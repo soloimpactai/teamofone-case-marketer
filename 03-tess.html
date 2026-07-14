@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>03 · 전략가 Tess — 전략 브리프 | SOLLIP</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#241C1E;
+    --ink-2:#544A4C;
+    --ink-3:#867A7C;
+    --tess:#9B5C63;
+    --tess-deep:#6E3D45;
+    --tess-soft:#C9A2A7;
+    --tess-wash:#F5EDEE;
+    --tess-wash-2:#EADCDE;
+    --leo:#46587A;
+    --ben:#5E7A62;
+    --ocker:#A8813F;
+    --plum:#5B4B7A;
+    --gold:#A8813F;
+    --gold-wash:#F6F0E4;
+    --paper:#F8F5F4;
+    --card:#FFFFFF;
+    --line:#E5E0DF;
+    --line-2:#EFEBEA;
+    --kill:#A89A9C;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.75;word-break:keep-all;
+    overflow-wrap:break-word;-webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 28px}
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  section:first-of-type{border-top:none}
+
+  header{background:linear-gradient(160deg,var(--tess-deep) 0%,var(--tess) 62%,#B0757C 100%);
+    color:#fff;padding:60px 0 52px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;
+    border:1px solid rgba(255,255,255,.14);border-radius:50%}
+  header::before{content:"";position:absolute;right:-20px;top:40px;width:200px;height:200px;
+    border:1px solid rgba(255,255,255,.10);border-radius:50%}
+  .brandbar{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:28px;font-weight:600}
+  .brandbar span.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.45)}
+  .stagerow{display:flex;align-items:flex-start;gap:20px;position:relative;z-index:1}
+  .stagenum{font-size:52px;font-weight:800;line-height:1;color:rgba(255,255,255,.28);
+    letter-spacing:-.03em;margin-top:2px}
+  h1{font-size:34px;font-weight:800;letter-spacing:-.025em;line-height:1.32;margin-bottom:10px}
+  .role{font-size:14px;color:rgba(255,255,255,.72);font-weight:500}
+  .meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:1}
+  .chip{font-size:12.5px;padding:5px 12px;border-radius:999px;font-weight:600;
+    background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.92)}
+
+  .teamstrip{background:var(--card);border-bottom:1px solid var(--line)}
+  .teamstrip .wrap{display:flex;padding:0}
+  .tsitem{flex:1;padding:14px 10px 12px;text-align:center;border-right:1px solid var(--line-2);opacity:.4}
+  .tsitem:last-child{border-right:none}
+  .tsitem.on{opacity:1}
+  .tsitem.done{opacity:.66}
+  .tsitem i{display:block;height:3px;border-radius:2px;margin-bottom:9px}
+  .tsitem b{display:block;font-size:13px;font-weight:700}
+  .tsitem em{display:block;font-size:11px;font-style:normal;color:var(--ink-3);margin-top:1px}
+
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--tess);margin-bottom:16px}
+  .kicker::before{content:"";width:22px;height:2px;background:var(--tess);border-radius:1px}
+  .kicker.gold{color:var(--gold)}
+  .kicker.gold::before{background:var(--gold)}
+  h2{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.4;margin-bottom:14px}
+  h3{font-size:18px;font-weight:700;margin:32px 0 10px}
+  p{color:var(--ink-2);margin-bottom:14px;font-size:15.5px}
+  p strong,li strong,td strong{color:var(--ink);font-weight:700}
+  .lead{font-size:17px;color:var(--ink-2)}
+  ul{list-style:none;margin-bottom:14px}
+  ul li{position:relative;padding-left:16px;margin-bottom:8px;color:var(--ink-2);font-size:15.5px}
+  ul li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;
+    border-radius:50%;background:var(--tess-soft)}
+  mark{background:linear-gradient(transparent 58%, var(--tess-wash-2) 58%);color:var(--ink);font-weight:700}
+  mark.gold{background:linear-gradient(transparent 58%, #EFE2C6 58%)}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--line-2);
+    padding:1px 5px;border-radius:3px}
+
+  .hero{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--tess);
+    border-radius:4px;padding:34px}
+  .hero .lbl{font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--tess);
+    text-transform:uppercase;margin-bottom:14px}
+  .hero .big{font-size:22px;line-height:1.6;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+  .hero .big em{font-style:normal;color:var(--tess);border-bottom:2px solid var(--tess-soft)}
+  .hero .sub{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line);font-size:15px}
+
+  .chain{background:var(--tess-deep);color:#fff;border-radius:4px;padding:26px 30px;margin:24px 0;
+    text-align:center}
+  .chain .cl{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:rgba(255,255,255,.6);margin-bottom:10px}
+  .chain .cb{font-size:25px;font-weight:800;letter-spacing:-.025em;line-height:1.4}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:28px;margin:26px 0}
+  .card .ct{font-size:15px;font-weight:700;margin-bottom:4px}
+  .card .cs{font-size:13px;color:var(--ink-3);margin-bottom:22px}
+
+  /* 3 personas */
+  .personas{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+  .pc{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:20px 18px}
+  .pc.gift{border:1px solid var(--tess);border-top:3px solid var(--tess);
+    box-shadow:0 6px 20px rgba(155,92,99,.10)}
+  .pc.buyer{border-top:3px solid var(--ben)}
+  .pc.insp{border-top:3px solid var(--kill)}
+  .pc h4{font-size:15px;font-weight:800;margin-bottom:3px}
+  .pc .ps{font-size:12px;color:var(--ink-3);margin-bottom:14px;font-weight:600}
+  .prow{display:flex;justify-content:space-between;font-size:13px;padding:6px 0;
+    border-bottom:1px solid var(--line-2)}
+  .prow:last-child{border-bottom:none}
+  .prow span{color:var(--ink-3);font-weight:600}
+  .prow b{color:var(--ink);font-weight:800}
+  .pc.gift .prow b{color:var(--tess)}
+  .pc.buyer .prow b{color:var(--ben)}
+  .pgets{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);
+    font-size:12.5px;font-weight:700}
+  .pc.insp .pgets{color:var(--kill)}
+  .pc.buyer .pgets{color:var(--ben)}
+  .pc.gift .pgets{color:var(--tess)}
+
+  /* comparison table */
+  .ctbl{width:100%;border-collapse:collapse;margin:24px 0;background:var(--card);
+    border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .ctbl th{background:var(--tess-wash);font-size:12px;font-weight:800;letter-spacing:.05em;
+    color:var(--tess-deep);padding:13px 16px;text-align:left;border-bottom:1px solid var(--tess-wash-2)}
+  .ctbl td{padding:14px 16px;border-bottom:1px solid var(--line-2);font-size:14px;
+    color:var(--ink-2);vertical-align:top;line-height:1.6}
+  .ctbl tr:last-child td{border-bottom:none}
+  .ctbl td.rk{font-weight:800;color:var(--ink);white-space:nowrap}
+  .ctbl td.bad{color:var(--tess);font-weight:700}
+  .ctbl .ok{color:var(--ben);font-weight:700}
+
+  /* breakeven */
+  .be{background:var(--gold-wash);border:1px solid #E4D6B8;border-radius:4px;padding:28px;margin:24px 0}
+  .be .bh{font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+    color:#8A6A2E;margin-bottom:6px}
+  .be .bf{font-family:ui-monospace,Menlo,monospace;font-size:16px;font-weight:700;color:var(--ink);
+    background:#fff;border:1px solid #E4D6B8;border-radius:3px;padding:14px 18px;margin:14px 0 18px;
+    text-align:center;letter-spacing:-.01em}
+  .betbl{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:#E4D6B8;
+    border:1px solid #E4D6B8;border-radius:3px;overflow:hidden}
+  .bec{background:#fff;padding:16px;text-align:center}
+  .bec .bv{font-size:13px;color:var(--ink-3);font-weight:700;margin-bottom:5px}
+  .bec .bn{font-size:24px;font-weight:800;color:#8A6A2E;letter-spacing:-.03em}
+  .bec.warn .bn{color:#A8543F}
+
+  /* causal chain */
+  .cc{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:30px 26px;margin:24px 0}
+
+  /* options */
+  .opts{display:flex;flex-direction:column;gap:12px;margin:24px 0}
+  .opt{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px 24px;
+    display:grid;grid-template-columns:52px 1fr;gap:18px;align-items:start}
+  .opt .on{width:40px;height:40px;border-radius:4px;background:var(--kill);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+  .opt.pick{border:1px solid var(--tess);border-left:5px solid var(--tess);
+    box-shadow:0 6px 22px rgba(155,92,99,.10)}
+  .opt.pick .on{background:var(--tess)}
+  .opt .ot{font-size:16.5px;font-weight:800;margin-bottom:6px;letter-spacing:-.015em}
+  .opt.killed .ot{color:var(--ink-3)}
+  .opt .od{font-size:14.5px;color:var(--ink-2);line-height:1.65;margin-bottom:10px}
+  .opt .why{font-size:13.5px;padding:12px 15px;border-radius:3px;line-height:1.6}
+  .opt.killed .why{background:#F2EFEF;color:var(--ink-2)}
+  .opt.pick .why{background:var(--tess-wash);color:var(--tess-deep)}
+  .opt .why b{font-weight:800}
+  .verdict-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.06em;
+    padding:2px 8px;border-radius:3px;margin-left:8px;vertical-align:2px}
+  .verdict-tag.k{background:#EAE6E6;color:var(--ink-3)}
+  .verdict-tag.p{background:var(--tess);color:#fff}
+
+  /* kill list */
+  .killlist{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:24px 0}
+  .kl{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:14px 16px;
+    display:grid;grid-template-columns:1fr;gap:3px}
+  .kl .kt{font-size:14px;font-weight:800;color:var(--ink-3);text-decoration:line-through;
+    text-decoration-color:var(--tess-soft);text-decoration-thickness:2px}
+  .kl .kd{font-size:12.5px;color:var(--ink-3);line-height:1.55}
+  .kl.head{background:var(--tess-deep);border-color:var(--tess-deep);grid-column:1/-1}
+  .kl.head .kt{color:#fff;text-decoration:none;font-size:16px}
+  .kl.head .kd{color:rgba(255,255,255,.72);font-size:13.5px}
+
+  /* lever order */
+  .lvorder{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:24px 0}
+  .lvbox{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px}
+  .lvbox .lh{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    margin-bottom:14px;color:var(--ink-3)}
+  .lvbox.mine .lh{color:var(--tess)}
+  .lvrow{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--line-2);
+    font-size:14px}
+  .lvrow:last-child{border-bottom:none}
+  .lvrow .lk{width:26px;height:26px;border-radius:3px;background:var(--line-2);color:var(--ink-3);
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+  .lvbox.mine .lvrow .lk{background:var(--tess);color:#fff}
+  .lvrow .ln{flex:1;font-weight:700;color:var(--ink-2)}
+  .lvbox.mine .lvrow .ln{color:var(--ink)}
+  .lvrow .lm{font-size:11px;font-weight:800;padding:2px 7px;border-radius:3px}
+  .lm.up{background:var(--tess-wash);color:var(--tess)}
+  .lm.dn{background:#F0EDEC;color:var(--ink-3)}
+  .lm.keep{background:#EDF1EC;color:var(--ben)}
+  .lm.new{background:var(--gold-wash);color:#8A6A2E}
+
+  /* kpi */
+  .kpis{display:flex;flex-direction:column;gap:9px;margin:24px 0}
+  .kp{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px 20px;
+    display:grid;grid-template-columns:52px 1fr 190px;gap:16px;align-items:center}
+  .kp .kk{font-size:13px;font-weight:800;color:#fff;background:var(--tess);width:44px;height:30px;
+    border-radius:3px;display:flex;align-items:center;justify-content:center}
+  .kp.alarm .kk{background:#A8543F}
+  .kp.star{border:1px solid var(--tess);border-top:3px solid var(--tess)}
+  .kp .kt{font-size:15px;font-weight:700;margin-bottom:2px}
+  .kp .kd{font-size:13px;color:var(--ink-3)}
+  .kp .kv{text-align:right;font-size:13px;font-weight:700;color:var(--ink-2)}
+  .kp .kv b{display:block;font-size:17px;color:var(--tess);font-weight:800;letter-spacing:-.02em}
+  .kp.alarm .kv b{color:#A8543F}
+
+  /* trap */
+  .trap{background:#FBF3F4;border:1px solid #E9D4D6;border-radius:4px;padding:28px;margin:24px 0}
+  .trap .th{font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;
+    color:var(--tess);margin-bottom:12px}
+  .trap .eq{font-family:ui-monospace,Menlo,monospace;background:#fff;border:1px solid #E9D4D6;
+    border-radius:3px;padding:14px 18px;margin:14px 0;font-size:14.5px;font-weight:700;text-align:center}
+
+  /* senior */
+  .snr{background:#FCFAFA;border:1px solid var(--line);border-left:4px solid var(--tess-soft);
+    border-radius:4px;padding:22px 26px;margin:24px 0}
+  .snr .sh{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--tess);
+    text-transform:uppercase;margin-bottom:10px}
+  .snr p{margin:0;font-size:14.5px}
+  .snr p + p{margin-top:10px}
+
+  /* stop conditions */
+  .stops{display:flex;flex-direction:column;gap:8px;margin:24px 0}
+  .stp{background:var(--card);border:1px solid var(--line);border-left:4px solid #C08A8F;
+    border-radius:4px;padding:16px 20px;font-size:14.5px;color:var(--ink-2);line-height:1.65}
+  .stp.alarm{border-left-color:#A8543F;background:#FBF5F3}
+  .stp b{color:var(--ink)}
+
+  /* handoff Sam */
+  .handoff{background:linear-gradient(150deg,#F7F1E5 0%,#F3EDDF 100%);
+    border:1px solid #E4D9C0;border-radius:4px;padding:34px;margin-top:12px}
+  .handoff .hh{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .handoff .hh i{width:30px;height:30px;border-radius:50%;background:var(--ocker);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;font-style:normal}
+  .handoff .hh b{font-size:19px;font-weight:800;letter-spacing:-.02em}
+  .handoff .hs{font-size:13.5px;color:var(--ink-2);margin-bottom:22px;padding-left:42px}
+  .pre{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:18px}
+  .pi{background:#fff;border:1px solid #E7DDC7;border-radius:4px;padding:14px 16px}
+  .pi.crit{border:1px solid var(--ocker);box-shadow:0 3px 12px rgba(168,129,63,.10)}
+  .pi .pn{font-size:11px;font-weight:800;color:var(--ocker);letter-spacing:.06em;margin-bottom:4px}
+  .pi .pt{font-size:14px;font-weight:700;margin-bottom:3px}
+  .pi .pd{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+  .nogo{background:#fff;border:1px solid #E7DDC7;border-radius:4px;padding:18px 20px}
+  .nogo .ngh{font-size:11.5px;font-weight:800;letter-spacing:.08em;color:var(--ocker);
+    text-transform:uppercase;margin-bottom:10px}
+  .nogo ul li::before{background:var(--ocker)}
+  .nogo ul li{font-size:14px}
+  .nogo ul{margin:0}
+
+  .disc{font-size:12px;color:var(--ink-3);margin-top:22px;padding-top:16px;
+    border-top:1px solid var(--line);line-height:1.6}
+  footer{background:var(--ink);color:rgba(255,255,255,.6);padding:40px 0;font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  footer b{color:#fff;font-weight:700}
+
+  @media(max-width:860px){
+    .personas{grid-template-columns:1fr}
+    .betbl{grid-template-columns:1fr}
+    .killlist{grid-template-columns:1fr}
+    .lvorder{grid-template-columns:1fr}
+    .kp{grid-template-columns:52px 1fr}
+    .kp .kv{grid-column:2;text-align:left}
+    .pre{grid-template-columns:1fr}
+    h1{font-size:27px}
+    .hero .big{font-size:18px}
+    .chain .cb{font-size:19px}
+    .teamstrip .wrap{overflow-x:auto}
+    .tsitem{min-width:104px}
+    .ctbl thead{display:none}
+    .ctbl td{display:block;border-bottom:none;padding:5px 16px}
+    .ctbl tr{display:block;border-bottom:1px solid var(--line);padding:10px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brandbar">
+      <span>Team of One : Marketer</span><span class="dot"></span>
+      <span>Case · SOLLIP</span><span class="dot"></span><span>2026.07.11</span>
+    </div>
+    <div class="stagerow">
+      <div class="stagenum">03</div>
+      <div>
+        <h1>올해 SOLLIP은 아무것도<br>새로 만들지 않는다</h1>
+        <div class="role">전략가 <b style="color:#fff">Tess</b> · 전략 브리프 · 파이프라인 3단계</div>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="chip">Ben 레버 순서 부분 변경</span>
+      <span class="chip">8월 데드라인 포기</span>
+      <span class="chip">Leo KPI 교정</span>
+      <span class="chip">다음 → 실행설계자 Sam</span>
+    </div>
+  </div>
+</header>
+
+<div class="teamstrip">
+  <div class="wrap">
+    <div class="tsitem done"><i style="background:#46587A"></i><b>Leo</b><em>해석가</em></div>
+    <div class="tsitem done"><i style="background:#5E7A62"></i><b>Ben</b><em>리서처</em></div>
+    <div class="tsitem on"><i style="background:#9B5C63"></i><b>Tess</b><em>전략가</em></div>
+    <div class="tsitem"><i style="background:#A8813F"></i><b>Sam</b><em>실행설계자</em></div>
+    <div class="tsitem"><i style="background:#5B4B7A"></i><b>Cap</b><em>팀장·검수</em></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- 전략 방향 -->
+<section>
+  <div class="kicker">전략 방향</div>
+  <div class="hero">
+    <div class="lbl">Direction</div>
+    <div class="big">
+      올해 SOLLIP은 <em>아무것도 새로 만들지 않는다.</em>
+      이미 도착한 수요가 <em>마지막 문에서 새는 것을 막고,</em>
+      이미 벌어지고 있는 선물 구매를 <em>상품으로 만든다.</em>
+    </div>
+    <div class="sub">
+      만들 것을 늘리는 모든 선택지(신제품·신규 SKU·편집자·숏츠·새 채널·새 상품군)를 <strong>전부</strong> 버립니다.
+      대신 <strong>이미 존재하는 세 가지</strong>만 팝니다:
+      장바구니에 담긴 <strong>1,980건</strong>, 선물로 사고 있는 <strong>18%</strong>,
+      그리고 저장·공유되는 <strong>2만 4천 명의 취향</strong>.
+    </div>
+  </div>
+  <p style="margin-top:22px">
+    이 문제의 형태는 “무엇을 더 할 것인가”가 아니라 <mark>“이미 있는 것을 왜 못 팔고 있는가”</mark>입니다.
+    그래서 이 전략의 모든 레버는 <strong>덧셈이 아니라 배관 수리</strong>예요.
+  </p>
+</section>
+
+<!-- 3C: 자원 배분 역상관 -->
+<section>
+  <div class="kicker">상황 분석</div>
+  <h2>한 브랜드 안에 세 사람이 섞여 있다</h2>
+
+  <div class="personas">
+    <div class="pc insp">
+      <h4>영감 소비자</h4>
+      <div class="ps">인스타 · 세션 9,540 (60%)</div>
+      <div class="prow"><span>상세 체류</span><b>0:19</b></div>
+      <div class="prow"><span>스크롤 50%↑</span><b>14%</b></div>
+      <div class="prow"><span>전환율</span><b>0.23%</b></div>
+      <div class="prow"><span>객단가</span><b>61,000원</b></div>
+      <div class="pgets">받는 것 · <strong>주 20시간</strong></div>
+    </div>
+    <div class="pc buyer">
+      <h4>구매자</h4>
+      <div class="ps">네이버 검색 · 세션 3,180 (20%)</div>
+      <div class="prow"><span>상세 체류</span><b>1:47</b></div>
+      <div class="prow"><span>스크롤 50%↑</span><b>68%</b></div>
+      <div class="prow"><span>전환율</span><b>1.60%</b></div>
+      <div class="prow"><span>객단가</span><b>82,000원</b></div>
+      <div class="pgets">받는 것 · <strong>월 광고비 30만 원</strong></div>
+    </div>
+    <div class="pc gift">
+      <h4>선물 구매자</h4>
+      <div class="ps">채널 무관 · 주문의 18% (시즌 34%)</div>
+      <div class="prow"><span>포장 요청</span><b>연 18%</b></div>
+      <div class="prow"><span>각인 요청</span><b>월 3~6건</b></div>
+      <div class="prow"><span>재구매 사유</span><b>58% 선물</b></div>
+      <div class="prow"><span>객단가</span><b>94,000원</b></div>
+      <div class="pgets">받는 것 · <strong>아무것도 없음</strong></div>
+    </div>
+  </div>
+
+  <div class="chain">
+    <div class="cl">상황 분석의 결론</div>
+    <div class="cb">자원 배분이 매출 구조와 정확히 역상관이다</div>
+  </div>
+
+  <h3>경쟁 · SOLLIP은 차별화가 부족한 게 아니라 위생요인이 미달이다</h3>
+  <table class="ctbl">
+    <thead>
+      <tr><th style="width:150px"></th><th>프리미엄 경쟁군 (69,000~123,000원)</th><th style="width:230px">SOLLIP (73,000원)</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="rk">가격 정당화 언어</td>
+        <td class="ok">“엔드그레인” · “북미산 호두나무” · “탄화 고온열처리”</td>
+        <td class="bad">상세를 19초 만에 나간다</td></tr>
+      <tr><td class="rk">각인</td>
+        <td class="ok"><strong>표준 관행.</strong> 우드마켓·아름피어는 <strong>상품명에 박아</strong> 판다</td>
+        <td class="bad">없음. 요청 월 3~6건 전부 거절</td></tr>
+      <tr><td class="rk">선물 포장</td>
+        <td class="ok">표준. 오이뮤는 별도 상품으로 판매</td>
+        <td class="bad">수기 리본 6분/건</td></tr>
+      <tr><td class="rk">배송비</td>
+        <td class="ok"><strong>무료</strong> (BOUMBI·아름피어·모어우드)</td>
+        <td class="bad">받는다. <strong>이탈 사유 1위(31%)</strong></td></tr>
+    </tbody>
+  </table>
+  <p>
+    <mark>SOLLIP은 가격만 프리미엄이고 오퍼는 저가 구간입니다.</mark>
+    차별화를 논하기 전에 기본이 미달이에요.
+    각인·선물포장·무료배송은 “해볼까”를 고민할 기회가 아니라 <strong>지금 진행 중인 실점</strong>입니다.
+  </p>
+
+  <div class="snr">
+    <div class="sh">시니어 코멘트 · 왜 경쟁 분석을 했는가</div>
+    <p>3C를 표로 채우는 게 목적이 아니에요. <strong>삭제 테스트</strong>를 해보세요. <strong>경쟁 칸을 지우면</strong> “각인이 표준 관행”이라는 사실이 사라지고, 그러면 선물 오퍼가 <strong>“새로운 아이디어”</strong>로 보입니다. 새 아이디어는 검증이 필요하고, 검증은 시간을 먹어요.</p>
+    <p>하지만 <strong>경쟁 표준을 못 따라가고 있는 것</strong>이면 검증할 게 없습니다. 그냥 따라가면 됩니다. 같은 행동인데 <mark>경쟁 분석이 있으면 “리스크 있는 신규 시도”가 “밀린 숙제”로 바뀝니다.</mark> 이게 분석이 결정을 바꾸는 방식이에요.</p>
+  </div>
+</section>
+
+<!-- 타깃 / DM 재해석 -->
+<section>
+  <div class="kicker">타깃</div>
+  <h2>같은 DM을 Leo와 다르게 읽는다</h2>
+
+  <div class="card">
+    <div class="ct">Leo의 독법</div>
+    <p style="margin:0 0 20px;font-size:15px;color:var(--ink-3)">
+      “아무도 도마를 안 묻는다. 오디언스는 SOLLIP을 인테리어 영감 계정으로 소비한다. <strong style="color:var(--ink-3)">이건 병이다.</strong>”
+    </p>
+    <div style="border-top:1px dashed var(--line);padding-top:20px">
+      <div class="ct" style="color:var(--tess)">Tess의 독법 · 뒤집어 읽는다</div>
+      <p style="margin:0;font-size:16px">
+        “이 화분 어디 거예요”, “테이블 어디서 사셨어요”, “이 조명 정보 좀요”
+        <br>= <mark>사람들이 SOLLIP을 “취향의 출처”로 신뢰하고 있다는, 관측된 증거.</mark>
+      </p>
+      <p style="margin:14px 0 0">
+        그리고 <strong>선물은 취향의 대리 구매</strong>입니다.
+        남에게 줄 물건을 고를 때 사람들이 가장 원하는 건 “이거면 안전하다”는 <strong>허락</strong>이에요.
+        취향의 출처로 신뢰받는 것은 <strong>선물 브랜드가 가질 수 있는 가장 비싼 자산</strong>입니다.
+      </p>
+    </div>
+  </div>
+
+  <div class="chain">
+    <div class="cl">JTBD</div>
+    <div class="cb" style="font-size:19px;line-height:1.55">
+      “집들이·결혼에 뭘 들고 갈지 정해야 하는데,<br>
+      성의 없어 보이지도 부담스럽지도 않으면서,<br>
+      내가 취향을 아는 사람이라는 게 드러나는 물건이 필요하다.”
+    </div>
+  </div>
+
+  <p>
+    집들이 선물이 어려운 건 실용성 때문이 아닙니다. <strong>센스 판정</strong>이 걸려 있어서예요.
+    사는 사람은 물건을 사는 게 아니라 <mark>“안목이 있다는 평가”</mark>를 삽니다.
+    그래서 이탈 사유 2위 “가격이 부담”(26%)도 다르게 보여요.
+    <strong>73,000~94,000원은 자기 도마로는 비싸고, 집들이 선물로는 정상 가격대</strong>입니다.
+    가격 저항은 절대 금액의 문제가 아니라 <strong>맥락의 문제</strong>예요.
+  </p>
+
+  <div class="snr">
+    <div class="sh">시니어 코멘트 · 같은 데이터를 뒤집어 읽는 법</div>
+    <p><strong>Leo가 틀린 게 아닙니다.</strong> Leo는 “자기용 도마를 파는 브랜드”를 전제로 DM을 읽었고, 그 전제 위에서는 완벽히 옳아요. 제가 바꾼 건 데이터가 아니라 <strong>전제</strong>입니다.</p>
+    <p><mark>“이 데이터가 나쁜 신호인가”는 데이터가 답하지 않습니다. 우리가 무엇을 팔기로 했느냐가 답합니다.</mark> 같은 DM이 자기용 시장에선 병이고 선물 시장에선 자산이에요. 데이터를 보고 좌절하기 전에 <strong>“내가 어느 시장을 전제하고 이걸 읽고 있나”</strong>를 한 번 물으세요.</p>
+    <p style="padding-top:10px;border-top:1px dashed var(--line)"><strong>⚠ 단, 이 도약에 못을 박아둡니다.</strong> 인스타 팔로워 2.4만 명이 <strong>선물 구매자라는 직접 증거는 없습니다</strong> <code>[공백]</code>. 확실한 건 재구매 58%가 선물, 선물 객단가 +28.8%, 시즌 포장 요청 34%뿐이에요. <strong>인스타 오디언스가 선물 구매로 전환된다는 건 가설이고, 이번 시즌이 그 시험대입니다.</strong></p>
+  </div>
+</section>
+
+<!-- 핵심 전략 -->
+<section>
+  <div class="kicker gold">★ 이 전략의 심장</div>
+  <h2>Ben이 안 물은 것: 무료배송은 공짜인가?</h2>
+  <p class="lead">
+    배송비는 이탈 사유 1위(31%)이고 경쟁사는 무료입니다. 그러니 없애야죠.
+    그런데 <strong>순마진 411만 원인 회사</strong>예요. 무료배송은 마진을 직접 깎습니다.
+  </p>
+
+  <div class="be">
+    <div class="bh">손익분기 산술 · Sam이 실제 배송비를 넣어 게이트로 쓸 것</div>
+    <p style="margin:6px 0 0;font-size:14px;color:#7A6A4A">
+      건당 순마진 <code>m</code> = 73,000 × 22% = <strong>16,060원</strong> ·
+      배송비 흡수액 <code>s</code> = <strong>[공백] 확인 필수</strong>
+    </p>
+    <div class="bf">본전 조건 &nbsp;:&nbsp; 주문 증가율 ≥ m ÷ (m − s) − 1</div>
+    <div class="betbl">
+      <div class="bec"><div class="bv">배송비 3,000원</div><div class="bn">+23.0%</div></div>
+      <div class="bec"><div class="bv">배송비 4,000원</div><div class="bn">+33.2%</div></div>
+      <div class="bec warn"><div class="bv">배송비 5,000원</div><div class="bn">+45.2%</div></div>
+    </div>
+    <p style="margin:18px 0 0;font-size:15px;color:var(--ink-2)">
+      Baymard의 체크아웃 개선 효과는 <strong>+35.26%</strong>입니다.
+      즉 <mark class="gold">무조건 전면 무료배송은 “될 수도 있고 안 될 수도 있는” 도박</mark>이고, 마진 하방이 열려 있어요.
+      <strong>순마진 411만 원짜리 회사가 걸 도박이 아닙니다.</strong>
+    </p>
+  </div>
+
+  <h3>그런데 여기서 두 레버가 만난다</h3>
+  <p>
+    선물 주문 객단가는 이미 <strong>94,000원</strong>입니다. 전체 평균 73,000원보다 <strong>28.8% 높아요.</strong>
+    즉 <mark>선물 구매자는 이미 무료배송 임계선을 넘고 있습니다.</mark>
+  </p>
+
+  <div class="chain">
+    <div class="cl">핵심 전략 한 줄</div>
+    <div class="cb">무료배송을 비용으로 사지 말고,<br>선물로 벌어라</div>
+  </div>
+
+  <p>
+    전면 무료배송(마진 하방 개방) 대신 <strong>무료배송 임계선</strong>을 둡니다.
+    그리고 <strong>선물 오퍼(각인·포장·메시지 카드·기존 SKU 번들)로 객단가를 임계선 위로 밀어올립니다.</strong>
+    이탈 사유 1위(배송비)는 “얼마 남았습니다”라는 <strong>추가 구매 유인</strong>으로 바뀌고,
+    이탈 사유 2위(가격 부담)는 <strong>선물이라는 맥락</strong>이 지웁니다.
+    <strong>하나의 움직임이 두 구멍을 동시에 막고, 마진 하방이 닫혀 있어요.</strong>
+  </p>
+
+  <div class="cc">
+    <div class="ct" style="margin-bottom:20px">인과 사슬 · 세 레버가 서로를 먹여살린다</div>
+    <svg viewBox="0 0 900 420" width="100%" role="img" aria-label="전략 인과 사슬">
+      <defs>
+        <marker id="a1" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#C9A2A7"/>
+        </marker>
+      </defs>
+      <g fill="none" stroke="#C9A2A7" stroke-width="2.2" marker-end="url(#a1)">
+        <path d="M450,72 L450,104"/>
+        <path d="M450,168 L450,200"/>
+        <path d="M450,264 L450,296"/>
+      </g>
+
+      <rect x="230" y="16" width="440" height="56" rx="4" fill="#F5EDEE" stroke="#EADCDE"/>
+      <text x="450" y="41" font-size="14.5" font-weight="800" fill="#6E3D45" text-anchor="middle">크래프트 콘텐츠 (발행 2건 → 축으로)</text>
+      <text x="450" y="61" font-size="12" fill="#867A7C" text-anchor="middle">프리미엄 가격 정당화 언어를 공급</text>
+
+      <rect x="230" y="112" width="440" height="56" rx="4" fill="#F5EDEE" stroke="#EADCDE"/>
+      <text x="450" y="137" font-size="14.5" font-weight="800" fill="#6E3D45" text-anchor="middle">선물 오퍼 (각인 · 포장 · 카드 · 번들)</text>
+      <text x="450" y="157" font-size="12" fill="#867A7C" text-anchor="middle">객단가를 73,000원 → 임계선 위로</text>
+
+      <rect x="230" y="208" width="440" height="56" rx="4" fill="#F6F0E4" stroke="#E4D6B8"/>
+      <text x="450" y="233" font-size="14.5" font-weight="800" fill="#8A6A2E" text-anchor="middle">무료배송 임계선</text>
+      <text x="450" y="253" font-size="12" fill="#9A8A6A" text-anchor="middle">이탈 1위(배송비 31%)를 마진 안 깎고 제거</text>
+
+      <rect x="230" y="304" width="440" height="56" rx="4" fill="#9B5C63"/>
+      <text x="450" y="329" font-size="14.5" font-weight="800" fill="#fff" text-anchor="middle">결제 완료</text>
+      <text x="450" y="349" font-size="12" fill="rgba(255,255,255,.8)" text-anchor="middle">선물 구매자는 이벤트마다 돌아온다 (재구매의 58%)</text>
+
+      <path d="M230,332 C130,332 130,44 226,44" fill="none" stroke="#C9A2A7" stroke-width="1.8"
+        stroke-dasharray="5 4" marker-end="url(#a1)"/>
+      <text x="66" y="192" font-size="12" font-weight="700" fill="#9B5C63" transform="rotate(-90 66 192)" text-anchor="middle">순환</text>
+
+      <rect x="700" y="150" width="180" height="80" rx="4" fill="#fff" stroke="#E5E0DF"/>
+      <text x="790" y="176" font-size="12" font-weight="800" fill="#9B5C63" text-anchor="middle">Ben은 세 레버를</text>
+      <text x="790" y="194" font-size="12" font-weight="800" fill="#9B5C63" text-anchor="middle">따로 계산했다.</text>
+      <text x="790" y="216" font-size="12" font-weight="800" fill="#241C1E" text-anchor="middle">나는 하나로 묶는다.</text>
+    </svg>
+  </div>
+</section>
+
+<!-- 경합안 -->
+<section>
+  <div class="kicker">경합 전략안</div>
+  <h2>세 개를 세우고 하나를 골랐다</h2>
+
+  <div class="opts">
+    <div class="opt killed">
+      <div class="on">안 1</div>
+      <div>
+        <div class="ot">문만 고친다 (결제 단선 집중)<span class="verdict-tag k">버림</span></div>
+        <div class="od">5주와 남은 자원 전부를 결제·비용 구조에만. 선물은 올해도 요청 오면 수기 대응.
+          <strong>장점</strong>: 가장 큰 레버에 자원 100%. 단순. 측정 명확.</div>
+        <div class="why">
+          <b>버린 이유 ①</b> 시즌은 1년에 한 번 온다. 결제는 언제 고쳐도 된다. <b>기회비용이 비대칭</b>이다.
+          결제 수리를 10월로 미루면 3개월 손해지만, 시즌을 놓치면 <b>12개월 손해</b>다.<br>
+          <b>버린 이유 ②</b> 결제 수리만으로는 이탈 사유 2위(가격 부담 26%)를 못 건드린다.
+          배송비를 없애도 “73,000원이 부담”인 사람은 여전히 안 산다.
+        </div>
+      </div>
+    </div>
+
+    <div class="opt killed">
+      <div class="on">안 2</div>
+      <div>
+        <div class="ot">선물 브랜드로 전환한다 (선물 단선 집중)<span class="verdict-tag k">버림 · 치명적</span></div>
+        <div class="od">5주를 선물 오퍼·포지셔닝·시즌 캠페인에 전부. 결제는 시즌 끝나고 내년에.
+          <strong>장점</strong>: 시한 있는 기회를 잡는다. 각인·포장이라는 경쟁 열위를 즉시 제거.</div>
+        <div class="why">
+          <b>버린 이유 (산술이 반박한다)</b> 선물 수요를 늘려봤자 <b>그 수요도 같은 결제 구멍으로 샌다.</b>
+          장바구니 → 구매 이탈 95.1%는 선물 구매자에게도 똑같이 적용된다
+          (유입원별 이탈률 93.5 / 92.7 / 93.1로 무차별 = 전 채널 공통 병목).<br>
+          <b>밑 빠진 독에 선물을 붓는 것이다.</b> 그리고 선물 포장은 수기 6분/건이라, 새는 주문을 위해 시간까지 태운다.
+        </div>
+      </div>
+    </div>
+
+    <div class="opt pick">
+      <div class="on">안 3</div>
+      <div>
+        <div class="ot">문을 열고, 그 문으로 선물을 통과시킨다<span class="verdict-tag p">채택</span></div>
+        <div class="od">결제·비용 구조를 먼저 열고, 그 위에 선물 오퍼를 얹는다.
+          콘텐츠 믹스는 <strong>착수 비용이 음수</strong>(시간을 돌려줌)라 즉시 병행.</div>
+        <div class="why">
+          <b>①</b> 안 2의 치명적 결함(새는 독)을 <b>안 1의 순서로 막는다.</b> 결제가 먼저 열려야 선물 수요가 담긴다.<br>
+          <b>②</b> 안 1의 기회비용 문제(시즌 상실)를 해소한다. 결제 수리와 선물 오퍼는 <b>둘 다 리드타임 0</b>이다.
+          순차가 아니라 <b>겹칠 수 있다.</b> 결제가 4주짜리 설정 작업이고 시즌은 3개월이다.<br>
+          <b>③</b> <b>선물이 결제의 마진을 벌어준다.</b> 두 레버가 별개가 아니라 하나의 구조다.
+          안 1도 안 2도 이 상승작용을 못 쓴다.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 8월 데드라인 -->
+<section>
+  <div class="kicker gold">★ 결정</div>
+  <h2>8월 중순 데드라인은 지키지 않는다</h2>
+  <p class="lead">
+    Ben은 “8월 중순이 신규 SKU 발주의 물리적 데드라인이고, 오늘부터 5주”라고 넘겼습니다.
+    이건 <strong>사실</strong>입니다. <mark class="gold">하지만 사실이 곧 명령은 아닙니다.</mark>
+  </p>
+
+  <table class="ctbl">
+    <thead><tr><th style="width:40px"></th><th>포기하는 근거</th></tr></thead>
+    <tbody>
+      <tr><td class="rk">1</td><td><strong>시장은 이미 기존 SKU를 선물로 사고 있다.</strong>
+        선물 포장 요청 18%도, 객단가 94,000원도, 각인 요청 월 3~6건도 <strong>전부 기존 SKU에 대한 것</strong>이다.
+        → <strong>없는 건 상품이 아니라 오퍼다.</strong> 신규 SKU는 없는 문제를 푼다.</td></tr>
+      <tr><td class="rk">2</td><td>결제가 안 고쳐진 상태에서 새 SKU를 얹으면 <strong>똑같이 결제에서 샌다.</strong>
+        구멍 난 양동이를 하나 더 사는 것.</td></tr>
+      <tr><td class="rk">3</td><td><strong>최소 발주 30개/품목.</strong> 순마진 411만 원인 회사가 안 팔릴 재고를 떠안으면,
+        <strong>다음 결정의 자유가 사라진다.</strong></td></tr>
+      <tr><td class="rk">4</td><td>5주는 신제품 기획·발주·촬영·상세페이지에 다 들어간다.
+        그 5주는 L1·L2에 쓸 시간이다. <strong>주 20시간 위에서 신제품과 결제 수리는 양립하지 않는다.</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="chain">
+    <div class="cl">그리고 이걸 포기하는 순간</div>
+    <div class="cb" style="font-size:21px">5주 시한이 사라진다</div>
+    <p style="margin:16px 0 0;color:rgba(255,255,255,.82);font-size:15px">
+      8월 중순은 <strong style="color:#fff">오직 신규 SKU에만 걸리는 벽</strong>입니다.
+      각인·포장·카드·기존 SKU 번들·상세·체크아웃·배송비는 <strong style="color:#fff">전부 리드타임 0</strong>이에요.
+      신규 SKU를 버리면 9월 1일에 모든 게 완성돼 있을 필요가 없습니다.
+      시즌은 3개월이고, 10월에 오퍼를 붙여도 시즌의 3분의 2가 남아 있어요.
+    </p>
+  </div>
+
+  <div class="snr">
+    <div class="sh">시니어 코멘트 · 전략가가 하는 일</div>
+    <p>데드라인이 있으면 반사적으로 “그 안에 맞춰야 한다”고 생각하게 돼요. 그게 주니어의 함정입니다.
+      <mark>전략은 제약을 만족시키는 게 아니라, 만족시킬 필요가 없는 제약을 골라내는 일이기도 합니다.</mark>
+      8월 중순 데드라인은 “신규 SKU를 낸다”는 선택을 했을 때만 존재해요. 그 선택을 버리면 <strong>제약 자체가 증발합니다.</strong></p>
+    <p>확인하는 방법: <strong>“이 시한을 못 지키면 정확히 무엇을 못 하게 되나?”</strong>를 끝까지 물으세요.
+      답이 “올해 신제품을 못 낸다”인데 우리가 애초에 신제품을 안 내기로 했다면, 그 시한은 <strong>우리 시한이 아닙니다.</strong>
+      남의 시한을 내 시한으로 착각하는 게 1인 기업이 시간을 태우는 흔한 방식이에요.</p>
+    <p style="padding-top:10px;border-top:1px dashed var(--line)"><strong>⚠ 이 판단이 뒤집히는 조건</strong>: 확인 결과
+      <strong>기존 SKU 재고가 시즌 수요를 못 받칠 만큼 얇다면</strong>, 이건 신제품이 아니라 <strong>재고 보충 발주</strong>이고
+      8월 중순이 다시 살아납니다. <strong>재고 현황 확인이 Sam의 첫 번째 일입니다.</strong> (Ben도 나도 재고 데이터를 못 봤어요 <code>[공백]</code>)</p>
+  </div>
+</section>
+
+<!-- 레버 순서 -->
+<section>
+  <div class="kicker">레버 우선순위</div>
+  <h2>Ben의 순서를 부분 변경한다</h2>
+
+  <div class="lvorder">
+    <div class="lvbox">
+      <div class="lh">Ben의 순서 (리서처)</div>
+      <div class="lvrow"><span class="lk">L1</span><span class="ln">결제·비용 구조</span></div>
+      <div class="lvrow"><span class="lk">L2</span><span class="ln">콘텐츠 믹스</span></div>
+      <div class="lvrow"><span class="lk">L3</span><span class="ln">선물 오퍼</span></div>
+      <div class="lvrow"><span class="lk">–</span><span class="ln" style="color:var(--ink-3)">(없음)</span></div>
+    </div>
+    <div class="lvbox mine">
+      <div class="lh">Tess의 순서 (전략가)</div>
+      <div class="lvrow"><span class="lk">L1</span><span class="ln">결제·비용 구조</span><span class="lm keep">유지</span></div>
+      <div class="lvrow"><span class="lk">L2</span><span class="ln">선물 오퍼</span><span class="lm up">↑ 승격</span></div>
+      <div class="lvrow"><span class="lk">L3</span><span class="ln">콘텐츠 믹스 <small style="font-weight:600;color:var(--ink-3)">(착수는 즉시)</small></span><span class="lm dn">↓ 강등</span></div>
+      <div class="lvrow"><span class="lk">L4</span><span class="ln">네이버 검색 확대</span><span class="lm new">신설</span></div>
+    </div>
+  </div>
+
+  <h3>왜 선물과 콘텐츠를 뒤집었나</h3>
+  <ul>
+    <li><strong>시한.</strong> 결제와 콘텐츠는 언제 해도 됩니다. <strong>시즌만 안 기다려요.</strong>
+      같은 크기의 레버라도 9~11월에만 열리는 창은 <strong>시간 가치가 다릅니다.</strong></li>
+    <li><strong>상승작용.</strong> 선물은 이탈 사유 2위(가격 부담 26%)를 직접 지우고, 객단가를 밀어올려
+      <strong>L1의 무료배송 임계선을 마진 중립으로 만듭니다.</strong> 콘텐츠는 그런 상승작용이 없어요(클릭을 늘릴 뿐).</li>
+    <li><strong>Ben 자신의 산술.</strong> 콘텐츠 믹스 교체는 <strong>+13~47%</strong>로 폭이 넓고,
+      그 폭 자체가 “도달이 유지된다”는 <strong>검증 안 된 가정</strong> 위에 있어요. Ben이 직접 “목표치로 쓰지 말라”고 경고했고요.
+      <br><span style="font-size:13.5px;color:var(--ink-3)">📌 <strong>사후 검증 반영</strong>: 초안에서 저는 “콘텐츠는 +13%로 <strong>셋 중 가장 작다</strong>”고 썼습니다.
+      Ben이 클릭당 주문율 격차(4.76배)를 자기 계산에 안 넣었던 게 검증에서 잡혔고, 제대로 넣으면 상한이 +47%예요.
+      <strong>그러면 “가장 작다”는 근거는 죽습니다.</strong>
+      <br><strong>그런데 순서는 안 바뀝니다.</strong> L2 승격 근거 셋 중 이건 3번이고, 1번(시즌은 1년에 한 번 온다)과 2번(선물이 L1의 마진을 벌어준다)이 남아요.
+      <strong>시한과 상승작용은 콘텐츠 레버의 크기와 무관하게 성립합니다.</strong>
+      근거 하나가 빠져도 결론이 서는지가, 그 결론이 얼마나 튼튼한지의 시험입니다.</span>
+      <strong>가장 작고 가장 불확실한 레버를 2순위에 둘 이유가 없습니다.</strong></li>
+  </ul>
+
+  <div class="card">
+    <div class="ct">단, 콘텐츠 믹스는 3순위지만 즉시 착수한다</div>
+    <div class="cs">순서 ≠ 착수 시점. 착수 비용이 음수(시간을 돌려줌)라서입니다.</div>
+    <table class="ctbl" style="margin:0">
+      <thead><tr><th></th><th>도달</th><th>프로필 방문</th><th>클릭률</th></tr></thead>
+      <tbody>
+        <tr><td class="rk">스타일링 (발행 78건)</td><td>41,200</td><td>388</td><td class="bad">0.114%</td></tr>
+        <tr><td class="rk" style="color:var(--tess)">크래프트 (발행 <strong>2건</strong>)</td>
+          <td><strong>12,300</strong></td>
+          <td class="ok"><strong>402 (전체 1위)</strong></td>
+          <td class="ok"><strong>1.390%</strong></td></tr>
+      </tbody>
+    </table>
+    <p style="margin:18px 0 0;font-size:15px">
+      크래프트는 <strong>도달과 클릭을 둘 다 잡는 유일한 유형</strong>이고,
+      동시에 <strong>경쟁사가 가격을 정당화하는 언어(“엔드그레인·북미산 호두나무”)에 대응하는 SOLLIP의 언어</strong>입니다.
+      6개월에 <strong>2건</strong> 발행했어요.
+      → 콘텐츠 축을 스타일링에서 크래프트로 옮깁니다.
+      <mark>이건 “콘텐츠를 늘리는” 결정이 아니라 “무엇을 안 만들지 정하는” 결정입니다.</mark>
+    </p>
+  </div>
+
+  <div class="card">
+    <div class="ct">L4 · 네이버 검색은 왜 지금이 아닌가</div>
+    <p style="margin:0;font-size:15.5px">
+      <strong>광고는 유입을 사는 것이고, 유입은 이미 남아돕니다.</strong>
+      결제가 고쳐지기 전에 유입을 더 사면 <strong>새는 독에 돈을 붓는 것</strong>이에요.
+      결제가 고쳐지면 <strong>같은 광고비의 ROI가 2~3배</strong>가 됩니다.
+      → <mark>광고는 결제 수리의 배수기입니다. 순서가 명확해요.</mark>
+      버리는 게 아니라 <strong>L1이 검증된 뒤의 레버</strong>입니다.
+    </p>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--gold)">
+    <div class="ct">Ben이 놓친 것 · 선물 포장의 시간 비용</div>
+    <div class="cs">“리드타임 0”이라고 적혀 있지만, 6분/건은 리드타임이 아니라 시간 비용입니다</div>
+    <ul style="margin:0">
+      <li>현재: 주문 98 × 18% = 약 <strong>18건/월</strong> × 6분 = <strong>월 1.8시간</strong> (감당 가능)</li>
+      <li>시즌 + 주문 증가: 주문 150 × 34% = 51건 → <strong>월 5.1시간</strong> / 주문 200 × 34% = 68건 → <strong>월 6.8시간</strong></li>
+      <li style="color:var(--gold);font-weight:700">→ <strong style="color:var(--gold)">경고선: 선물 주문 월 60건.</strong>
+        이걸 넘으면 포장이 병목이 되고 <strong style="color:var(--gold)">주 20시간 제약이 재발합니다.</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- 버리는 것 -->
+<section>
+  <div class="kicker">전략은 선택이다</div>
+  <h2>버리는 목록이 하는 목록보다 길다</h2>
+
+  <div class="killlist">
+    <div class="kl head">
+      <div class="kt">주 20시간짜리 회사에서 전략은 대부분 뺄셈이다</div>
+      <div class="kd">더할 게 없어서가 아니라, 하나를 더하면 반드시 하나를 빼야 하기 때문입니다.</div>
+    </div>
+    <div class="kl"><div class="kt">신규 SKU · 시즌 신제품</div><div class="kd">8월 중순 데드라인을 지키지 않는다. 없는 건 상품이 아니라 오퍼다</div></div>
+    <div class="kl"><div class="kt">편집자 채용</div><div class="kd">손익분기 월매출 +1,500만(+80%). 순마진 411만 중 275~330만 잠식</div></div>
+    <div class="kl"><div class="kt">유튜브 숏츠 · 신규 채널</div><div class="kd">전환 0에 곱하기. Leo·Ben 계승</div></div>
+    <div class="kl"><div class="kt">오디언스 재구축</div><div class="kd">A2 강한 버전 사망. 같은 계정에서 콘텐츠별 구매율 4.76배</div></div>
+    <div class="kl"><div class="kt">상품군 확장 (화분·조명)</div><div class="kd">D 기각. 리드타임·최소 30개·1인 리소스</div></div>
+    <div class="kl"><div class="kt">시간 축 리텐션 캠페인</div><div class="kd">재구매 주기 17.8개월. 물리적 불가</div></div>
+    <div class="kl"><div class="kt">팔로워 · 저장 · 공유 목표</div><div class="kd">팔로워 +200% 하는 동안 매출 탄력성 0</div></div>
+    <div class="kl"><div class="kt">상세페이지 대수술</div><div class="kd">네이버 유입은 스크롤 68%·전환 1.60%로 이미 상세를 읽고 산다. 인스타는 19초라 고쳐도 안 읽는다</div></div>
+    <div class="kl"><div class="kt">무조건 전면 무료배송</div><div class="kd">마진 하방 개방. 손익분기 게이트를 통과하는 방식만 허용</div></div>
+    <div class="kl"><div class="kt">자기용 구매자 확보에 자원 투입</div><div class="kd">내구재 LTV 1회. 네이버 검색이 이미 잡고 있다</div></div>
+  </div>
+</section>
+
+<!-- KPI -->
+<section>
+  <div class="kicker">성공 지표</div>
+  <h2>North Star는 매출도 주문 수도 아니다</h2>
+
+  <div class="kpis">
+    <div class="kp star">
+      <div class="kk">NS</div>
+      <div>
+        <div class="kt">자사몰 월 순마진액</div>
+        <div class="kd">이 전략의 핵심 트레이드오프는 “마진을 얼마나 내주고 주문을 살 것인가”다.
+          <strong>주문 수를 North Star로 두면 마진을 태워 주문을 사는 걸 못 잡는다.</strong></div>
+      </div>
+      <div class="kv">현재 추정<b>약 157만 원/월</b></div>
+    </div>
+    <div class="kp">
+      <div class="kk">K1</div>
+      <div>
+        <div class="kt">장바구니 → 구매 완료율 <span style="font-size:12px;color:var(--tess)">★ 핵심 동인</span></div>
+        <div class="kd">분모가 “장바구니에 담은 사람”이라 <strong>세션 감소의 영향을 안 받는다</strong></div>
+      </div>
+      <div class="kv">벤치마크 29.78%<b>현재 4.95%</b></div>
+    </div>
+    <div class="kp">
+      <div class="kk">K2</div>
+      <div>
+        <div class="kt">9~11월 선물 주문 비중</div>
+        <div class="kd">오퍼 <strong>없이</strong> 나온 34%가 baseline. 이걸 못 넘으면 선물 가설이 틀린 것</div>
+      </div>
+      <div class="kv">시즌 게이트<b>&gt; 34%</b></div>
+    </div>
+    <div class="kp">
+      <div class="kk">K4</div>
+      <div>
+        <div class="kt">주당 콘텐츠 투입 시간</div>
+        <div class="kd">Leo가 발굴한 “두 번째 소원”. 매출을 푸는 방향과 시간을 푸는 방향이 같다</div>
+      </div>
+      <div class="kv">현재 20시간+<b>감소</b></div>
+    </div>
+    <div class="kp alarm">
+      <div class="kk">🚨</div>
+      <div>
+        <div class="kt">경보기 · 스마트스토어 월매출</div>
+        <div class="kd">이 전략은 <strong>스마트스토어가 버텨주는 동안 자사몰을 고치는 전략</strong>이다.
+          받침이 무너지면 우선순위가 통째로 바뀐다</div>
+      </div>
+      <div class="kv">흔들리면<b>전략 중단</b></div>
+    </div>
+  </div>
+
+  <div class="trap">
+    <div class="th">⚠ Leo의 성공 신호를 교정합니다</div>
+    <p style="margin:0 0 4px;font-size:15.5px">
+      Leo는 2차 성공 신호로 <strong>“자사몰 전환율이 0.6%에서 회복 방향으로 돈다”</strong>를 뒀습니다. <strong>위험합니다.</strong>
+    </p>
+    <div class="eq">전환율 = 주문 ÷ <span style="color:var(--tess)">세션</span></div>
+    <p style="margin:0;font-size:15.5px">
+      <strong>콘텐츠 믹스를 바꾸면 스타일링 발행이 줄고, 그러면 세션(분모)이 줍니다.</strong>
+      <mark>주문이 하나도 안 늘어도 전환율은 회복된 것처럼 보입니다.</mark>
+      이건 이 전략이 <strong>스스로에게 주는 가장 위험한 착시</strong>예요.
+      이 전략은 세션을 줄이는 전략이라 전환율이 자동으로 올라갑니다.
+      <br><br>→ <strong>전환율은 진단 지표로만 봅니다. 목표 지표에서 강등.</strong>
+    </p>
+  </div>
+
+  <div class="snr">
+    <div class="sh">시니어 코멘트 · KPI는 측정 도구가 아니라 행동 설계 도구다</div>
+    <p>“전환율이 떨어졌으니 전환율을 올리자”는 자연스러워 보이죠. 그런데 <strong>전환율은 비율이고, 비율은 분모로도 조작됩니다.</strong></p>
+    <p>KPI를 고를 때 항상 이걸 물으세요: <mark>“내가 아무 성과도 못 냈는데 이 지표가 좋아질 수 있는 시나리오가 있나?”</mark> 있으면 그건 KPI가 아니라 <strong>허영 지표</strong>입니다. 팔로워·저장·공유가 그랬듯이요.</p>
+    <p>그리고 하나 더. 이 케이스에서 <strong>팔로워 3배가 매출 0을 만든 게 정확히 이 실수의 결과</strong>입니다. 지표를 잘못 골랐더니, 그 지표를 최적화하는 콘텐츠만 만들게 됐고, 1년이 갔어요.</p>
+  </div>
+</section>
+
+<!-- 중단 조건 -->
+<section>
+  <div class="kicker">중단 조건</div>
+  <h2>무엇이 나오면 이 전략을 접는가</h2>
+
+  <div class="stops">
+    <div class="stp">
+      🔴 <b>GA4 <code>begin_checkout</code>이 실제로는 장바구니 페이지 진입이었고, 진짜 결제창 진입→완료율이 벤치마크 안이라면</b>
+      → L1이 최대 레버가 아니게 된다. 순서를 재편한다.
+      (단 “장바구니→구매 95.1% 이탈”은 계측과 무관하게 성립하므로 L1이 완전히 사라지진 않는다. 크기가 줄 뿐.)
+      <strong>★ T+1주 안에 가장 먼저 확인할 것.</strong>
+    </div>
+    <div class="stp">
+      🔴 <b>배송비를 마진 중립 방식으로 없앴는데 4~6주 안에 K1이 안 움직인다면</b>
+      → 이탈 사유 설문(n=61)이 실제 행동과 다르다는 뜻. L1을 접고 가격·상세로 이동.
+    </div>
+    <div class="stp">
+      🔴 <b>9~11월 선물 주문 비중이 34%를 못 넘는다면</b>
+      → 선물 수요가 <strong>오퍼로 확장되지 않는 수동적 수요</strong>라는 뜻.
+      선물을 전략의 축에서 내리고 L1 + L4 단선으로 재편.
+    </div>
+    <div class="stp">
+      🔴 <b>콘텐츠 믹스를 뒤집었는데 인스타 링크 클릭 총량이 오히려 줄고 주문도 안 늘면</b>
+      → 알고리즘 도달 붕괴가 클릭 이득을 잡아먹은 것(Ben이 경고한 리스크).
+      인스타를 “브랜드 검색 유발기”로만 남기고 자원을 네이버로 완전 이동.
+    </div>
+    <div class="stp alarm">
+      🚨 <b>스마트스토어 월매출(1,155만)이 흔들리면 → 즉시 중단.</b>
+      받침이 무너지면 우선순위가 통째로 바뀐다. (Ben: <em>“시간은 고객 편이 아니다”</em>)
+    </div>
+  </div>
+
+  <h3>이 전략이 틀렸을 신호 · 더 근본적인 것</h3>
+  <div class="card" style="border-left:4px solid var(--tess)">
+    <div class="ct" style="color:var(--tess)">⚠ 이 전략의 심장이 걸려 있는 인과 하나</div>
+    <p style="margin:8px 0 0;font-size:15.5px">
+      <strong>선물 주문의 객단가 94,000원이 “선물이라서 비싼 것”이 아니라
+      “비싼 걸 산 사람이 포장을 요청한 것”이라면</strong> (인과 역전)
+      → <strong>선물 오퍼가 객단가를 못 올립니다.</strong>
+      핵심 사슬(선물 → 객단가 → 무료배송 임계선 → 마진 중립)이 끊어져요.
+    </p>
+    <p style="margin:14px 0 0;font-size:15.5px">
+      <mark>이건 상관을 인과로 읽었을 가능성이 실재하는 지점입니다. Ben도 저도 이걸 못 갈랐어요.</mark>
+      <strong>가장 저렴한 검증</strong>: 선물 포장 요청 주문의 <strong>“포장 요청 전 장바구니 금액”</strong>을 봅니다.
+      요청 전부터 비쌌으면 인과 역전, 요청 후에 올랐으면 선물 프레임이 맞습니다.
+      <strong>데이터는 이미 있어요. 10분짜리 확인입니다.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- 종합 코멘트 -->
+<section>
+  <div class="kicker">종합 코멘트</div>
+  <h2>레버를 줄 세우는 건 리서처의 일이고,<br>레버끼리 무슨 관계인지 보는 건 전략가의 일이다</h2>
+
+  <p class="lead">
+    이 전략의 진짜 승부처는 <strong>“Ben의 세 레버를 따로 실행하지 않은 것”</strong>입니다.
+  </p>
+  <p>
+    Ben이 준 순서(결제 &gt; 콘텐츠 &gt; 선물)를 그대로 받아 하나씩 처리했다면 이런 그림이 됐을 거예요.
+    결제를 고치려고 무료배송을 켠다 → <strong>마진이 깎인다</strong> → 남은 마진으로는 콘텐츠도 선물도 못 한다 → 시즌을 놓친다.
+    <mark>각 레버는 옳은데 합쳐놓으면 재무적으로 자멸합니다.</mark>
+  </p>
+  <p>
+    세 레버를 <strong>하나의 사슬</strong>로 묶었을 때만 이게 성립해요.
+    <strong>선물이 객단가를 올려서, 무료배송의 비용을 스스로 벌어옵니다.</strong>
+    이건 세 레버를 따로 계산해서는 절대 안 보입니다.
+  </p>
+</section>
+
+<!-- 핸드오프 -->
+<section>
+  <div class="kicker">핸드오프</div>
+  <h2>실행 설계자에게 넘깁니다</h2>
+  <p class="lead">
+    저는 <strong>“무엇을 할 것인가”</strong>까지 왔습니다.
+    <strong>“누가 언제 무엇을 어떻게”는 Sam의 몫</strong>이에요.
+  </p>
+
+  <div class="handoff">
+    <div class="hh"><i>Sam</i><b>선결 확인 5건 · 이거 없이는 실행안이 안 선다</b></div>
+    <div class="hs">넷은 조사가 아니라 확인입니다. 다섯 번째가 이 전략의 심장이고요.</div>
+
+    <div class="pre">
+      <div class="pi crit">
+        <div class="pn">Check 01 · 최우선</div>
+        <div class="pt">GA4 <code>begin_checkout</code> 정의</div>
+        <div class="pd">L1의 레버 크기가 여기 걸립니다. <strong>10분짜리 확인.</strong></div>
+      </div>
+      <div class="pi crit">
+        <div class="pn">Check 02 · 게이트</div>
+        <div class="pt">자사몰·스마트스토어 실제 배송비 금액</div>
+        <div class="pd">손익분기 공식에 <code>s</code>를 넣어야 L1의 실행 방식(임계선 vs 흡수)이 정해집니다.</div>
+      </div>
+      <div class="pi">
+        <div class="pn">Check 03</div>
+        <div class="pt">각인 외주 리드타임·단가</div>
+        <div class="pd">시즌 대응 가능 여부. <strong>단, 각인은 선물 오퍼의 필요조건이 아닙니다.</strong>
+          못 맞추면 포장·카드·번들만으로 갑니다.</div>
+      </div>
+      <div class="pi">
+        <div class="pn">Check 04</div>
+        <div class="pt">기존 SKU 재고 현황</div>
+        <div class="pd">신규 SKU 포기 판단의 전제. <strong>재고가 얇으면 8월 데드라인이 되살아납니다.</strong></div>
+      </div>
+      <div class="pi crit" style="grid-column:1/-1">
+        <div class="pn">Check 05 · ★ 전략의 심장</div>
+        <div class="pt">선물 포장 요청 주문의 “요청 전” 장바구니 금액</div>
+        <div class="pd">94,000원은 <strong>선물이라서 비싼 건가, 비싼 걸 산 사람이 포장을 요청한 건가.</strong>
+          이 인과가 뒤집히면 L1이 마진 하방 열린 채 혼자 서야 합니다. 데이터는 이미 있고 <strong>10분짜리 확인</strong>입니다.</div>
+      </div>
+    </div>
+
+    <div class="nogo">
+      <div class="ngh">넘지 말 것</div>
+      <ul>
+        <li><strong>마진 하방을 여는 방식 전부</strong> (전면 무조건 무료배송 포함)</li>
+        <li>Ben의 <strong>[물리적 불가] 6종</strong></li>
+        <li><strong>신규 SKU.</strong> 8월 중순 데드라인은 지키지 않기로 했습니다. <strong>시한에 쫓기지 마세요.</strong></li>
+        <li>주 20시간 위에 <strong>시간을 더 얹는 처방</strong></li>
+        <li><strong>선물 주문 월 60건</strong> = 포장 병목 경고선</li>
+        <li><strong>자사몰 전환율(세션 대비)을 목표 지표로 쓰지 말 것.</strong> 세션이 줄면 자동으로 오릅니다</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="disc">
+    이 브리프의 브랜드·내부 수치는 <strong>가상 시나리오 설정</strong>입니다(쇼케이스 케이스).
+    시장·업계 벤치마크·경쟁사 관행은 리서처가 실제 출처로 검증했습니다.
+    <br>산출 원본: <code>작업/2026-07-11_쇼케이스_대조실험/03_Tess_전략.md</code>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div><b>Team of One : Marketer</b> · 1인 기업·마케터를 위한 AI 팀원 패키지</div>
+    <div>03 / 05 · 전략가 Tess · 전략 브리프</div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>02 · 리서처 Ben — 조사 리포트 | SOLLIP</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#1B2420;
+    --ink-2:#48544C;
+    --ink-3:#7B8781;
+    --ben:#5E7A62;
+    --ben-deep:#3C5342;
+    --ben-soft:#A3B8A6;
+    --ben-wash:#EDF2EC;
+    --ben-wash-2:#DDE7DC;
+    --leo:#46587A;
+    --rose:#9B5C63;
+    --ocker:#A8813F;
+    --plum:#5B4B7A;
+    --clay:#A8543F;
+    --clay-wash:#F7EBE6;
+    --amber:#B08A46;
+    --paper:#F7F6F2;
+    --card:#FFFFFF;
+    --line:#E3E1DA;
+    --line-2:#EEEDE7;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.75;
+    word-break:keep-all;overflow-wrap:break-word;-webkit-font-smoothing:antialiased;font-size:16px;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 28px}
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  section:first-of-type{border-top:none}
+
+  header{background:linear-gradient(160deg,var(--ben-deep) 0%,var(--ben) 62%,#728C74 100%);
+    color:#fff;padding:60px 0 52px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;
+    border:1px solid rgba(255,255,255,.14);border-radius:50%}
+  header::before{content:"";position:absolute;right:-20px;top:40px;width:200px;height:200px;
+    border:1px solid rgba(255,255,255,.10);border-radius:50%}
+  .brandbar{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:28px;font-weight:600}
+  .brandbar span.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.45)}
+  .stagerow{display:flex;align-items:flex-start;gap:20px;position:relative;z-index:1}
+  .stagenum{font-size:52px;font-weight:800;line-height:1;color:rgba(255,255,255,.28);
+    letter-spacing:-.03em;margin-top:2px}
+  h1{font-size:34px;font-weight:800;letter-spacing:-.025em;line-height:1.32;margin-bottom:10px}
+  .role{font-size:14px;color:rgba(255,255,255,.72);font-weight:500}
+  .meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:1}
+  .chip{font-size:12.5px;padding:5px 12px;border-radius:999px;font-weight:600;
+    background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.92)}
+
+  .teamstrip{background:var(--card);border-bottom:1px solid var(--line)}
+  .teamstrip .wrap{display:flex;padding:0}
+  .tsitem{flex:1;padding:14px 10px 12px;text-align:center;border-right:1px solid var(--line-2);
+    opacity:.4;transition:opacity .2s}
+  .tsitem:last-child{border-right:none}
+  .tsitem.on{opacity:1}
+  .tsitem.done{opacity:.68}
+  .tsitem i{display:block;height:3px;border-radius:2px;margin-bottom:9px}
+  .tsitem b{display:block;font-size:13px;font-weight:700}
+  .tsitem em{display:block;font-size:11px;font-style:normal;color:var(--ink-3);margin-top:1px}
+
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--ben);margin-bottom:16px}
+  .kicker::before{content:"";width:22px;height:2px;background:var(--ben);border-radius:1px}
+  .kicker.hot{color:var(--clay)}
+  .kicker.hot::before{background:var(--clay)}
+  h2{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.4;margin-bottom:14px}
+  h3{font-size:18px;font-weight:700;margin:32px 0 10px}
+  p{color:var(--ink-2);margin-bottom:14px;font-size:15.5px}
+  p strong,li strong,td strong{color:var(--ink);font-weight:700}
+  .lead{font-size:17px;color:var(--ink-2)}
+  ul{list-style:none;margin-bottom:14px}
+  ul li{position:relative;padding-left:16px;margin-bottom:8px;color:var(--ink-2);font-size:15.5px}
+  ul li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;
+    border-radius:50%;background:var(--ben-soft)}
+  mark{background:linear-gradient(transparent 58%, var(--ben-wash-2) 58%);color:var(--ink);font-weight:700}
+  mark.hot{background:linear-gradient(transparent 58%, #F2D9CF 58%)}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--line-2);
+    padding:1px 5px;border-radius:3px}
+
+  /* verdict hero */
+  .verdict{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--ben);
+    border-radius:4px;padding:34px}
+  .verdict .lbl{font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--ben);
+    text-transform:uppercase;margin-bottom:14px}
+  .verdict .big{font-size:21px;line-height:1.62;font-weight:700;letter-spacing:-.015em;color:var(--ink)}
+  .verdict .big em{font-style:normal;color:var(--ben);border-bottom:2px solid var(--ben-soft)}
+  .verdict .big em.hot{color:var(--clay);border-bottom-color:#E2B3A0}
+
+  /* stat strip */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:24px 0}
+  .st{background:var(--card);padding:20px 16px;text-align:center}
+  .st .n{font-size:25px;font-weight:800;letter-spacing:-.03em;line-height:1.2;color:var(--ben-deep)}
+  .st .n small{font-size:14px;font-weight:700;color:var(--ink-3)}
+  .st .l{font-size:12px;color:var(--ink-3);margin-top:6px;font-weight:600}
+  .st.up .n{color:var(--ben)}
+  .st.down .n{color:var(--clay)}
+  .st.flat .n{color:var(--ink-3)}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:28px;margin:26px 0}
+  .card .ct{font-size:15px;font-weight:700;margin-bottom:4px}
+  .card .cs{font-size:13px;color:var(--ink-3);margin-bottom:22px}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:16px;font-size:12.5px;color:var(--ink-2)}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+
+  /* correction box */
+  .corr{background:var(--clay-wash);border:1px solid #E7CDC1;border-radius:4px;padding:26px 28px;margin:24px 0}
+  .corr .th{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--clay);margin-bottom:14px}
+  .corr ul li::before{background:var(--clay)}
+  .corr ul li{font-size:15px}
+  .corr ul{margin:0}
+
+  /* funnel */
+  .fn{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:24px 0}
+  .fcol{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:20px 18px}
+  .fcol.bad{border-top:3px solid var(--clay)}
+  .fcol.good{border-top:3px solid var(--ben)}
+  .fcol.mid{border-top:3px solid var(--ben-soft)}
+  .fcol h4{font-size:15px;font-weight:800;margin-bottom:2px}
+  .fcol .cv{font-size:12.5px;color:var(--ink-3);margin-bottom:16px;font-weight:600}
+  .fstep{margin-bottom:9px}
+  .fstep .fl{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:3px;
+    color:var(--ink-2);font-weight:600}
+  .fstep .fl b{color:var(--ink)}
+  .fbar{height:9px;background:var(--line-2);border-radius:2px;overflow:hidden}
+  .fbar i{display:block;height:100%;border-radius:2px}
+  .fcol.bad .fbar i{background:var(--clay)}
+  .fcol.good .fbar i{background:var(--ben)}
+  .fcol.mid .fbar i{background:var(--ben-soft)}
+  .cliff{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);font-size:12.5px;
+    font-weight:700;color:var(--clay)}
+  .fcol.good .cliff{color:var(--ben)}
+  .fcol.mid .cliff{color:var(--ink-3)}
+
+  /* benchmark compare */
+  .bm{margin:26px 0}
+  .bmrow{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:20px 24px;margin-bottom:10px}
+  .bmrow .bh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px;gap:10px}
+  .bmrow .bt{font-size:15px;font-weight:700}
+  .bmrow .bv{font-size:11.5px;font-weight:800;letter-spacing:.06em;padding:3px 9px;border-radius:3px;white-space:nowrap}
+  .bv.ok{background:var(--ben-wash);color:var(--ben-deep)}
+  .bv.bad{background:var(--clay);color:#fff}
+  .bv.warn{background:#F3E6D6;color:#8A6A2E}
+  .bmbars{display:flex;flex-direction:column;gap:7px}
+  .bmb{display:grid;grid-template-columns:82px 1fr 92px;gap:10px;align-items:center;font-size:12.5px}
+  .bmb .k{color:var(--ink-3);font-weight:700;text-align:right}
+  .bmb .tr{height:22px;background:var(--line-2);border-radius:2px;overflow:hidden}
+  .bmb .tr i{display:block;height:100%;border-radius:2px}
+  .bmb .v{font-weight:800;color:var(--ink);font-size:13px}
+
+  /* lever compare */
+  .levers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:26px 0}
+  .lv{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px 20px;text-align:center}
+  .lv.top{border:1px solid var(--clay);border-top:3px solid var(--clay);
+    box-shadow:0 6px 20px rgba(168,84,63,.10)}
+  .lv .lr{font-size:11px;font-weight:800;letter-spacing:.08em;color:var(--ink-3);margin-bottom:10px}
+  .lv.top .lr{color:var(--clay)}
+  .lv .ln{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.1;color:var(--ink-3)}
+  .lv.top .ln{color:var(--clay);font-size:36px}
+  .lv .lt{font-size:14px;font-weight:700;margin-top:8px}
+  .lv .ld{font-size:12.5px;color:var(--ink-3);margin-top:5px;line-height:1.55}
+
+  /* rank flip */
+  .flip{display:grid;grid-template-columns:1fr 44px 1fr;gap:0;align-items:center;margin:24px 0}
+  .fbox{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px}
+  .fbox .fh{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    margin-bottom:14px;color:var(--ink-3)}
+  .fbox.right .fh{color:var(--ben)}
+  .fitem{display:flex;justify-content:space-between;align-items:center;padding:8px 0;
+    border-bottom:1px solid var(--line-2);font-size:13.5px}
+  .fitem:last-child{border-bottom:none}
+  .fitem .rk{width:20px;font-weight:800;color:var(--ink-3);font-size:12px}
+  .fitem .nm{flex:1;font-weight:600;color:var(--ink-2)}
+  .fitem .vl{font-weight:800;color:var(--ink);font-size:13px}
+  .fitem.hi{background:var(--ben-wash);margin:0 -22px;padding:8px 22px}
+  .fitem.hi .nm,.fitem.hi .vl{color:var(--ben-deep)}
+  .fitem.lo{background:var(--clay-wash);margin:0 -22px;padding:8px 22px}
+  .fitem.lo .nm,.fitem.lo .vl{color:var(--clay)}
+  .flipmid{display:flex;align-items:center;justify-content:center;color:var(--ben);
+    font-size:20px;font-weight:800}
+
+  /* 19->70 */
+  .contrib{background:var(--ben-wash);border:1px solid var(--ben-wash-2);border-radius:4px;
+    padding:30px 26px;margin:24px 0}
+  .cbarrow{margin-bottom:20px}
+  .cbarrow:last-child{margin-bottom:0}
+  .cbarrow .cl{font-size:13px;font-weight:700;color:var(--ink-2);margin-bottom:6px}
+  .cbar{display:flex;height:40px;border-radius:3px;overflow:hidden}
+  .cbar div{display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff}
+  .cbar .sty{background:#B4BBB2}
+  .cbar .non{background:var(--ben-deep)}
+
+  /* hypothesis verdict table */
+  .hv{width:100%;border-collapse:collapse;margin:24px 0;background:var(--card);
+    border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .hv th{background:var(--ben-wash);font-size:12px;font-weight:800;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ben-deep);padding:13px 16px;text-align:left;
+    border-bottom:1px solid var(--ben-wash-2)}
+  .hv td{padding:16px;border-bottom:1px solid var(--line-2);font-size:14px;
+    color:var(--ink-2);vertical-align:top;line-height:1.6}
+  .hv tr:last-child td{border-bottom:none}
+  .hv td.hn{font-weight:800;color:var(--ink);white-space:nowrap;font-size:14.5px}
+  .vtag{display:inline-block;font-size:11.5px;font-weight:800;padding:3px 9px;border-radius:3px;
+    white-space:nowrap;letter-spacing:.03em}
+  .vtag.live{background:var(--ben);color:#fff}
+  .vtag.dead{background:#E5E2DC;color:var(--ink-3)}
+  .vtag.rev{background:var(--clay);color:#fff}
+  .vtag.half{background:#F3E6D6;color:#8A6A2E}
+  .vtag.ok{background:var(--ben-wash);color:var(--ben-deep);border:1px solid var(--ben-wash-2)}
+
+  /* senior comment */
+  .snr{background:#FBFAF7;border:1px solid var(--line);border-left:4px solid var(--ben-soft);
+    border-radius:4px;padding:22px 26px;margin:24px 0}
+  .snr .sh{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--ben);
+    text-transform:uppercase;margin-bottom:10px}
+  .snr p{margin:0;font-size:14.5px}
+  .snr p + p{margin-top:10px}
+
+  /* gap / unknown */
+  .gaps{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:26px 28px;margin:24px 0}
+  .gaps .gh{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:14px}
+  .gaps ul li::before{background:var(--ink-3);width:4px;height:4px}
+  .gaps ul li{font-size:14.5px}
+  .gaps ul{margin:0}
+
+  /* blocked */
+  .blocked{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:24px 0}
+  .bl{background:#FBF7F5;border:1px solid #E9DCD5;border-radius:4px;padding:16px 18px}
+  .bl .bt{font-size:14px;font-weight:800;color:var(--clay);margin-bottom:4px}
+  .bl .bd{font-size:13px;color:var(--ink-2);line-height:1.6}
+
+  /* sources */
+  .src{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:24px 26px;margin-top:8px}
+  .src .sh{font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ben);margin-bottom:14px}
+  .src ul li{font-size:13.5px;margin-bottom:6px}
+  .src ul li::before{top:9px}
+  .src a{color:var(--ben-deep);text-decoration:none;border-bottom:1px solid var(--ben-wash-2)}
+  .src a:hover{border-bottom-color:var(--ben)}
+  .src .sg{font-size:12px;font-weight:800;color:var(--ink-3);margin:16px 0 8px;letter-spacing:.04em}
+  .src .sg:first-of-type{margin-top:0}
+
+  /* handoff to Tess */
+  .handoff{background:linear-gradient(150deg,#F5EEEF 0%,#F1E8E9 100%);
+    border:1px solid #E5D3D5;border-radius:4px;padding:34px;margin-top:12px}
+  .handoff .hh{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .handoff .hh i{width:30px;height:30px;border-radius:50%;background:var(--rose);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;font-style:normal}
+  .handoff .hh b{font-size:19px;font-weight:800;letter-spacing:-.02em}
+  .handoff .hs{font-size:13.5px;color:var(--ink-2);margin-bottom:22px;padding-left:42px}
+  .fiveline{display:flex;flex-direction:column;gap:9px}
+  .fl5{background:#fff;border:1px solid #E8D9DB;border-radius:4px;padding:16px 18px;
+    display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start}
+  .fl5 .fn5{width:22px;height:22px;border-radius:50%;background:var(--rose);color:#fff;
+    font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;margin-top:2px}
+  .fl5 .ft5{font-size:14.5px;font-weight:700;margin-bottom:3px;letter-spacing:-.01em}
+  .fl5 .fd5{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+
+  .disc{font-size:12px;color:var(--ink-3);margin-top:22px;padding-top:16px;border-top:1px solid var(--line);line-height:1.6}
+  footer{background:var(--ink);color:rgba(255,255,255,.6);padding:40px 0;font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  footer b{color:#fff;font-weight:700}
+
+  @media(max-width:860px){
+    .stats{grid-template-columns:1fr 1fr}
+    .fn{grid-template-columns:1fr}
+    .levers{grid-template-columns:1fr}
+    .flip{grid-template-columns:1fr}
+    .flipmid{transform:rotate(90deg);height:34px}
+    .blocked{grid-template-columns:1fr}
+    .bmb{grid-template-columns:64px 1fr 76px}
+    h1{font-size:27px}
+    .verdict .big{font-size:18px}
+    .teamstrip .wrap{overflow-x:auto}
+    .tsitem{min-width:104px}
+    .hv thead{display:none}
+    .hv td{display:block;border-bottom:none;padding:6px 16px}
+    .hv tr{display:block;border-bottom:1px solid var(--line);padding:10px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brandbar">
+      <span>Team of One : Marketer</span><span class="dot"></span>
+      <span>Case · SOLLIP</span><span class="dot"></span><span>2026.07.11</span>
+    </div>
+    <div class="stagerow">
+      <div class="stagenum">02</div>
+      <div>
+        <h1>앵커는 버텼다. 그런데 가장 큰 구멍은<br>Leo가 지목한 곳이 아니었다</h1>
+        <div class="role">리서처 <b style="color:#fff">Ben</b> · 조사 설계서 + 핵심 발견 · 파이프라인 2단계</div>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="chip">앵커 검증 통과</span>
+      <span class="chip">Leo 정정 3건</span>
+      <span class="chip">가설 B 부활</span>
+      <span class="chip">다음 → 전략가 Tess</span>
+    </div>
+  </div>
+</header>
+
+<div class="teamstrip">
+  <div class="wrap">
+    <div class="tsitem done"><i style="background:#46587A"></i><b>Leo</b><em>해석가</em></div>
+    <div class="tsitem on"><i style="background:#5E7A62"></i><b>Ben</b><em>리서처</em></div>
+    <div class="tsitem"><i style="background:#9B5C63"></i><b>Tess</b><em>전략가</em></div>
+    <div class="tsitem"><i style="background:#A8813F"></i><b>Sam</b><em>실행설계자</em></div>
+    <div class="tsitem"><i style="background:#5B4B7A"></i><b>Cap</b><em>팀장·검수</em></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ===== 결론 ===== -->
+<section>
+  <div class="kicker">조사 결론</div>
+  <div class="verdict">
+    <div class="lbl">Finding</div>
+    <div class="big">
+      Leo의 앵커는 실측으로 검증됐습니다. 세션 <em>+74.7%</em>, 주문 <em>−2.0%</em>.
+      그런데 퍼널을 벤치마크에 대보니 다른 그림이 나왔어요.
+      <em class="hot">장바구니 담기율은 글로벌 평균의 2배인데, 담은 것의 95.1%가 결제되지 않습니다.</em>
+      구매 의향은 이미 충분히 만들어졌고, <em class="hot">마지막 문에서 전부 새고 있습니다.</em>
+    </div>
+  </div>
+  <div class="snr" style="margin-top:22px">
+    <div class="sh">시니어 코멘트 · 이번 조사의 승부처</div>
+    <p>Leo는 가설 B를 “인스타 유입 특유의 결제 문제”로 세웠어요. 유입원별 결제 이탈률이 93.5% / 92.7% / 93.1%로 <strong>똑같아서</strong>, 표면적으로 B는 죽은 것처럼 보였습니다. 저도 거기서 멈출 뻔했어요.</p>
+    <p><strong>“차이가 없다”와 “정상이다”는 완전히 다른 말입니다.</strong> 차이가 없는 이유가 “다 정상이라서”가 아니라 <strong>“다 똑같이 망가져서”</strong>일 수 있거든요. 이걸 가르는 유일한 방법이 외부 기준선이었고, Baymard의 70.22% 앞에 SOLLIP의 95.1%를 놓자마자 그림이 뒤집혔습니다.</p>
+    <p><mark>비교 대상 없는 숫자는 아무것도 말하지 않습니다.</mark></p>
+  </div>
+</section>
+
+<!-- ===== 앵커 ===== -->
+<section>
+  <div class="kicker">Mission 01 · 앵커 검증</div>
+  <h2>재정의 전체가 걸려 있던 못은 버텼다</h2>
+  <p class="lead">
+    00b의 데이터에 이미 %가 계산되어 있었지만 <strong>전부 다시 계산했습니다.</strong>
+    남이 준 %를 그대로 받으면 그 안에 숨은 오류를 같이 물려받거든요.
+    실제로 재계산 과정에서 데이터 내부 불일치 1건을 잡았고, Leo가 예측 못 한 최대 레버를 발견했습니다.
+  </p>
+
+  <div class="stats">
+    <div class="st up"><div class="n">+74.7<small>%</small></div><div class="l">자사몰 세션<br>9,100 → 15,900</div></div>
+    <div class="st down"><div class="n">−2.0<small>%</small></div><div class="l">주문 수<br>100 → 98</div></div>
+    <div class="st down"><div class="n">−5.9<small>%</small></div><div class="l">자사몰 매출<br>760만 → 715만</div></div>
+    <div class="st"><div class="n">97.4<small>%</small></div><div class="l">전환율 하락 중<br>세션 증가 기여분<br><small style="font-size:10px;color:#A9A296">순차 분해 · 로그는 96.5%</small></div></div>
+  </div>
+
+  <p>
+    산술 검산: 주문비 0.98 ÷ 세션비 1.747 = <strong>0.561</strong>. 재계산 전환율 비율(0.616% ÷ 1.099%)과 정확히 일치합니다.
+    세 숫자가 서로 모순 없이 맞물려요. <mark>Leo의 “세션 1.8배” 추론은 실측 1.747배로 거의 정확히 맞았습니다.</mark>
+  </p>
+
+  <div class="corr">
+    <div class="th">그러나 Leo를 두 곳에서 정정합니다</div>
+    <ul>
+      <li><strong>“주문 정체”가 아니라 “완만한 감소”입니다.</strong> 100 → 103 → 101 → 98.
+        세션이 74.7% 늘어나는 동안 주문은 오히려 줄었어요.
+        <strong>늘어난 6,800 세션의 한계 전환율은 음수입니다.</strong></li>
+      <li><strong>“매출 정체”도 정확하지 않습니다.</strong> 자사몰 매출 −5.9%, 객단가 −3.9%.
+        스마트스토어(1,150 → 1,155만)가 평평하게 받쳐주고 있어서 <strong>전체가 정체처럼 보일 뿐,
+        자사몰은 침식 중</strong>입니다. 스마트스토어가 흔들리면 정체가 아니라 하락으로 드러납니다.
+        <strong>시간은 고객 편이 아닙니다.</strong></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ===== 퍼널 ===== -->
+<section>
+  <div class="kicker">Mission 02 · 유입원별 퍼널</div>
+  <h2>인스타 유입은 읽지도 않고 나간다</h2>
+  <p class="lead">전 단계를 직접 재계산했습니다. 괄호는 직전 단계 대비 통과율.</p>
+
+  <div class="fn">
+    <div class="fcol bad">
+      <h4>인스타그램</h4>
+      <div class="cv">세션 9,540 (60%) · 전환율 0.231%</div>
+      <div class="fstep"><div class="fl"><span>상세 도달</span><b>72.0%</b></div><div class="fbar"><i style="width:72%"></i></div></div>
+      <div class="fstep"><div class="fl"><span>장바구니</span><b>8.6%</b></div><div class="fbar"><i style="width:8.6%"></i></div></div>
+      <div class="fstep"><div class="fl"><span>결제 시작</span><b>56.9%</b></div><div class="fbar"><i style="width:56.9%"></i></div></div>
+      <div class="fstep"><div class="fl"><span>결제 완료</span><b>6.5%</b></div><div class="fbar"><i style="width:6.5%"></i></div></div>
+      <div class="cliff">체류 0:19 · 스크롤 50%도달 14%<br>객단가 61,000원</div>
+    </div>
+    <div class="fcol good">
+      <h4>네이버 검색</h4>
+      <div class="cv">세션 3,180 (20%) · 전환율 1.604%</div>
+      <div class="fstep"><div class="fl"><span>상세 도달</span><b>89.0%</b></div><div class="fbar"><i style="width:89%"></i></div></div>
+      <div class="fstep"><div class="fl"><span>장바구니</span><b>32.4%</b></div><div class="fbar"><i style="width:32.4%"></i></div></div>
+      <div class="fstep"><div class="fl"><span>결제 시작</span><b>76.5%</b></div><div class="fbar"><i style="width:76.5%"></i></div></div>
+      <div class="fstep"><div class="fl"><span>결제 완료</span><b>7.3%</b></div><div class="fbar"><i style="width:7.3%"></i></div></div>
+      <div class="cliff">체류 1:47 · 스크롤 50%도달 68%<br>객단가 82,000원</div>
+    </div>
+    <div class="fcol mid">
+      <h4>직접 · 기타</h4>
+      <div class="cv">세션 3,180 (20%) · 전환율 0.786%</div>
+      <div class="fstep"><div class="fl"><span>상세 도달</span><b>72.0%</b></div><div class="fbar"><i style="width:72%"></i></div></div>
+      <div class="fstep"><div class="fl"><span>장바구니</span><b>20.5%</b></div><div class="fbar"><i style="width:20.5%"></i></div></div>
+      <div class="fstep"><div class="fl"><span>결제 시작</span><b>76.8%</b></div><div class="fbar"><i style="width:76.8%"></i></div></div>
+      <div class="fstep"><div class="fl"><span>결제 완료</span><b>6.9%</b></div><div class="fbar"><i style="width:6.9%"></i></div></div>
+      <div class="cliff">체류 1:22 · 스크롤 50%도달 51%<br>객단가 79,000원</div>
+    </div>
+  </div>
+
+  <p>
+    <strong>절벽 1 · 상세 → 장바구니</strong>: 인스타 8.6% vs 네이버 32.4%, <strong>3.76배 격차.</strong>
+    인스타 유입은 상품 상세를 <mark>19초 보고, 14%만 스크롤하고 나갑니다.</mark>
+    이건 “구매 근거가 부실해서 설득이 안 됐다”가 아니라 <strong>“애초에 읽을 의사가 없다”</strong>에 가까워요.
+    <strong>상세페이지를 아무리 잘 고쳐도 19초 안에 읽히지 않습니다.</strong>
+  </p>
+  <p>
+    <strong>절벽 2 · 장바구니 → 결제 시작</strong>: 인스타 56.9% vs 네이버 76.5%.
+    고객이 말한 “장바구니에 담고 안 삼”의 실체입니다.
+  </p>
+  <div class="snr">
+    <div class="sh">시니어 코멘트</div>
+    <p>Leo는 A2(오디언스 미스매치)를 “단독 결론으로 밀지 않겠다”며 조심했는데, <strong>체류 19초·스크롤 14%는 A2를 강하게 지지하는 숫자</strong>예요. 그런데 여기서 멈추면 오판합니다. 아래 콘텐츠 분석에 A2를 되받아치는 데이터가 나옵니다. <strong>한 표만 세고 결론 내리면 안 됩니다.</strong></p>
+  </div>
+</section>
+
+<!-- ===== 최대 발견 ===== -->
+<section>
+  <div class="kicker hot">★ 예상 밖의 최대 발견</div>
+  <h2>결제 단계가 전 채널에서 무너져 있다</h2>
+  <p class="lead">
+    유입원별 결제 이탈률: 인스타 93.5% / 네이버 92.7% / 직접 93.1%.
+    <strong>차이가 없습니다.</strong> 그래서 “인스타 특유의 결제 문제”라는 형태의 가설 B는 죽었어요.
+    그런데 이 숫자의 <mark class="hot">절대값</mark>을 벤치마크에 대보니 그림이 완전히 뒤집혔습니다.
+  </p>
+
+  <div class="bm">
+    <div class="bmrow">
+      <div class="bh">
+        <div class="bt">장바구니 담기율 (세션 대비)</div>
+        <div class="bv ok">정상 ~ 우수</div>
+      </div>
+      <div class="bmbars">
+        <div class="bmb"><span class="k">SOLLIP</span>
+          <span class="tr"><i style="width:100%;background:#5E7A62"></i></span>
+          <span class="v">12.45%</span></div>
+        <div class="bmb"><span class="k">글로벌 평균</span>
+          <span class="tr"><i style="width:51%;background:#C5CEC3"></i></span>
+          <span class="v">6.34%</span></div>
+      </div>
+      <p style="margin:12px 0 0;font-size:14px">
+        <strong>구매 의향은 충분히 만들어지고 있습니다.</strong> 담기율이 글로벌 평균의 두 배예요.
+        네이버 유입은 28.9%로 압도적이고요.
+      </p>
+    </div>
+
+    <div class="bmrow">
+      <div class="bh">
+        <div class="bt">장바구니 → 구매 이탈률</div>
+        <div class="bv bad">벤치마크 25%p 초과 · 심각</div>
+      </div>
+      <div class="bmbars">
+        <div class="bmb"><span class="k">SOLLIP</span>
+          <span class="tr"><i style="width:100%;background:#A8543F"></i></span>
+          <span class="v">95.1%</span></div>
+        <div class="bmb"><span class="k">Baymard</span>
+          <span class="tr"><i style="width:73.8%;background:#C5CEC3"></i></span>
+          <span class="v">70.22%</span></div>
+      </div>
+      <p style="margin:12px 0 0;font-size:14px">
+        1,980건이 장바구니에 담기고, <strong>98건만 결제됩니다.</strong>
+        Baymard는 49개 연구 메타분석 기반 UX 연구기관이에요.
+      </p>
+    </div>
+
+    <div class="bmrow">
+      <div class="bh">
+        <div class="bt">결제 시작 → 완료율</div>
+        <div class="bv bad">업계 하한선의 1/3 · 재앙</div>
+      </div>
+      <div class="bmbars">
+        <div class="bmb"><span class="k">SOLLIP</span>
+          <span class="tr"><i style="width:15.6%;background:#A8543F"></i></span>
+          <span class="v">7.0%</span></div>
+        <div class="bmb"><span class="k">업계 하한</span>
+          <span class="tr"><i style="width:44.4%;background:#C5CEC3"></i></span>
+          <span class="v">20%</span></div>
+        <div class="bmb"><span class="k">업계 상한</span>
+          <span class="tr"><i style="width:89%;background:#C5CEC3"></i></span>
+          <span class="v">40%</span></div>
+      </div>
+    </div>
+  </div>
+
+  <h3>이탈 사유가 벤치마크와 같은 곳을 가리킨다</h3>
+  <div class="card" style="margin-top:12px">
+    <div class="ct">자사몰 이탈 사유 설문 (n=61)</div>
+    <div class="cs">Baymard: “예상 못 한 추가비용(배송비·수수료·세금)”이 <strong>손댈 수 있는 이탈 사유 중 1위 (39%)</strong>
+      · 전체 1위는 “그냥 둘러보는 중”(43%)이나 이건 마케터가 손댈 수 없어 통상 제외한다</div>
+    <svg viewBox="0 0 900 200" width="100%" role="img" aria-label="이탈 사유 분포">
+      <g font-size="13" font-weight="700" fill="#1B2420">
+        <text x="0" y="26">배송비</text>
+        <text x="0" y="66">가격이 부담</text>
+        <text x="0" y="106">다른 곳과 비교하려고</text>
+        <text x="0" y="146">결제수단 없음</text>
+        <text x="0" y="186">기타</text>
+      </g>
+      <g>
+        <rect x="210" y="10" width="465" height="22" rx="2" fill="#A8543F"/>
+        <text x="690" y="26" font-size="13" font-weight="800" fill="#A8543F">31%</text>
+        <rect x="210" y="50" width="390" height="22" rx="2" fill="#A8543F" opacity=".85"/>
+        <text x="615" y="66" font-size="13" font-weight="800" fill="#A8543F">26%</text>
+        <rect x="210" y="90" width="345" height="22" rx="2" fill="#B4BBB2"/>
+        <text x="570" y="106" font-size="13" font-weight="800" fill="#7B8781">23%</text>
+        <rect x="210" y="130" width="165" height="22" rx="2" fill="#C5CEC3"/>
+        <text x="390" y="146" font-size="13" font-weight="800" fill="#7B8781">11%</text>
+        <rect x="210" y="170" width="135" height="22" rx="2" fill="#D6DAD3"/>
+        <text x="360" y="186" font-size="13" font-weight="800" fill="#7B8781">9%</text>
+      </g>
+      <rect x="210" y="4" width="855" height="0" fill="none"/>
+      <line x1="210" y1="4" x2="210" y2="196" stroke="#E3E1DA"/>
+    </svg>
+    <div style="margin-top:16px;padding:14px 18px;background:var(--clay-wash);border-radius:3px;
+      font-size:14.5px;font-weight:700;color:var(--clay)">
+      배송비 31% + 가격 부담 26% = <strong style="color:var(--clay)">57%가 비용 이슈</strong>
+    </div>
+  </div>
+
+  <h3>프리미엄 구간에서 무료배송이 흔하다 (실판매 페이지 직접 확인)</h3>
+  <p>
+    다나와 나무도마 카테고리(476개 가격비교 상품)를 직접 열어봤습니다.
+    프리미엄 구간 브랜드 상당수가 <strong>무료배송</strong>이에요 (BOUMBI 64,000원 무료 등).
+    배송비 3,000원 부과는 대체로 저가 구간이지만, <strong>중가에도 사례가 있습니다.</strong>
+    <span style="font-size:13px;color:var(--ink-3)">(2026-07-11 조회 기준 · 다나와 가격은 일 단위로 변동)</span>
+  </p>
+  <p>
+    <mark class="hot">SOLLIP은 객단가 73,000원(프리미엄 구간)인데 배송비를 받고 있고, 그게 이탈 사유 1위입니다. 경쟁사 다수는 안 받습니다.</mark>
+  </p>
+
+  <h3>레버 크기 산술 (Tess가 쓸 것)</h3>
+  <div class="levers">
+    <div class="lv top">
+      <div class="lr">1순위 레버</div>
+      <div class="ln">×2.86</div>
+      <div class="lt">결제 병목 수리</div>
+      <div class="ld">완료율을 업계 하한(20%)으로만 올려도 주문 98 → 280건.<br>보수적 15%여도 ×2.14</div>
+    </div>
+    <div class="lv">
+      <div class="lr">2순위</div>
+      <div class="ln">+13~47%</div>
+      <div class="lt">콘텐츠 믹스 교체</div>
+      <div class="ld"><strong>하한</strong>: 클릭만 1.58배 → 주문 111건<br>
+        <strong>상한</strong>: 클릭당 주문율 격차(4.76배) 반영 → 144건</div>
+    </div>
+    <div class="lv">
+      <div class="lr">3순위</div>
+      <div class="ln">+28.8%</div>
+      <div class="lt">선물 오퍼 (객단가)</div>
+      <div class="ld">선물 포장 주문 객단가 94,000원 vs 전체 73,000원</div>
+    </div>
+  </div>
+  <p>
+    <strong>결제 병목 수리가 콘텐츠 믹스 교체보다 여전히 큰 레버입니다. 다만 배수는 <mark>2~4배</mark>예요.</strong>
+    그리고 결제·배송비 수정은 <strong>일회성 설정 작업</strong>이라
+    <mark>주 20시간 제약을 통과하는 거의 유일한 종류의 처방</mark>입니다.
+    콘텐츠는 매주 시간을 먹지만, 배송비 정책은 한 번 바꾸면 끝납니다.
+  </p>
+
+  <div class="snr" style="border-left-color:var(--clay)">
+    <div class="sh" style="color:var(--clay)">⚠ 자기 교정 (사후 검증에서 잡힌 것)</div>
+    <p>초안에서 저는 콘텐츠 레버를 <strong>+13%</strong>로만 적고, <strong>“결제가 최소 3배 이상 큰 레버”</strong>라고 썼습니다.
+      <strong>클릭 배수를 주문에 그대로 곱한 건데, 이건 제가 바로 아래에서 발견한 것(콘텐츠 종류에 따라 클릭당 구매율이 4.76배 갈린다)과 모순됩니다.</strong>
+      제 발견을 제 계산에 안 넣었어요.</p>
+    <p>정정하면 상한이 <strong>+47%</strong>이고, <strong>“3배 이상”은 하한 가정에서만 성립합니다. 정직한 배수는 2~4배입니다.</strong>
+      <strong>서열(결제 1순위)은 안 뒤집힙니다.</strong> 배수만 낮춥니다.</p>
+  </div>
+
+  <div class="snr" style="border-left-color:var(--clay)">
+    <div class="sh" style="color:var(--clay)">⚠ 자가 반증 · 계측 정의 리스크</div>
+    <p>GA4의 <code>begin_checkout</code>이 카페24에서 어떻게 구현됐느냐에 따라, “결제 시작 1,400건”이 실제 결제창 진입이 아니라 장바구니 페이지 진입일 수 있습니다. 그러면 <strong>완료율 7.0%는 과장된 숫자</strong>예요.</p>
+    <p><strong>단, 그렇더라도 “장바구니 → 구매 완료 95.1% 이탈(벤치마크 70.22%)”은 계측 정의와 무관하게 성립합니다.</strong> 어느 층위로 보든 결제 구간이 벤치마크 대비 심각하게 나쁘다는 결론은 안 무너져요. Tess는 이 결론을 써도 되지만, <strong>“7%”라는 특정 숫자를 클라이언트 앞에서 단독 인용하기 전에 이벤트 정의를 한 번 확인</strong>할 것.</p>
+  </div>
+</section>
+
+<!-- ===== 콘텐츠 역전 ===== -->
+<section>
+  <div class="kicker">Mission 04 · 콘텐츠 재정렬</div>
+  <h2>저장 순위와 클릭 순위가 완전히 뒤집힌다</h2>
+  <p class="lead">
+    Leo의 미션은 “저장·공유가 아니라 <strong>링크 클릭</strong>으로 다시 줄 세워라”였습니다. 그렇게 했어요.
+  </p>
+
+  <div class="flip">
+    <div class="fbox">
+      <div class="fh">저장 수 순위 (지금 쓰는 기준)</div>
+      <div class="fitem lo"><span class="rk">1</span><span class="nm">스타일링·오브제 릴스</span><span class="vl">1,840</span></div>
+      <div class="fitem"><span class="rk">2</span><span class="nm">제작 과정·공방</span><span class="vl">640</span></div>
+      <div class="fitem"><span class="rk">3</span><span class="nm">제품 단독 컷</span><span class="vl">310</span></div>
+      <div class="fitem"><span class="rk">4</span><span class="nm">사용법·레시피</span><span class="vl">285</span></div>
+      <div class="fitem hi"><span class="rk">5</span><span class="nm">관리법·오일링</span><span class="vl">198</span></div>
+    </div>
+    <div class="flipmid">⇄</div>
+    <div class="fbox right">
+      <div class="fh">클릭률 순위 (실제 팔리는 기준)</div>
+      <div class="fitem hi"><span class="rk">1</span><span class="nm">관리법·오일링</span><span class="vl">1.463%</span></div>
+      <div class="fitem"><span class="rk">2</span><span class="nm">제작 과정·공방</span><span class="vl">1.390%</span></div>
+      <div class="fitem"><span class="rk">3</span><span class="nm">사용법·레시피</span><span class="vl">1.275%</span></div>
+      <div class="fitem"><span class="rk">4</span><span class="nm">제품 단독 컷</span><span class="vl">1.116%</span></div>
+      <div class="fitem lo"><span class="rk">5</span><span class="nm">스타일링·오브제 릴스</span><span class="vl">0.114%</span></div>
+    </div>
+  </div>
+
+  <p>
+    저장 1위가 <strong>클릭률 최하위</strong>이고, 저장 최하위가 <strong>클릭률 1위</strong>입니다.
+    <mark>“재미없어 보여서 안 올리던” 관리법 콘텐츠의 클릭률이 스타일링의 12.8배예요.</mark>
+  </p>
+  <p>
+    그리고 <strong>크래프트(제작 과정·공방)가 유일하게 둘 다 잡습니다.</strong>
+    도달 12,300(스타일링 다음), 프로필 방문 <strong>402로 전체 1위</strong>(스타일링 388보다 높음), 클릭률 1.390%.
+    2건밖에 안 올렸어요.
+  </p>
+
+  <h3>결정타 · 발행의 19%가 주문의 70%를 만든다</h3>
+  <div class="contrib">
+    <div class="cbarrow">
+      <div class="cl">발행 비중 (최근 6개월 96건)</div>
+      <div class="cbar">
+        <div class="sty" style="width:81%">스타일링 81%</div>
+        <div class="non" style="width:19%">19%</div>
+      </div>
+    </div>
+    <div class="cbarrow">
+      <div class="cl">링크 클릭 비중</div>
+      <div class="cbar">
+        <div class="sty" style="width:67%">67%</div>
+        <div class="non" style="width:33%">33%</div>
+      </div>
+    </div>
+    <div class="cbarrow">
+      <div class="cl">주문 기여 (접점 확인 20건)</div>
+      <div class="cbar">
+        <div class="sty" style="width:30%">30%</div>
+        <div class="non" style="width:70%">비스타일링 70%</div>
+      </div>
+    </div>
+    <div style="margin-top:18px;padding-top:16px;border-top:1px dashed var(--ben-wash-2);
+      font-size:15px;font-weight:700;color:var(--ben-deep);text-align:center">
+      클릭당 주문 전환율 · 비스타일링 0.780% vs 스타일링 0.164% = <span style="font-size:19px">4.76배</span>
+    </div>
+  </div>
+
+  <p>
+    <strong>이게 A2를 되받아칩니다.</strong> 체류 19초는 A2(오디언스가 통째로 비구매자)를 지지하는 것처럼 보였어요.
+    그런데 <mark>같은 인스타 계정의 오디언스인데, 어느 콘텐츠를 통과했느냐에 따라 구매율이 4.76배 갈립니다.</mark>
+    오디언스가 통째로 죽었다면 이 격차가 안 나와요.
+  </p>
+  <p>
+    → 오디언스 전체가 비구매자인 게 아니라, <strong>스타일링 콘텐츠가 비구매자만 걸러서 데려오고 있습니다.</strong>
+    필터를 바꾸면 같은 계정에서 다른 사람이 옵니다.
+    <strong>더 만들 필요가 없어요. 만들던 걸 바꾸면 됩니다.</strong>
+  </p>
+  <div class="gaps" style="background:#FBFAF7">
+    <div class="gh">⚠ 반사실 시뮬레이션은 방향 근거로만 쓸 것</div>
+    <p style="margin:0;font-size:14.5px">
+      발행 비중을 뒤집으면(비스타일링 78 / 스타일링 18) 클릭 총량은 5,461 → 약 8,646, <strong>1.58배</strong>.
+      단 이건 <strong>도달이 유지된다는 가정 위의 계산</strong>입니다. 알고리즘은 저장·공유를 보상하므로
+      스타일링을 줄이면 도달이 떨어질 수 있어요. <strong>목표치로 쓰지 마세요.</strong>
+    </p>
+  </div>
+</section>
+
+<!-- ===== 어트리뷰션 & 재구매 ===== -->
+<section>
+  <div class="kicker">Mission 03 · 05</div>
+  <h2>가설 C는 죽었고, 재구매는 병이 아니었다</h2>
+
+  <div class="card">
+    <div class="ct">어트리뷰션 · 팔로워는 늘었는데 아무 데도 도달하지 않았다</div>
+    <div class="cs">12개월 · 지수 (12개월 전 = 100)</div>
+    <svg viewBox="0 0 900 240" width="100%" role="img" aria-label="어트리뷰션 탄력성">
+      <g stroke="#EEEDE7" stroke-width="1">
+        <line x1="150" y1="30" x2="880" y2="30"/><line x1="150" y1="90" x2="880" y2="90"/>
+        <line x1="150" y1="150" x2="880" y2="150"/><line x1="150" y1="210" x2="880" y2="210"/>
+      </g>
+      <g font-size="13" font-weight="700" fill="#1B2420">
+        <text x="0" y="55">인스타 팔로워</text>
+        <text x="0" y="125">“솔립” 검색량</text>
+        <text x="0" y="195">네이버 매출</text>
+      </g>
+      <rect x="150" y="36" width="600" height="30" rx="2" fill="#5E7A62"/>
+      <text x="765" y="56" font-size="14" font-weight="800" fill="#5E7A62">+200%</text>
+      <rect x="150" y="106" width="63" height="30" rx="2" fill="#A3B8A6"/>
+      <text x="228" y="126" font-size="14" font-weight="800" fill="#7B8781">+21%</text>
+      <rect x="150" y="176" width="3" height="30" rx="1" fill="#A8543F"/>
+      <text x="168" y="196" font-size="14" font-weight="800" fill="#A8543F">0%</text>
+    </svg>
+    <div style="margin-top:16px;font-size:14.5px;color:var(--ink-2)">
+      브랜드 검색 탄력성 <strong>0.105</strong> · 매출 탄력성 <strong>0</strong>.
+      인스타가 네이버 수요를 만들고 있었다면 팔로워 3배 기간에 스마트스토어 매출이 따라 올랐어야 합니다.
+      <strong>한 푼도 안 올랐어요.</strong>
+    </div>
+    <div style="margin-top:14px;padding:14px 18px;background:var(--ben-wash);border-radius:3px;font-size:14px">
+      <strong>다만 완전한 0은 아닙니다.</strong> 브랜드 검색이 +21% 늘긴 늘었어요.
+      → <strong>사실이 함의하는 제약: “인스타를 끄는” 처방은 안전하지 않습니다.
+      “인스타의 역할을 바꾸는” 처방만 안전해요.</strong> Tess는 이 구분을 지킬 것.
+    </div>
+  </div>
+
+  <h3>재구매 · Leo의 함정 경고는 절반만 확증된다</h3>
+  <div class="stats">
+    <div class="st"><div class="n">11.2<small>%</small></div><div class="l">SOLLIP 재구매율<br>271 / 2,410명</div></div>
+    <div class="st down"><div class="n">~15<small>%</small></div><div class="l">Home &amp; Furniture<br>벤치마크 (Bluecore 14.7%)</div></div>
+    <div class="st flat"><div class="n">17.8<small>개월</small></div><div class="l">재구매까지<br>평균 경과</div></div>
+    <div class="st down"><div class="n">58<small>%</small></div><div class="l">2회차 구매 사유<br>“선물용”</div></div>
+  </div>
+
+  <div class="snr" style="border-left-color:var(--clay)">
+    <div class="sh" style="color:var(--clay)">⚠ 자기 교정 (사후 검증에서 잡힌 것 · 가장 아픈 오류)</div>
+    <p>초안에서 저는 <strong>“내구재·홈데코 재구매율 7~15%”</strong>라는 밴드를 쓰고, <strong>“SOLLIP 11.2%는 정상 범위의 중간”</strong>이라고 판정했습니다.
+      <mark class="hot">그 밴드는 제가 인용한 두 출처 어디에도 없습니다.</mark> 어디선가 뭉뚱그려 만든 숫자예요.</p>
+    <p>실제 출처값: <strong>Home &amp; Furniture 약 15%</strong>(Bluecore 실측 14.7%) / <strong>홈굿즈 18~25%</strong> / 이커머스 전체 평균 25~30%.
+      <strong>즉 11.2%는 “정상 범위 중간”이 아니라 「밴드 하단 또는 그 아래」입니다.</strong></p>
+    <p><strong>지어낸 게 아니라 뭉뚱그린 겁니다. 그래서 스스로도 못 알아챘어요.</strong>
+      그리고 그 밴드가 제 결론(“재구매는 병이 아니다”)을 편하게 서게 했습니다.
+      <mark>“비교 대상 없는 숫자는 아무것도 말하지 않는다”고 써놓고, 정작 그 비교 대상을 제가 만들었습니다.</mark></p>
+  </div>
+
+  <p>
+    <strong>그래서 판정을 낮춥니다. 함정 경고는 절반만 확증됩니다.</strong>
+  </p>
+  <ul>
+    <li><strong>확증되는 부분</strong>: 재구매율이 <strong>구조적으로 낮은 카테고리</strong>라는 것.
+      이커머스 전체 평균(25~30%)이나 식료품(35~45%)과 자릿수가 다릅니다.
+      <strong>소모품·구독의 리텐션 논리를 가져오면 오진이라는 Leo의 경고는 유효합니다.</strong></li>
+    <li><strong>확증 안 되는 부분</strong>: <strong>11.2%가 “정상”이라고 단정할 근거는 없습니다.</strong>
+      Home &amp; Furniture 벤치마크보다 낮아요.</li>
+    <li><strong>그래도 방향은 안 바뀝니다</strong>: 파손·교체가 재구매 사유의 <strong>11%뿐</strong>이고,
+      수명 5~10년, 실측 주기 17.8개월. <strong>이건 벤치마크가 아니라 자사 실측이라 안 흔들립니다.</strong></li>
+  </ul>
+  <p>
+    <mark class="hot">그리고 재구매의 58%가 “자기 것 아닌 구매”(선물)입니다.</mark>
+    <strong>재구매는 “리텐션” 갈래가 아니라 “선물” 갈래예요.</strong>
+    기존 고객 2,410명은 리마인드 대상이 아니라 <strong>선물 구매 대상</strong>입니다.
+    <span style="font-size:13px;color:var(--ink-3)">(초안의 “확장 구매까지 82%”는 근거가 없어 뺐습니다. “다른 사이즈 추가”를 선물로 분류할 단서가 데이터에 없어요.)</span>
+  </p>
+  <p style="font-size:15px;color:var(--clay);font-weight:700">
+    → <strong>Tess에게</strong>: “재구매는 병이 아니다”를 <strong>“재구매는 시간 축으로 풀 수 있는 병이 아니다”</strong>로 좁혀서 받으세요.
+    전자는 벤치마크가 지지하지 않고, <strong>후자는 자사 실측이 지지합니다.</strong>
+  </p>
+</section>
+
+<!-- ===== 선물 시장 ===== -->
+<section>
+  <div class="kicker">Mission 06 · 선물 시장</div>
+  <h2>각인은 기회가 아니라, 이미 벌어진 손실이다</h2>
+  <p class="lead">
+    검색 요약을 믿지 않고 <strong>실판매 페이지 원문을 직접 열어</strong> 확인했습니다.
+  </p>
+
+  <div class="stats">
+    <div class="st"><div class="n">18 → 34<small>%</small></div><div class="l">선물 포장 요청<br>연간 → 9~11월</div></div>
+    <div class="st up"><div class="n">+28.8<small>%</small></div><div class="l">선물 포장 주문 객단가<br>94,000원</div></div>
+    <div class="st down"><div class="n">월 3~6<small>건</small></div><div class="l">각인 요청<br><strong style="color:#A8543F">전부 거절 중</strong></div></div>
+    <div class="st"><div class="n">24.0<small>만 건</small></div><div class="l">2025 혼인<br>2년 연속 증가</div></div>
+  </div>
+
+  <div class="card">
+    <div class="ct">각인을 상품명에 걸고 파는 경쟁자가 실재한다</div>
+    <div class="cs">그리고 SOLLIP은 들어온 요청을 거절하고 있다</div>
+    <ul style="margin:0">
+      <li><strong>우드마켓</strong> “원목 도마 선물 답례품 <strong>+ 레이저 각인 서비스 + 손잡이가방 증정</strong>” — 각인을 <strong>상품명에 박아</strong> 판매</li>
+      <li><strong>굿즈컨설팅</strong> “플레이팅 원목 도마 제작 <strong>인쇄 각인</strong> 선물 판촉물” — 각인 전문 B2B</li>
+    </ul>
+
+    <div class="snr" style="border-left-color:var(--clay);margin:18px 0 0">
+      <div class="sh" style="color:var(--clay)">⚠ 자기 교정 · 근거 강도를 낮춥니다</div>
+      <p>초안에서 저는 <strong>“3개 독립 판매처 교차 → 각인은 카테고리 표준 관행”</strong>이라고 썼습니다. <strong>과했어요.</strong></p>
+      <p><strong>아름피어 나무공작소</strong>: 상품명·가격·리뷰 수까지 인용했으나 <strong>출처 URL을 못 붙였습니다.</strong> 근거에서 뺍니다.<br>
+        <strong>오이뮤(OIMU)</strong>: 실재하지만 <strong>도마 브랜드가 아니라 문구·라이프스타일 브랜드</strong>이고, 각인도 제품이 아니라 <strong>선물 태그에 3자 이내</strong>입니다. 동급 사례가 아니라 뺍니다.<br>
+        <strong>남는 건 2건.</strong></p>
+      <p><strong>→ “카테고리 표준”이라고까진 못 합니다. 그런데 결론에는 그게 필요 없어요.</strong></p>
+    </div>
+
+    <div style="margin-top:18px;padding:16px 18px;background:var(--clay-wash);border-radius:3px;
+      font-size:15px;font-weight:700;color:var(--clay)">
+      확실한 건 두 줄입니다.
+      <strong style="color:var(--clay)">(1) 각인을 상품명에 걸고 파는 경쟁자가 실재하고,
+      (2) SOLLIP은 각인 요청 월 3~6건을 전부 거절 중입니다.</strong>
+      시장 표준 여부와 무관하게, <strong style="color:var(--clay)">연 36~72건의 명시적 지불 의사를 거절하는 건 실점입니다.</strong>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="ct">가격대 실측 · 다나와 나무도마 476개 상품</div>
+    <div class="cs">SOLLIP 객단가 73,000원은 프리미엄 구간 진입선에 정확히 위치한다</div>
+    <svg viewBox="0 0 900 150" width="100%" role="img" aria-label="가격대 분포">
+      <line x1="40" y1="100" x2="860" y2="100" stroke="#E3E1DA" stroke-width="2"/>
+      <g font-size="11.5" fill="#7B8781" font-weight="600">
+        <text x="40" y="124">0원</text>
+        <text x="300" y="124">40,000</text>
+        <text x="560" y="124">80,000</text>
+        <text x="855" y="124" text-anchor="end">125,000</text>
+      </g>
+      <rect x="40" y="86" width="150" height="14" rx="2" fill="#D6DAD3"/>
+      <text x="115" y="76" font-size="11.5" fill="#7B8781" font-weight="700" text-anchor="middle">저가 대량생산</text>
+      <rect x="190" y="86" width="185" height="14" rx="2" fill="#A3B8A6"/>
+      <text x="282" y="76" font-size="11.5" fill="#5E7A62" font-weight="700" text-anchor="middle">중가</text>
+      <rect x="440" y="86" width="420" height="14" rx="2" fill="#5E7A62"/>
+      <text x="650" y="76" font-size="11.5" fill="#3C5342" font-weight="700" text-anchor="middle">프리미엄 · 공방 · 엔드그레인</text>
+      <line x1="513" y1="46" x2="513" y2="86" stroke="#A8543F" stroke-width="2"/>
+      <circle cx="513" cy="93" r="6" fill="#A8543F" stroke="#fff" stroke-width="2"/>
+      <rect x="443" y="22" width="140" height="24" rx="3" fill="#A8543F"/>
+      <text x="513" y="39" font-size="12" fill="#fff" font-weight="800" text-anchor="middle">SOLLIP 73,000원</text>
+    </svg>
+    <p style="margin:16px 0 0;font-size:14.5px">
+      <strong>가격 자체는 시장에서 정당화 가능합니다.</strong>
+      그런데 그 구간의 브랜드들은 가격을 “엔드그레인”, “북미산 호두나무”, “탄화 고온열처리” 같은
+      <strong>재료·공법 언어</strong>로 정당화해요. SOLLIP의 상세는 인스타 유입이 <strong>19초 만에,
+      스크롤 14%만 하고</strong> 나갑니다. <mark class="hot">정당화 언어가 있어도 읽히지 않고, 없다면 더 나쁩니다.</mark>
+      이탈 사유 2위가 “가격이 부담”(26%)인 게 우연이 아니에요.
+    </p>
+  </div>
+</section>
+
+<!-- ===== 편집자 채용 ===== -->
+<section>
+  <div class="kicker">Mission 08 · 채용 여력</div>
+  <h2>Leo의 “가정”을 산술로 확정한다. 불가다</h2>
+  <p class="lead">
+    Leo는 마진 미확인 상태에서 “채용 여력 없음”을 <strong>가정</strong>으로 박고 역제안했습니다. 이제 실측이 왔어요.
+  </p>
+
+  <div class="card">
+    <div class="ct">손익분기 산술</div>
+    <div class="cs">순마진율 22% · 현재 월매출 1,870만 원</div>
+    <svg viewBox="0 0 900 210" width="100%" role="img" aria-label="편집자 채용 손익분기">
+      <g font-size="12.5" font-weight="700" fill="#48544C">
+        <text x="0" y="30">월 순마진</text>
+        <text x="0" y="86">편집자 실질 고정비</text>
+        <text x="0" y="142">남는 것</text>
+        <text x="0" y="196">손익분기 필요 매출</text>
+      </g>
+      <rect x="180" y="12" width="411" height="26" rx="2" fill="#5E7A62"/>
+      <text x="605" y="31" font-size="13.5" font-weight="800" fill="#3C5342">411만 원</text>
+
+      <rect x="180" y="68" width="330" height="26" rx="2" fill="#A8543F"/>
+      <text x="524" y="87" font-size="13.5" font-weight="800" fill="#A8543F">275 ~ 330만 원</text>
+      <text x="660" y="87" font-size="12" font-weight="700" fill="#7B8781">(순마진의 67~80% 잠식)</text>
+
+      <rect x="180" y="124" width="81" height="26" rx="2" fill="#C5CEC3"/>
+      <text x="275" y="143" font-size="13.5" font-weight="800" fill="#7B8781">81 ~ 136만 원</text>
+
+      <line x1="180" y1="166" x2="180" y2="204" stroke="#E3E1DA"/>
+      <rect x="180" y="176" width="187" height="24" rx="2" fill="#D6DAD3"/>
+      <rect x="367" y="176" width="333" height="24" rx="2" fill="#A8543F" opacity=".85"/>
+      <text x="238" y="193" font-size="12" font-weight="800" fill="#48544C">현재 1,870만</text>
+      <text x="533" y="193" font-size="12" font-weight="800" fill="#fff">+1,500만 필요</text>
+      <text x="712" y="193" font-size="13" font-weight="800" fill="#A8543F">= 3,370만 (+80%)</text>
+    </svg>
+  </div>
+
+  <p>
+    <strong>릴스를 주 4회에서 8회로 늘려 매출 +80%가 가능한가?</strong>
+    데이터는 정반대를 말합니다. 지난 6개월 스타일링 78건을 발행하는 동안
+    전환율은 1.10% → 0.62%로 떨어졌고, 스타일링의 클릭률은 0.114%예요.
+  </p>
+  <p style="font-size:16px;font-weight:700;color:var(--ben-deep)">
+    “편집자 채용은 마진을 유의미하게 잠식한다”는 Leo의 가정은 더 이상 가정이 아닙니다. <strong>사실입니다.</strong>
+  </p>
+</section>
+
+<!-- ===== 가설 판정표 ===== -->
+<section>
+  <div class="kicker">so-what</div>
+  <h2>가설 판정표</h2>
+
+  <table class="hv">
+    <thead>
+      <tr><th style="width:130px">가설</th><th style="width:150px">판정</th><th>근거 숫자</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="hn">앵커<br><span style="font-weight:500;font-size:12.5px;color:var(--ink-3)">세션↑ + 주문 정체</span></td>
+        <td><span class="vtag ok">✅ 검증</span></td>
+        <td>세션 <strong>+74.7%</strong>, 주문 <strong>−2.0%</strong>. 전환율 하락의 <strong>96~97%가 세션 증가 탓.</strong>
+          단 “정체”가 아니라 자사몰 매출 <strong>−5.9% 침식.</strong></td>
+      </tr>
+      <tr>
+        <td class="hn">A1<br><span style="font-weight:500;font-size:12.5px;color:var(--ink-3)">프레이밍</span></td>
+        <td><span class="vtag live">✅ 살았다 (강함)</span></td>
+        <td>발행 <strong>19%</strong>(비스타일링)가 인스타 <strong>주문의 70%</strong>.
+          클릭당 주문율 <strong>4.76배</strong>. 클릭률 관리법 1.46% vs 스타일링 0.11%(<strong>12.8배</strong>).</td>
+      </tr>
+      <tr>
+        <td class="hn">A2<br><span style="font-weight:500;font-size:12.5px;color:var(--ink-3)">오디언스 미스매치</span></td>
+        <td><span class="vtag half">⚠ 약한 버전만 생존</span></td>
+        <td>체류 19초·스크롤 14%는 A2 지지. 그러나 <strong>같은 오디언스에서 콘텐츠별 구매율이 4.76배 갈린다</strong>
+          → <strong>오디언스 재구축은 불필요.</strong></td>
+      </tr>
+      <tr>
+        <td class="hn">B<br><span style="font-weight:500;font-size:12.5px;color:var(--ink-3)">결제 이탈</span></td>
+        <td><span class="vtag rev">🔥 형태 바꿔 부활 · 최대 레버</span></td>
+        <td>“인스타 특유” 버전은 사망(이탈률 93.5/92.7/93.1 무차별).
+          그러나 <strong>전 채널 공통</strong>: 장바구니 이탈 <strong>95.1%</strong>(벤치 70.2%),
+          결제완료율 <strong>7.0%</strong>(벤치 20~40%). <strong>A1보다 2~4배 큰 레버.</strong></td>
+      </tr>
+      <tr>
+        <td class="hn">C<br><span style="font-weight:500;font-size:12.5px;color:var(--ink-3)">어트리뷰션 착시</span></td>
+        <td><span class="vtag dead">❌ 사망</span></td>
+        <td>팔로워 +200% → 브랜드검색 +21% → 네이버 매출 <strong>0%</strong>. 매출 탄력성 0.</td>
+      </tr>
+      <tr>
+        <td class="hn">D<br><span style="font-weight:500;font-size:12.5px;color:var(--ink-3)">사업 확장</span></td>
+        <td><span class="vtag dead">❌ 기각</span></td>
+        <td>화분·조명을 팔면 산다는 증거 <strong>없음.</strong> 데이터가 가리키는 건 확장이 아니라
+          <strong>크래프트 서사</strong>(공방 콘텐츠: 프로필 방문 402로 전체 1위). 물리 제약상 신규 카테고리는 불가.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="snr">
+    <div class="sh">Leo를 세 곳에서 반증·정정했습니다 (눈치 안 봤습니다)</div>
+    <p>① <strong>“주문 정체”는 부정확합니다.</strong> 주문 −2%, 자사몰 매출 −5.9%. 정체가 아니라 침식이에요.<br>
+    ② <strong>가설 B는 죽지 않았습니다.</strong> 형태를 바꿔 부활했고, A1보다 2~4배 큰 레버입니다.<br>
+    ③ <strong>“재구매는 병이 아니다”는 맞지만, 재구매의 58%가 선물이라는 걸 못 봤습니다.</strong></p>
+    <p style="padding-top:10px;border-top:1px dashed var(--line)">
+    <strong>Leo가 정확히 맞힌 것도 명시합니다 (반증만 하는 건 편향입니다):</strong>
+    앵커(세션 1.8배 예측 → 실측 1.75배), A1의 반증 조건(“버려진 콘텐츠의 클릭률이 높다면”), C의 사망,
+    D를 결론으로 밀지 않은 것, 편집자 채용 불가 가정. <strong>다섯 개 다 맞았습니다.</strong></p>
+  </div>
+</section>
+
+<!-- ===== 제약 & 공백 ===== -->
+<section>
+  <div class="kicker">Tess가 넘을 수 없는 벽</div>
+  <h2>사실이 강제하는 제약, 그리고 모르는 것</h2>
+
+  <div class="blocked">
+    <div class="bl"><div class="bt">편집자 채용 · 불가</div>
+      <div class="bd">손익분기 월매출 <strong>+1,500만(+80%)</strong>. 순마진 411만 중 275~330만 잠식.</div></div>
+    <div class="bl"><div class="bt">신규 SKU · 5주 남음</div>
+      <div class="bd">공방 리드타임 3~4주(성수기 5~6주), 최소 30개.
+        <strong>8월 중순 발주가 물리적 데드라인.</strong> 그 이후 아이디어는 올해 시즌에 못 나갑니다.</div></div>
+    <div class="bl"><div class="bt">시간 축 리텐션 · 불가</div>
+      <div class="bd">재구매 주기 17.8개월, 상품 수명 5~10년. <strong>이벤트 축(선물 시즌)만 유효.</strong></div></div>
+    <div class="bl"><div class="bt">인스타 끄기 · 불가</div>
+      <div class="bd">브랜드 검색 +21%의 잔여 기여가 있습니다. <strong>역할 교체만 안전.</strong></div></div>
+    <div class="bl"><div class="bt">긴 설득 기대 · 불가</div>
+      <div class="bd">인스타 유입 상세 체류 <strong>19초</strong>, 스크롤 14%. 상세를 고쳐도 읽히지 않습니다.</div></div>
+    <div class="bl"><div class="bt">“시간을 더 쓰세요” · 전부 불가</div>
+      <div class="bd">주 20시간이 이미 묶여 있습니다. <strong>일회성 설정 작업만 이 필터를 통과합니다.</strong></div></div>
+  </div>
+
+  <div class="gaps">
+    <div class="gh">공백 · 지어내지 않았습니다</div>
+    <ul>
+      <li><strong>SOLLIP의 실제 배송비 금액·무료배송 임계선</strong> — 데이터 없음.
+        <strong style="color:var(--clay)">이탈 사유 1위인데 금액을 모릅니다.</strong> Sam 단계 전 확인 필수.</li>
+      <li><strong>GA4 <code>begin_checkout</code> 이벤트 정의</strong> — 최대 레버의 정밀도가 여기 걸립니다.
+        조사가 아니라 <strong>10분짜리 확인</strong>입니다.</li>
+      <li><strong>각인 장비·외주의 리드타임·단가</strong> — 미확인. 시즌 대응 가능 여부가 여기 걸립니다.</li>
+      <li><strong>“집들이 선물” 네이버 검색량 월별 곡선</strong> — 미확보.
+        <strong>단, 자사 실측(포장 요청 18% → 34%)만으로 시즌은 이미 증명됩니다.</strong></li>
+      <li><strong>월별 혼인 계절성</strong> — 국가데이터처는 연간만 공개. “봄·가을 성수기”는 통념이나 1차 확인 불가.</li>
+      <li><strong>“콘텐츠를 줄여 전환을 올린” 소규모 D2C 정량 사례</strong> — 신뢰 가능한 1차 출처 미확보.
+        검색되는 건 벤더 자기홍보뿐. <strong>대신 체크아웃 최적화(+35.26%, Baymard)가 검증된 대체 레버로 확인됨.</strong></li>
+      <li><strong>데이터 불일치 1건</strong> — Mission 01 객단가(73,000)와 Mission 02 가중평균(76,520)이 4.8% 어긋남.
+        결론에는 영향 없으나 <strong>정밀 인용 금지.</strong></li>
+    </ul>
+  </div>
+
+  <div class="snr">
+    <div class="sh">시니어 코멘트 · 모르는 걸 모른다고 남기는 지점</div>
+    <p>검색 요약은 “봄·가을이 성수기”라고 그럴듯하게 말해줬어요. 하지만 <strong>1차 출처를 열어보니 월별 데이터를 공개하지 않습니다.</strong> 통념을 사실로 적으면 편했겠지만, 그러면 Tess가 그 위에 캠페인을 세웁니다.</p>
+    <p>대신 <strong>자사 실측(포장 요청 18%→34%)이 이미 시즌을 증명하고 있으니 외부 곡선은 없어도 됩니다.</strong> 공백을 인정하되, 그 공백이 결론을 막지 않는다는 것까지 확인하는 게 리서처의 일이에요.</p>
+  </div>
+</section>
+
+<!-- ===== 핸드오프 ===== -->
+<section>
+  <div class="kicker">핸드오프</div>
+  <h2>전략가에게 넘깁니다</h2>
+  <p class="lead">
+    저는 <strong>“무엇이 사실인가”</strong>까지 왔습니다.
+    <strong>“그래서 무엇을 하라”는 Tess의 몫</strong>이에요. 경계를 넘지 않습니다.
+  </p>
+
+  <div class="handoff">
+    <div class="hh"><i>Tess</i><b>Tess가 알아야 할 다섯 줄</b></div>
+    <div class="hs">이 순서를 뒤집으면 가장 큰 구멍을 놔두고 작은 구멍을 고치게 됩니다.</div>
+
+    <div class="fiveline">
+      <div class="fl5">
+        <div class="fn5">1</div>
+        <div>
+          <div class="ft5">가장 큰 구멍은 콘텐츠가 아니라 결제다</div>
+          <div class="fd5">담기율은 글로벌 평균의 2배(12.45% vs 6.34%)인데, 담은 것의 <strong>95.1%가 안 산다</strong>(벤치 70.2%).
+            <strong>의향은 이미 만들어졌고, 마지막 문에서 다 새고 있다.</strong>
+            이탈 사유 1·2위(배송비 31% + 가격 26% = 57%)가 Baymard의 “추가비용이 손댈 수 있는 이탈 사유 1위(39%)”와 같은 곳을 가리킴.</div>
+        </div>
+      </div>
+      <div class="fl5">
+        <div class="fn5">2</div>
+        <div>
+          <div class="ft5">콘텐츠는 총량이 아니라 믹스의 문제다</div>
+          <div class="fd5">발행 81%가 주문의 30%를, 발행 19%가 <strong>주문의 70%</strong>를 만든다.
+            <strong>더 만들 필요가 없다. 만들던 걸 바꾸면 된다.</strong>
+            도달까지 잡는 유일한 유형은 <strong>크래프트(공방·제작 과정)</strong>다.</div>
+        </div>
+      </div>
+      <div class="fl5">
+        <div class="fn5">3</div>
+        <div>
+          <div class="ft5">오디언스는 안 죽었다. 필터가 잘못 끼워져 있을 뿐이다</div>
+          <div class="fd5">같은 계정에서 온 사람인데 통과한 콘텐츠에 따라 구매율이 4.76배 갈린다.
+            <strong>오디언스 재구축에 자원을 쓰지 마라.</strong>
+            다만 상세 체류 19초는 실재하므로 <strong>인스타에 “긴 설득”을 기대하는 처방은 실패한다.</strong></div>
+        </div>
+      </div>
+      <div class="fl5">
+        <div class="fn5">4</div>
+        <div>
+          <div class="ft5">재구매는 병이 아니다. 다만 “선물”이다</div>
+          <div class="fd5">⚠ <strong>주의해서 받으세요.</strong> 11.2%는 Home &amp; Furniture 벤치마크(약 15%)의 <strong>아래</strong>입니다.
+            “정상”이라고 단정하지 마세요. 다만 <strong>재구매의 58%가 선물용</strong>이고 파손·교체는 11%뿐이라,
+            <strong>시간 축으로 풀 수 없다는 건 자사 실측이 지지합니다.</strong>
+            → 기존 고객 2,410명은 리텐션 대상이 아니라 <strong>선물 시즌 타깃</strong>이다.
+            시간 축 캠페인은 버리고 이벤트 축만 잡아라.</div>
+        </div>
+      </div>
+      <div class="fl5">
+        <div class="fn5">5</div>
+        <div>
+          <div class="ft5">선물은 기회가 아니라 이미 벌어진 손실이다</div>
+          <div class="fd5">각인을 상품명에 걸고 파는 경쟁자가 실재합니다(우드마켓·굿즈컨설팅 실판매 확인).
+            <span style="color:var(--ink-3)">⚠ “카테고리 표준”이라고까진 못 합니다(교차 2건).</span>
+            SOLLIP은 각인 요청 월 3~6건을 <strong>전부 거절 중</strong>이고, 선물 포장 주문은 객단가가 <strong>+28.8%</strong>다.
+            배송비도 프리미엄 경쟁사는 무료인데 SOLLIP만 받고 그게 이탈 1위다.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 출처 ===== -->
+<section>
+  <div class="kicker">출처</div>
+  <h2>실재하는 URL만 적습니다</h2>
+  <p class="lead">
+    자사 수치는 쇼케이스 <strong>가상 설정치</strong>입니다.
+    <strong>시장·업계 벤치마크·경쟁사 관행은 실제 웹 출처로 검증했고, 아래 URL은 전부 실재합니다.</strong>
+    <br><strong style="color:var(--clay)">그리고 공개 전에 이 출처들을 전부 다시 팩트체크했습니다. 제 인용 오류 6건이 잡혔고, 위 본문에 전부 반영했습니다.</strong>
+  </p>
+
+  <div class="card" style="border-left:4px solid var(--clay)">
+    <div class="ct" style="color:var(--clay)">📌 사후 검증 이력 (2026-07-12) · 지우지 않고 남깁니다</div>
+    <table class="hv" style="margin:14px 0 0">
+      <thead><tr><th style="width:46%">초안에서 제가 쓴 것</th><th>정정</th></tr></thead>
+      <tbody>
+        <tr><td class="hn" style="font-weight:600;white-space:normal">Baymard “추가비용 이탈 원인 1위 <strong>48%</strong>”</td>
+          <td>→ <strong>39%</strong>. 그리고 전체 1위는 “그냥 둘러봄”(43%). <strong>손댈 수 있는 사유 중 1위가 39%</strong></td></tr>
+        <tr><td class="hn" style="font-weight:600;white-space:normal">“Shopify 평균 <strong>45%</strong>”</td>
+          <td>→ <strong>삭제.</strong> 인용 출처에 없는 수치였습니다</td></tr>
+        <tr><td class="hn" style="font-weight:600;white-space:normal">“내구재·홈데코 재구매율 <strong>7~15%</strong>”</td>
+          <td>🔴 <strong>어느 출처에도 없는 밴드였습니다.</strong> 실제값으로 교체하고,
+            <strong>“11.2%는 정상 범위 중간” → “밴드 하단 또는 그 아래”로 판정을 낮췄습니다</strong></td></tr>
+        <tr><td class="hn" style="font-weight:600;white-space:normal">원목 도마 수명 <strong>4~10년</strong></td>
+          <td>→ <strong>5~10년</strong> (원문 “between five and ten years”)</td></tr>
+        <tr><td class="hn" style="font-weight:600;white-space:normal">“<strong>82%</strong>가 자기 것 아닌 구매”</td>
+          <td>→ <strong>58%.</strong> “다른 사이즈 추가”를 선물로 분류할 근거가 없었습니다</td></tr>
+        <tr><td class="hn" style="font-weight:600;white-space:normal">각인 “3개 판매처 교차 · <strong>카테고리 표준</strong>”</td>
+          <td>→ <strong>2건.</strong> 아름피어(URL 미확보)·오이뮤(도마 브랜드 아님)를 뺐고, “표준” 주장 강도를 낮췄습니다</td></tr>
+        <tr><td class="hn" style="font-weight:600;white-space:normal">콘텐츠 레버 <strong>+13%</strong> / “결제가 <strong>3배 이상</strong>”</td>
+          <td>→ <strong>+13~47% / 2~4배.</strong> 제가 찾은 클릭당 주문율 격차(4.76배)를 제 계산에 안 넣었습니다</td></tr>
+        <tr><td class="hn" style="font-weight:600;white-space:normal">전환율 비율 <strong>0.564</strong> / “로그 분해 97.4%”</td>
+          <td>→ <strong>0.561</strong>(반올림된 %를 받아썼습니다) / <strong>순차 분해</strong>값(로그는 96.5%)</td></tr>
+      </tbody>
+    </table>
+    <div class="snr" style="margin:18px 0 0;border-left-color:var(--clay)">
+      <div class="sh" style="color:var(--clay)">시니어 코멘트 · 마지막</div>
+      <p>이 표를 지우고 조용히 고칠 수도 있었습니다. <strong>안 지웁니다.</strong>
+        리서처가 파는 건 숫자가 아니라 <strong>숫자를 대하는 태도</strong>예요.</p>
+      <p><strong>가장 아픈 오류는 “7~15%”였습니다.</strong> 지어낸 게 아니라 <strong>뭉뚱그린 것</strong>이라 스스로도 못 알아챕니다.
+        그리고 그 밴드가 제 결론을 편하게 서게 했어요.
+        <mark class="hot">“비교 대상 없는 숫자는 아무것도 말하지 않는다”고 써놓고, 정작 그 비교 대상을 제가 만들었습니다.</mark></p>
+      <p><strong>지어낸 URL은 하나도 없었습니다.</strong> Baymard 70.22% · +35.26% · 담기율 6.34% · 다나와 476개 · 국가데이터처 혼인 통계 · 자사 퍼널 재계산 전 항목은 <strong>전부 검증 통과</strong>했습니다.</p>
+    </div>
+  </div>
+
+  <div class="src">
+    <div class="sg">결제·장바구니 이탈 벤치마크</div>
+    <ul>
+      <li><a href="https://baymard.com/lists/cart-abandonment-rate" target="_blank">Baymard Institute — Cart Abandonment Rate Statistics</a> (50개 연구 메타분석 · 평균 70.22% · 추가비용 이탈 39%)</li>
+      <li><a href="https://mida-app.io/blog/checkout-conversion-rate-benchmarks-for-ecommerce/" target="_blank">Checkout Conversion Rate Benchmarks for Ecommerce</a></li>
+      <li><a href="https://www.clickpost.ai/blog/add-to-cart-conversion-rates-by-industry" target="_blank">Add-to-Cart Conversion Rates by Industry</a> (글로벌 평균 6.34%)</li>
+      <li><a href="https://chatboq.com/blogs/ecommerce-funnel-benchmarks" target="_blank">Ecommerce Funnel Benchmarks</a></li>
+      <li><a href="https://www.digitalapplied.com/blog/free-shipping-threshold-strategy-2026-ecommerce-playbook" target="_blank">Free Shipping Threshold Strategy</a> <code>[주의]</code> 벤더 출처 · 방향 참고용</li>
+    </ul>
+
+    <div class="sg">재구매 벤치마크</div>
+    <ul>
+      <li><a href="https://www.finsi.ai/blog/repeat-purchase-rate-ecommerce/" target="_blank">Repeat Purchase Rate Benchmarks</a> (홈굿즈 18~25%, 전체 평균 25~30%)</li>
+      <li><a href="https://www.mobiloud.com/blog/repeat-customer-rate-ecommerce" target="_blank">What's a Good Repeat Customer Rate in Ecommerce?</a></li>
+      <li><a href="https://www.mobiloud.com/blog/repeat-customer-rate-ecommerce" target="_blank">Home &amp; Furniture 약 15%</a> (Bluecore 실측 14.7%)</li>
+      <li><a href="https://www.woodcuttingboardstore.com/whats-the-average-life-span-of-a-wood-board/" target="_blank">원목 도마 수명 5~10년</a></li>
+    </ul>
+
+    <div class="sg">가격대·각인 관행 (1차 실판매 페이지)</div>
+    <ul>
+      <li><a href="https://prod.danawa.com/list/?cate=17325212" target="_blank">다나와 나무도마 가격비교</a>
+        (476개 상품 · <strong>2026-07-11 조회 기준 · 가격은 일 단위 변동</strong>)</li>
+      <li><a href="https://woodmarket.kr/" target="_blank">우드마켓</a> — 원목 도마 + 레이저 각인 서비스 + 손잡이가방 증정</li>
+      <li><a href="https://goodsconsulting.co.kr/279/?idx=192" target="_blank">굿즈컨설팅</a> — 플레이팅 원목 도마 제작 인쇄 각인</li>
+      <li style="color:var(--ink-3)"><s>오이뮤(OIMU)</s> — ⚠ <strong>각인 근거에서 제외.</strong>
+        도마 브랜드가 아니라 문구·라이프스타일 브랜드이고, 각인은 제품이 아니라 선물 태그에 3자 이내</li>
+      <li style="color:var(--ink-3)"><s>아름피어 나무공작소</s> — ⚠ <strong>근거에서 제외.</strong> 출처 URL을 확보하지 못했음</li>
+    </ul>
+
+    <div class="sg">결혼 시장 (1차 공식)</div>
+    <ul>
+      <li><a href="https://www.index.go.kr/unity/potal/main/EachDtlPageDetail.do?idx_cd=1580" target="_blank">국가데이터처 e-나라지표 — 총 혼인건수 및 조혼인율</a> (2025년 24.0만 건, +8.1%)</li>
+      <li><a href="https://www.kostat.go.kr/board.es?mid=a10301010000&bid=204&act=view&list_no=435601" target="_blank">국가데이터처 — 2024년 혼인·이혼 통계</a> (22.2만 건, +14.8%)</li>
+    </ul>
+  </div>
+
+  <div class="disc">
+    이 리포트의 브랜드·내부 수치는 <strong>가상 시나리오 설정</strong>입니다(쇼케이스 케이스).
+    시장·업계 벤치마크·경쟁사 관행은 위 실제 출처로 검증했습니다.
+    <br>산출 원본: <code>작업/2026-07-11_쇼케이스_대조실험/02_Ben_조사.md</code>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div><b>Team of One : Marketer</b> · 1인 기업·마케터를 위한 AI 팀원 패키지</div>
+    <div>02 / 05 · 리서처 Ben · 조사 리포트</div>
+  </div>
+</footer>
+
+</body>
+</html>

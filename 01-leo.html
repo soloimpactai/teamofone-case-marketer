@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>01 · 해석가 Leo — 문제정의 브리프 | SOLLIP</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#1C2130;
+    --ink-2:#4A5265;
+    --ink-3:#7B8296;
+    --leo:#46587A;
+    --leo-deep:#2E3A52;
+    --leo-soft:#8FA3C4;
+    --leo-wash:#EEF1F6;
+    --leo-wash-2:#E2E8F1;
+    --warn:#B4785E;
+    --warn-wash:#F6EDE7;
+    --sage:#5E7A62;
+    --rose:#9B5C63;
+    --ocker:#A8813F;
+    --plum:#5B4B7A;
+    --paper:#F7F5F2;
+    --card:#FFFFFF;
+    --line:#E4E0DA;
+    --line-2:#EDEAE5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.75;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+    -webkit-font-smoothing:antialiased;
+    font-size:16px;
+  }
+  .wrap{max-width:980px;margin:0 auto;padding:0 28px}
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  section:first-of-type{border-top:none}
+
+  /* ---------- header ---------- */
+  header{
+    background:linear-gradient(160deg,var(--leo-deep) 0%,var(--leo) 62%,#5A6E92 100%);
+    color:#fff;padding:60px 0 52px;position:relative;overflow:hidden;
+  }
+  header::after{
+    content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;
+    border:1px solid rgba(255,255,255,.14);border-radius:50%;
+  }
+  header::before{
+    content:"";position:absolute;right:-20px;top:40px;width:200px;height:200px;
+    border:1px solid rgba(255,255,255,.10);border-radius:50%;
+  }
+  .brandbar{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:28px;font-weight:600}
+  .brandbar span.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.45)}
+  .stagerow{display:flex;align-items:flex-start;gap:20px;position:relative;z-index:1}
+  .stagenum{
+    font-size:52px;font-weight:800;line-height:1;color:rgba(255,255,255,.28);
+    letter-spacing:-.03em;margin-top:2px;
+  }
+  h1{font-size:34px;font-weight:800;letter-spacing:-.025em;line-height:1.32;margin-bottom:10px}
+  .role{font-size:14px;color:rgba(255,255,255,.72);font-weight:500}
+  .meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:1}
+  .chip{
+    font-size:12.5px;padding:5px 12px;border-radius:999px;font-weight:600;
+    background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.92)
+  }
+
+  /* ---------- team color strip ---------- */
+  .teamstrip{background:var(--card);border-bottom:1px solid var(--line)}
+  .teamstrip .wrap{display:flex;gap:0;padding:0}
+  .tsitem{flex:1;padding:14px 10px 12px;text-align:center;border-right:1px solid var(--line-2);
+    position:relative;opacity:.42;transition:opacity .2s}
+  .tsitem:last-child{border-right:none}
+  .tsitem.on{opacity:1}
+  .tsitem i{display:block;height:3px;border-radius:2px;margin-bottom:9px}
+  .tsitem b{display:block;font-size:13px;font-weight:700;letter-spacing:-.01em}
+  .tsitem em{display:block;font-size:11px;font-style:normal;color:var(--ink-3);margin-top:1px}
+
+  /* ---------- typography ---------- */
+  .kicker{
+    display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--leo);margin-bottom:16px
+  }
+  .kicker::before{content:"";width:22px;height:2px;background:var(--leo);border-radius:1px}
+  h2{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.4;margin-bottom:14px}
+  h3{font-size:18px;font-weight:700;letter-spacing:-.01em;margin:32px 0 10px}
+  p{color:var(--ink-2);margin-bottom:14px;font-size:15.5px}
+  p strong,li strong{color:var(--ink);font-weight:700}
+  .lead{font-size:17px;color:var(--ink-2)}
+  ul{list-style:none;margin-bottom:14px}
+  ul li{position:relative;padding-left:16px;margin-bottom:8px;color:var(--ink-2);font-size:15.5px}
+  ul li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;
+    border-radius:50%;background:var(--leo-soft)}
+  mark{background:linear-gradient(transparent 58%, var(--leo-wash-2) 58%);color:var(--ink);
+    font-weight:700;padding:0 1px}
+
+  /* ---------- redefinition hero ---------- */
+  .redef{
+    background:var(--card);border:1px solid var(--line);border-left:5px solid var(--leo);
+    border-radius:4px;padding:34px 34px 30px;box-shadow:0 1px 3px rgba(28,33,48,.04)
+  }
+  .redef .lbl{font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--leo);
+    text-transform:uppercase;margin-bottom:14px}
+  .redef .big{font-size:21px;line-height:1.62;font-weight:700;letter-spacing:-.015em;color:var(--ink)}
+  .redef .big em{font-style:normal;color:var(--leo);border-bottom:2px solid var(--leo-soft);padding-bottom:1px}
+  .redef .sub{margin-top:18px;padding-top:16px;border-top:1px dashed var(--line);
+    font-size:15px;color:var(--ink-2)}
+
+  /* ---------- ask vs real ---------- */
+  .askreal{display:grid;grid-template-columns:1fr 56px 1fr;gap:0;align-items:stretch;margin:28px 0}
+  .ar-box{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:22px 22px 20px}
+  .ar-box.ask{border-top:3px solid #B9B3AA}
+  .ar-box.real{border-top:3px solid var(--leo)}
+  .ar-tag{font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    margin-bottom:10px;color:var(--ink-3)}
+  .ar-box.real .ar-tag{color:var(--leo)}
+  .ar-box h4{font-size:16.5px;font-weight:700;line-height:1.5;margin-bottom:8px;letter-spacing:-.01em}
+  .ar-box p{font-size:14px;margin:0;color:var(--ink-2)}
+  .ar-arrow{display:flex;align-items:center;justify-content:center;color:var(--leo-soft);font-size:22px}
+
+  /* ---------- chart card ---------- */
+  .chartcard{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:28px;margin:26px 0}
+  .chartcard .ct{font-size:15px;font-weight:700;margin-bottom:4px}
+  .chartcard .cs{font-size:13px;color:var(--ink-3);margin-bottom:22px}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px;font-size:12.5px;color:var(--ink-2)}
+  .legend i{display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;
+    vertical-align:-1px}
+
+  /* ---------- math strip ---------- */
+  .mathstrip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:4px;overflow:hidden;margin:24px 0}
+  .ms{background:var(--card);padding:20px 18px;text-align:center}
+  .ms .n{font-size:26px;font-weight:800;letter-spacing:-.03em;color:var(--leo-deep);line-height:1.2}
+  .ms .n small{font-size:15px;font-weight:700;color:var(--ink-3)}
+  .ms .l{font-size:12px;color:var(--ink-3);margin-top:6px;font-weight:600}
+  .ms.flat .n{color:var(--ink-3)}
+  .ms.down .n{color:var(--warn)}
+
+  /* ---------- loop diagram ---------- */
+  .loopwrap{background:var(--leo-wash);border:1px solid var(--leo-wash-2);border-radius:4px;
+    padding:30px 24px 22px;margin:26px 0}
+  .loopwrap .ct{font-size:15px;font-weight:700;margin-bottom:4px;text-align:center}
+  .loopwrap .cs{font-size:13px;color:var(--ink-3);margin-bottom:8px;text-align:center}
+
+  /* ---------- branch diagnosis ---------- */
+  .branches{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0}
+  .br{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px 16px;
+    position:relative;overflow:hidden}
+  .br .bt{font-size:13.5px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px}
+  .br .bd{font-size:13px;color:var(--ink-2);line-height:1.6}
+  .br .bs{margin-top:12px;font-size:11px;font-weight:800;letter-spacing:.06em;padding:3px 8px;
+    border-radius:3px;display:inline-block}
+  .br.closed{opacity:.62}
+  .br.closed .bs{background:#EEECE8;color:var(--ink-3)}
+  .br.hot{border:1px solid var(--leo);border-top:3px solid var(--leo);
+    box-shadow:0 4px 16px rgba(70,88,122,.10)}
+  .br.hot .bs{background:var(--leo);color:#fff}
+  .br.warm .bs{background:var(--leo-wash-2);color:var(--leo-deep)}
+  .br.trap{border-top:3px solid var(--warn)}
+  .br.trap .bs{background:var(--warn-wash);color:var(--warn)}
+
+  /* ---------- quote / DM ---------- */
+  .dm{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:26px 28px;margin:24px 0}
+  .dmlist{display:flex;flex-direction:column;gap:9px;margin:16px 0 20px}
+  .dmb{background:var(--leo-wash);border-radius:14px 14px 14px 3px;padding:10px 15px;
+    font-size:14.5px;color:var(--ink);max-width:78%;font-weight:500}
+  .dmpunch{border-top:1px dashed var(--line);padding-top:16px;font-size:17px;font-weight:800;
+    color:var(--leo-deep);letter-spacing:-.015em}
+
+  /* ---------- hypotheses ---------- */
+  .hyps{display:flex;flex-direction:column;gap:10px;margin:24px 0}
+  .hyp{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px 20px;
+    display:grid;grid-template-columns:44px 1fr 150px;gap:16px;align-items:start}
+  .hyp .id{font-size:15px;font-weight:800;color:#fff;background:var(--leo);width:34px;height:34px;
+    border-radius:4px;display:flex;align-items:center;justify-content:center;letter-spacing:-.02em}
+  .hyp.dim .id{background:var(--ink-3)}
+  .hyp .ht{font-size:15px;font-weight:700;margin-bottom:5px;letter-spacing:-.01em}
+  .hyp .hd{font-size:14px;color:var(--ink-2);line-height:1.62}
+  .hyp .hx{font-size:12.5px;color:var(--leo-deep);margin-top:8px;font-weight:600;
+    background:var(--leo-wash);display:inline-block;padding:3px 9px;border-radius:3px}
+  .hyp.dim .hx{background:#F0EEEA;color:var(--ink-3)}
+  .conf{text-align:right}
+  .conf .cl{font-size:11px;color:var(--ink-3);font-weight:700;letter-spacing:.06em;margin-bottom:6px}
+  .bar{height:6px;background:var(--line-2);border-radius:3px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--leo);border-radius:3px}
+  .bar.low i{background:var(--leo-soft)}
+  .conf .cv{font-size:11.5px;color:var(--ink-3);margin-top:5px;font-weight:600}
+
+  /* ---------- confidence tiers ---------- */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:24px 0}
+  .tier{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:20px 18px}
+  .tier .tv{font-size:12px;font-weight:800;letter-spacing:.08em;margin-bottom:10px}
+  .tier.hi .tv{color:var(--leo-deep)}
+  .tier.mid .tv{color:var(--leo)}
+  .tier.lo .tv{color:var(--warn)}
+  .tier .tt{font-size:14.5px;font-weight:700;line-height:1.5;margin-bottom:8px}
+  .tier .td{font-size:13px;color:var(--ink-2)}
+  .gauge{display:flex;gap:3px;margin-bottom:12px}
+  .gauge s{flex:1;height:5px;background:var(--line-2);border-radius:2px;text-decoration:none}
+  .tier.hi .gauge s:nth-child(-n+5){background:var(--leo-deep)}
+  .tier.mid .gauge s:nth-child(-n+4){background:var(--leo)}
+  .tier.lo .gauge s:nth-child(-n+2){background:var(--warn)}
+
+  /* ---------- trigger / falsification ---------- */
+  .trig{background:var(--warn-wash);border:1px solid #E8D5C8;border-radius:4px;padding:26px 28px;margin:24px 0}
+  .trig .th{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--warn);margin-bottom:14px}
+  .trig ul li::before{background:var(--warn)}
+  .trig ul li{font-size:14.5px}
+
+  /* ---------- misallocation ---------- */
+  .alloc{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:28px;margin:26px 0}
+  .allocrow{display:grid;grid-template-columns:110px 1fr;gap:16px;align-items:center;margin-bottom:16px}
+  .allocrow:last-child{margin-bottom:0}
+  .allocrow .k{font-size:13.5px;font-weight:700;text-align:right;color:var(--ink)}
+  .allocbar{display:flex;height:34px;border-radius:3px;overflow:hidden;background:var(--line-2)}
+  .allocbar div{display:flex;align-items:center;padding:0 12px;font-size:12.5px;font-weight:700;
+    color:#fff;white-space:nowrap}
+
+  /* ---------- handoff ---------- */
+  .handoff{background:linear-gradient(150deg,#EDF1F0 0%,#E7EDE8 100%);
+    border:1px solid #D7E0D9;border-radius:4px;padding:34px;margin-top:12px}
+  .handoff .hh{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .handoff .hh i{width:30px;height:30px;border-radius:50%;background:var(--sage);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;font-style:normal}
+  .handoff .hh b{font-size:19px;font-weight:800;letter-spacing:-.02em}
+  .handoff .hs{font-size:13.5px;color:var(--ink-2);margin-bottom:22px;padding-left:42px}
+  .missions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .mi{background:#fff;border:1px solid #DDE5DE;border-radius:4px;padding:15px 16px}
+  .mi .mn{font-size:11px;font-weight:800;color:var(--sage);letter-spacing:.08em;margin-bottom:5px}
+  .mi .mt{font-size:14px;font-weight:700;margin-bottom:4px;letter-spacing:-.01em}
+  .mi .md{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+  .mi.pri{border:1px solid var(--sage);box-shadow:0 3px 12px rgba(94,122,98,.10)}
+  .carry{margin-top:20px;background:#fff;border:1px solid #DDE5DE;border-radius:4px;padding:18px 20px}
+  .carry .ct{font-size:11.5px;font-weight:800;letter-spacing:.09em;color:var(--sage);
+    text-transform:uppercase;margin-bottom:10px}
+  .carry ul li::before{background:var(--sage)}
+  .carry ul li{font-size:14px}
+  .carry ul{margin:0}
+
+  /* ---------- footer ---------- */
+  footer{background:var(--ink);color:rgba(255,255,255,.6);padding:40px 0;font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  footer b{color:#fff;font-weight:700}
+  .disc{font-size:12px;color:var(--ink-3);margin-top:22px;padding-top:16px;border-top:1px solid var(--line);
+    line-height:1.6}
+
+  @media(max-width:860px){
+    .askreal{grid-template-columns:1fr;gap:10px}
+    .ar-arrow{transform:rotate(90deg);height:28px}
+    .branches{grid-template-columns:1fr 1fr}
+    .mathstrip{grid-template-columns:1fr 1fr}
+    .tiers{grid-template-columns:1fr}
+    .missions{grid-template-columns:1fr}
+    .hyp{grid-template-columns:44px 1fr}
+    .conf{grid-column:2;text-align:left}
+    h1{font-size:27px}
+    .redef .big{font-size:18px}
+    .teamstrip .wrap{overflow-x:auto}
+    .tsitem{min-width:104px}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brandbar">
+      <span>Team of One : Marketer</span><span class="dot"></span>
+      <span>Case · SOLLIP</span><span class="dot"></span>
+      <span>2026.07.11</span>
+    </div>
+    <div class="stagerow">
+      <div class="stagenum">01</div>
+      <div>
+        <h1>수제 원목 도마 D2C, 팔로워는 3배가 됐는데<br>매출은 7개월째 그대로다</h1>
+        <div class="role">해석가 <b style="color:#fff">Leo</b> · 문제정의 브리프 · 파이프라인 1단계</div>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="chip">전략 트랙 우세</span>
+      <span class="chip">캠페인 트랙 시한부 병행</span>
+      <span class="chip">다음 → 리서처 Ben</span>
+    </div>
+  </div>
+</header>
+
+<div class="teamstrip">
+  <div class="wrap">
+    <div class="tsitem on"><i style="background:#46587A"></i><b>Leo</b><em>해석가</em></div>
+    <div class="tsitem"><i style="background:#5E7A62"></i><b>Ben</b><em>리서처</em></div>
+    <div class="tsitem"><i style="background:#9B5C63"></i><b>Tess</b><em>전략가</em></div>
+    <div class="tsitem"><i style="background:#A8813F"></i><b>Sam</b><em>실행설계자</em></div>
+    <div class="tsitem"><i style="background:#5B4B7A"></i><b>Cap</b><em>팀장·검수</em></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ 재정의 ============ -->
+<section>
+  <div class="kicker">한 줄 재정의</div>
+  <div class="redef">
+    <div class="lbl">Redefinition</div>
+    <div class="big">
+      가져오신 건 “콘텐츠가 모자라니 편집자를 뽑아 릴스를 2배로 늘리자”인데,
+      숫자가 말하는 건 정반대입니다. <em>유입은 이미 충분히 늘었고, 늘어난 그 유입이 사지 않고 있어요.</em>
+      막힌 지점은 유입의 앞단이 아니라 유입과 구매 사이, 즉 <em>전환의 다리</em>입니다.
+    </div>
+    <div class="sub">
+      생산량을 2배로 늘리는 건 이미 넘치는 쪽에 물을 더 붓는 일이고,
+      편집자 채용은 그 물붓기를 <strong>고정비로 못 박는</strong> 일입니다.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 요구 vs 문제 ============ -->
+<section>
+  <div class="kicker">요구는 문제가 아니다</div>
+  <h2>처방이 먼저 도착한 의뢰</h2>
+  <p class="lead">
+    “편집자를 뽑을까요, 숏츠를 돌릴까요”는 둘 다 <strong>답안지</strong>이지 질문이 아닙니다.
+    처방이 먼저 도착한 의뢰는 거의 항상 그 아래에 진단되지 않은 병이 있습니다.
+  </p>
+
+  <div class="askreal">
+    <div class="ar-box ask">
+      <div class="ar-tag">고객이 가져온 것 · Want</div>
+      <h4>“숏폼 편집자를 뽑아 릴스를 주 4회에서 주 8회로 늘려야 할까요?”</h4>
+      <p>함께 온 전제 세 개: ① 매출 정체의 원인은 콘텐츠 생산량 부족이다.
+      ② 따라서 해법은 생산량 2배다. ③ 인스타 지표가 좋으니 방향은 맞다.</p>
+    </div>
+    <div class="ar-arrow">→</div>
+    <div class="ar-box real">
+      <div class="ar-tag">숫자가 말하는 것 · Problem</div>
+      <h4>전환이 0에 수렴하는 유입을 2배로 만들려 하고 있다</h4>
+      <p>0에 무엇을 곱해도 0입니다. 채널 추가(숏츠)도 같은 구조예요.
+      곱해지는 값이 0에 가까우면 채널을 늘려도 결과는 0입니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 산술 앵커 ============ -->
+<section>
+  <div class="kicker">앵커 · 가장 크게 소리치는 숫자</div>
+  <h2>팔로워 3배가 아니라, 전환율 반토막</h2>
+  <p class="lead">
+    전환율은 분수입니다. 분모가 세션, 분자가 주문이죠.
+    매출이 7개월째 그대로인데 전환율만 0.55배로 떨어졌다는 건, 산술적으로
+    <mark>분모(세션)가 약 1.8배 늘고 분자(주문)는 제자리</mark>였다는 뜻입니다.
+  </p>
+
+  <div class="mathstrip">
+    <div class="ms"><div class="n">×3</div><div class="l">인스타 팔로워<br>8천 → 2.4만</div></div>
+    <div class="ms"><div class="n">≈×1.8</div><div class="l">자사몰 세션<br>(산술 추정)</div></div>
+    <div class="ms flat"><div class="n">×1.0</div><div class="l">주문 수<br>제자리</div></div>
+    <div class="ms down"><div class="n">0.6<small>%</small></div><div class="l">전환율<br>1.1%에서 하락</div></div>
+  </div>
+
+  <div class="chartcard">
+    <div class="ct">12개월, 무엇이 늘고 무엇이 멈췄나</div>
+    <div class="cs">지수화 · 12개월 전 = 100 기준 · 매출·전환율은 고객 제공 수치, 세션·주문은 그로부터의 산술 추정</div>
+    <svg viewBox="0 0 900 330" width="100%" role="img" aria-label="지표 추이 비교 차트">
+      <defs>
+        <linearGradient id="gf" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#8FA3C4" stop-opacity=".28"/>
+          <stop offset="100%" stop-color="#8FA3C4" stop-opacity="0"/>
+        </linearGradient>
+      </defs>
+      <!-- grid -->
+      <g stroke="#EDEAE5" stroke-width="1">
+        <line x1="70" y1="40" x2="870" y2="40"/>
+        <line x1="70" y1="100" x2="870" y2="100"/>
+        <line x1="70" y1="160" x2="870" y2="160"/>
+        <line x1="70" y1="220" x2="870" y2="220"/>
+        <line x1="70" y1="280" x2="870" y2="280"/>
+      </g>
+      <g font-size="11" fill="#7B8296" font-weight="600">
+        <text x="58" y="44" text-anchor="end">300</text>
+        <text x="58" y="104" text-anchor="end">225</text>
+        <text x="58" y="164" text-anchor="end">150</text>
+        <text x="58" y="224" text-anchor="end">100</text>
+        <text x="58" y="284" text-anchor="end">50</text>
+        <text x="70" y="308" text-anchor="middle">12개월 전</text>
+        <text x="470" y="308" text-anchor="middle">7개월 전</text>
+        <text x="870" y="308" text-anchor="middle">현재</text>
+      </g>
+
+      <!-- 팔로워 (100 -> 300) -->
+      <path d="M70,220 C230,200 320,150 470,110 C620,72 760,48 870,40"
+            fill="none" stroke="#46587A" stroke-width="2.6" stroke-linecap="round"/>
+      <!-- 세션 (100 -> 180) -->
+      <path d="M70,220 C230,208 330,182 470,164 C620,146 760,140 870,156"
+            fill="none" stroke="#8FA3C4" stroke-width="2.4" stroke-dasharray="7 5" stroke-linecap="round"/>
+      <!-- 매출/주문 flat (100) -->
+      <path d="M70,220 C230,216 340,224 470,220 C620,217 760,222 870,220"
+            fill="none" stroke="#A9A296" stroke-width="2.6" stroke-linecap="round"/>
+      <!-- 전환율 (100 -> 55) -->
+      <path d="M70,220 C230,232 330,248 470,262 C620,274 760,276 870,277"
+            fill="none" stroke="#B4785E" stroke-width="2.6" stroke-linecap="round"/>
+      <path d="M70,220 C230,232 330,248 470,262 C620,274 760,276 870,277 L870,300 L70,300 Z"
+            fill="url(#gf)" opacity=".35"/>
+
+      <!-- endpoint dots -->
+      <circle cx="870" cy="40" r="4.5" fill="#46587A"/>
+      <circle cx="870" cy="156" r="4.5" fill="#8FA3C4"/>
+      <circle cx="870" cy="220" r="4.5" fill="#A9A296"/>
+      <circle cx="870" cy="277" r="4.5" fill="#B4785E"/>
+
+      <!-- gap annotation -->
+      <line x1="798" y1="46" x2="798" y2="214" stroke="#46587A" stroke-width="1" stroke-dasharray="3 3" opacity=".5"/>
+      <rect x="612" y="88" width="176" height="24" rx="3" fill="#46587A"/>
+      <text x="700" y="105" font-size="12" fill="#fff" font-weight="700" text-anchor="middle">이 간극이 문제다</text>
+    </svg>
+    <div class="legend">
+      <span><i style="background:#46587A"></i>인스타 팔로워</span>
+      <span><i style="background:#8FA3C4"></i>자사몰 세션 (추정)</span>
+      <span><i style="background:#A9A296"></i>매출 · 주문 수</span>
+      <span><i style="background:#B4785E"></i>자사몰 전환율</span>
+    </div>
+  </div>
+
+  <p>
+    즉 <strong>추가로 들어온 방문자들의 전환율은 사실상 0에 수렴합니다.</strong>
+    팔로워가 8천에서 2만 4천이 되는 동안, 늘어난 1만 6천 명은 트래픽은 만들었지만 주문은 만들지 않았어요.
+    <mark>콘텐츠는 이미 사람을 데려오고 있습니다. 데려온 사람이 안 살 뿐이에요.</mark>
+    부족한 건 콘텐츠의 양이 아니라 콘텐츠와 구매 사이의 연결입니다.
+  </p>
+</section>
+
+<!-- ============ 자기강화 고리 ============ -->
+<section>
+  <div class="kicker">급소 · 메커니즘</div>
+  <h2>콘텐츠를 고르는 규칙이, 팔릴 콘텐츠를 자동으로 걸러내고 있다</h2>
+  <p class="lead">
+    본인이 직접 하신 두 문장을 나란히 놓아보죠. 잘 되는 콘텐츠는 “스타일링 컷, 저장·공유 폭발”.
+    안 되는 콘텐츠는 “제품 단독 컷, 사용법, 관리법 — <mark>재미없어 보여서 잘 안 올려요</mark>”.
+  </p>
+  <p>
+    두 번째 문장이 무섭습니다. 안 올리는 이유가 “성과가 안 나와서”가 아니라 <strong>“재미없어 보여서”</strong>예요.
+    콘텐츠를 고르는 기준이 매출이 아니라 <strong>저장·공유</strong>로 굳어 있습니다.
+    그런데 저장·공유는 <strong>영감 신호</strong>이지 <strong>구매 의향 신호</strong>가 아닙니다.
+    사람들이 스타일링 컷을 저장하는 건 “나중에 내 집 꾸밀 때 참고하려고”죠.
+  </p>
+
+  <div class="loopwrap">
+    <div class="ct">스스로 강화되는 고리</div>
+    <div class="cs">편집자를 붙이면 이 고리가 끊기는 게 아니라, 2배 속도로 돕니다</div>
+    <svg viewBox="0 0 900 420" width="100%" role="img" aria-label="자기강화 고리 다이어그램">
+      <defs>
+        <marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#8FA3C4"/>
+        </marker>
+        <marker id="arw" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+          <path d="M0,0 L9,4.5 L0,9 Z" fill="#B4785E"/>
+        </marker>
+      </defs>
+
+      <!-- circular arrows -->
+      <g fill="none" stroke="#8FA3C4" stroke-width="2" marker-end="url(#ar)">
+        <path d="M300,68 L560,68"/>
+        <path d="M700,112 L730,168"/>
+        <path d="M712,258 L640,318"/>
+        <path d="M420,352 L300,352"/>
+        <path d="M172,310 L152,250"/>
+        <path d="M158,158 L192,108"/>
+      </g>
+
+      <!-- nodes -->
+      <g>
+        <rect x="90" y="44" width="212" height="52" rx="4" fill="#fff" stroke="#C9D3E2"/>
+        <text x="196" y="68" font-size="13.5" font-weight="700" fill="#1C2130" text-anchor="middle">저장·공유 잘 나오는</text>
+        <text x="196" y="86" font-size="13.5" font-weight="700" fill="#1C2130" text-anchor="middle">콘텐츠만 발행</text>
+
+        <rect x="560" y="44" width="200" height="52" rx="4" fill="#fff" stroke="#C9D3E2"/>
+        <text x="660" y="68" font-size="13.5" font-weight="700" fill="#1C2130" text-anchor="middle">알고리즘이</text>
+        <text x="660" y="86" font-size="13.5" font-weight="700" fill="#1C2130" text-anchor="middle">더 멀리 퍼뜨림</text>
+
+        <rect x="662" y="176" width="200" height="70" rx="4" fill="#fff" stroke="#C9D3E2"/>
+        <text x="762" y="200" font-size="13.5" font-weight="700" fill="#1C2130" text-anchor="middle">영감 소비자</text>
+        <text x="762" y="218" font-size="13.5" font-weight="700" fill="#1C2130" text-anchor="middle">팔로워 증가</text>
+        <text x="762" y="236" font-size="11.5" fill="#7B8296" text-anchor="middle">지표가 좋아 보임</text>
+
+        <rect x="420" y="326" width="220" height="52" rx="4" fill="#fff" stroke="#C9D3E2"/>
+        <text x="530" y="350" font-size="13.5" font-weight="700" fill="#1C2130" text-anchor="middle">“방향이 맞다”</text>
+        <text x="530" y="368" font-size="13.5" font-weight="700" fill="#1C2130" text-anchor="middle">확신 강화</text>
+
+        <rect x="96" y="326" width="204" height="52" rx="4" fill="#fff" stroke="#C9D3E2"/>
+        <text x="198" y="350" font-size="13.5" font-weight="700" fill="#1C2130" text-anchor="middle">스타일링 콘텐츠</text>
+        <text x="198" y="368" font-size="13.5" font-weight="700" fill="#1C2130" text-anchor="middle">더 만듦</text>
+
+        <rect x="44" y="176" width="216" height="70" rx="4" fill="#F6EDE7" stroke="#E0C8B6"/>
+        <text x="152" y="200" font-size="13" font-weight="800" fill="#B4785E" text-anchor="middle">구매 근거 콘텐츠는</text>
+        <text x="152" y="218" font-size="13" font-weight="800" fill="#B4785E" text-anchor="middle">계속 발행 안 됨</text>
+        <text x="152" y="237" font-size="11.5" fill="#B4785E" text-anchor="middle">제품 · 사용 · 관리 · 크래프트</text>
+      </g>
+
+      <!-- outcome -->
+      <g>
+        <line x1="152" y1="176" x2="152" y2="130" stroke="#B4785E" stroke-width="0" />
+        <rect x="330" y="176" width="300" height="70" rx="35" fill="#B4785E"/>
+        <text x="480" y="207" font-size="14" font-weight="800" fill="#fff" text-anchor="middle">결과 · 전환율 1.1% → 0.6%</text>
+        <text x="480" y="228" font-size="12" fill="rgba(255,255,255,.82)" text-anchor="middle">팔 이유를 말하는 콘텐츠가 구조적으로 배제된다</text>
+      </g>
+      <g fill="none" stroke="#B4785E" stroke-width="1.6" stroke-dasharray="4 4" marker-end="url(#arw)" opacity=".8">
+        <path d="M262,211 L322,211"/>
+      </g>
+    </svg>
+  </div>
+
+  <p>
+    동시에 짚어야 할 것: <strong>수제 원목 도마는 설명이 필요한 상품입니다.</strong>
+    왜 이 가격인지, 나무가 무엇이고, 어떻게 쓰고 관리하면 몇 년을 쓰는지.
+    그 설명이 구매 근거를 만듭니다. 그런데 정확히 그 콘텐츠들이 “재미없어 보여서” 발행 목록에서 잘려 나가고 있어요.
+  </p>
+</section>
+
+<!-- ============ DM 증언 ============ -->
+<section>
+  <div class="kicker">증언</div>
+  <h2>DM은 잘못된 신호가 아니라, 정확한 신호다</h2>
+  <div class="dm">
+    <p style="font-size:14px;color:var(--ink-3);margin-bottom:4px;font-weight:600">
+      자주 오는 DM 질문 (고객 발화)</p>
+    <div class="dmlist">
+      <div class="dmb">이 사진에 있는 화분 어디 거예요?</div>
+      <div class="dmb">테이블 어디서 사셨어요?</div>
+      <div class="dmb">이 조명 정보 좀요.</div>
+    </div>
+    <div class="dmpunch">아무도 도마를 안 묻습니다.</div>
+    <p style="margin-top:14px;margin-bottom:0">
+      이 사람들은 SOLLIP의 콘텐츠를 사랑하고, SOLLIP의 취향을 신뢰하고,
+      그 신뢰로 <strong>화분과 테이블과 조명</strong>을 사러 갑니다.
+      프레임 안에서 도마는 주인공이 아니라 소품이에요.
+      오디언스는 SOLLIP을 도마 브랜드가 아니라 <mark>인테리어 영감 계정</mark>으로 소비하고 있습니다.
+      콘텐츠가 부족한 게 아니라, 콘텐츠가 <strong>다른 상품을 팔고 있습니다.</strong> 그것도 우리가 안 파는 상품을요.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 갈래 진단 ============ -->
+<section>
+  <div class="kicker">넓이로 확인</div>
+  <h2>고객이 손대려는 곳과 아픈 곳이 정확히 어긋나 있다</h2>
+  <p class="lead">한 줄기만 파면 과잉확신이 됩니다. “매출이 안 는다”를 네 갈래로 갈라 어디가 새는지 겹쳐 봤습니다.</p>
+
+  <div class="branches">
+    <div class="br closed">
+      <div class="bt">유입</div>
+      <div class="bd">사람이 안 온다?<br>아닙니다. 3배 늘었고 본인도 인정.</div>
+      <div class="bs">갈래 닫힘</div>
+    </div>
+    <div class="br hot">
+      <div class="bt">전환</div>
+      <div class="bd">온 사람이 안 산다.<br>전환율 반토막, 장바구니 담고 이탈, 인스타 유입 객단가 낮음.</div>
+      <div class="bs">통증 집중</div>
+    </div>
+    <div class="br warm">
+      <div class="bt">객단가</div>
+      <div class="bd">사는 사람이 적게 산다.<br>선물 시즌엔 튀는데 그 수요가 방치돼 있음.</div>
+      <div class="bs">기회 방치</div>
+    </div>
+    <div class="br trap">
+      <div class="bt">재구매</div>
+      <div class="bd">산 사람이 다시 안 온다?<br>도마는 몇 년 쓰는 <strong>내구재</strong>. 낮은 게 병이 아니라 성질일 수 있음.</div>
+      <div class="bs">오진 함정</div>
+    </div>
+  </div>
+
+  <div style="background:var(--card);border:1px solid var(--line);border-left:4px solid var(--warn);
+    border-radius:4px;padding:20px 24px;margin-top:8px">
+    <strong style="color:var(--warn)">⚠ 다음 파트너를 위한 함정 경고</strong>
+    <p style="margin:8px 0 0">
+      구독·소모품 케이스의 <strong>리텐션·LTV 논리를 그대로 가져오면 오진</strong>입니다.
+      내구재에서 재구매를 병으로 오진하면 힘을 엉뚱한 데 씁니다. 실측으로 확인할 것.
+    </p>
+  </div>
+</section>
+
+<!-- ============ 자원 오배치 ============ -->
+<section>
+  <div class="kicker">방치된 자산</div>
+  <h2>일하는 채널은 굶고, 안 되는 채널이 20시간을 먹고 있다</h2>
+
+  <div class="alloc">
+    <div class="allocrow">
+      <div class="k">매출 기여</div>
+      <div class="allocbar">
+        <div style="width:60%;background:#5E7A62">네이버 검색 · 약 6할</div>
+        <div style="width:40%;background:#B0B7C4;color:#2E3A52">자사몰 + 인스타 등</div>
+      </div>
+    </div>
+    <div class="allocrow">
+      <div class="k">주 20시간+</div>
+      <div class="allocbar">
+        <div style="width:12%;background:#5E7A62"></div>
+        <div style="width:88%;background:#46587A">콘텐츠 제작 (촬영·편집·발행)</div>
+      </div>
+    </div>
+    <div class="allocrow">
+      <div class="k">광고비</div>
+      <div class="allocbar">
+        <div style="width:100%;background:#C6C0B6;color:#4A5265">월 30만 원 이하 · 네이버 쇼핑검색 광고만</div>
+      </div>
+    </div>
+  </div>
+
+  <p>
+    검색으로 들어오는 사람은 <strong>이미 원목 도마를 사려고 마음먹고</strong> 검색창을 연 사람입니다.
+    수요를 만들 필요가 없어요, 이미 있는 수요를 잡기만 하면 됩니다.
+    이 채널이 매출의 6할을 만드는데 광고비는 월 30만 원 이하고,
+    주당 20시간의 대부분은 매출이 거의 안 나오는 쪽에 쓰이고 있습니다.
+  </p>
+
+  <h3>그리고 실재하는데 방치된 수요 하나</h3>
+  <p>
+    매출이 튀는 시점이 집들이·결혼 시즌(3월, 9~11월)이고 그때 <strong>선물 포장 요청이 몰립니다.</strong>
+    이건 체감이 아니라 <mark>관측된 행동</mark>이에요. 사람들이 스스로 “이건 선물이다”라고 말해주고 있는데,
+    브랜드는 선물로 포지셔닝하지도, 선물 오퍼를 만들지도 않았습니다. 요청이 오면 그때 포장해 줄 뿐이에요.
+    <strong>오늘은 7월 11일. 9~11월 시즌까지 두 달 남짓입니다.</strong>
+  </p>
+</section>
+
+<!-- ============ 두 번째 소원 ============ -->
+<section>
+  <div class="kicker">말하지 않은 두 번째 소원</div>
+  <h2>“신제품 기획할 시간이 없거든요”</h2>
+  <p class="lead">
+    이 요구에는 <strong>두 개의 소원이 겹쳐</strong> 있습니다.
+    ① 매출을 다시 올리고 싶다, ② 내 시간을 되찾고 싶다.
+    편집자 채용은 머릿속에서 두 소원을 동시에 풀어주는 것처럼 보였을 겁니다.
+  </p>
+  <p>
+    그런데 냉정하게 보면, <strong>편집자를 뽑아 발행량을 2배로 늘리면 시간은 오히려 더 없어집니다.</strong>
+    촬영은 여전히 본인이 하고, 기획·브리핑·검수·발행이 2배가 되니까요.
+    창작 방향은 위임이 안 되는 종류의 일입니다.
+  </p>
+  <p>
+    시간을 되찾는 방향은 생산량을 늘리는 쪽이 아니라 <mark>줄이는 쪽</mark>에 있습니다.
+    그리고 다행히, 매출을 푸는 방향과 시간을 푸는 방향이 <strong>같은 쪽을 가리킵니다.</strong>
+    이건 이 케이스의 드문 행운이에요.
+  </p>
+  <div style="background:var(--leo-wash);border:1px solid var(--leo-wash-2);border-radius:4px;
+    padding:20px 24px;margin-top:20px">
+    <strong>역제안 · 만약 채용 여력이 실제로 있다면</strong>
+    <p style="margin:8px 0 0">
+      그때도 뽑아야 할 자리는 <strong>숏폼 편집자가 아닙니다.</strong>
+      콘텐츠 창작은 대표의 눈이 있어야 굴러가서 위임해도 시간이 안 돌아옵니다.
+      반면 <strong>CS·정산·발송</strong>처럼 대표의 취향이 필요 없는 오퍼레이션은 위임하는 즉시 시간이 돌아옵니다.
+      <span style="color:var(--ink-3);font-size:13px">[내 추론] · 확신도 中 · 마진 확인 시 재검토</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ 경합 가설 ============ -->
+<section>
+  <div class="kicker">자기 반증 · 경합 가설</div>
+  <h2>“왜 안 사는가”는 아직 확정하지 않는다</h2>
+  <p class="lead">
+    방향(전환이 급소다)은 세게 밉니다. 하지만 <strong>어느 전환 병목인지</strong>는 데이터 없이 못 가릅니다.
+    정밀 진단이 갈리면 처방이 완전히 달라져요. 그래서 결론 대신 <strong>경합 가설</strong>로 벌려 넘깁니다.
+  </p>
+
+  <div class="hyps">
+    <div class="hyp">
+      <div class="id">A1</div>
+      <div>
+        <div class="ht">프레이밍 문제 (약한 버전)</div>
+        <div class="hd">오디언스는 잠재 구매자가 맞다. 다만 콘텐츠에서 제품이 주인공이 아니라 소품이라 구매 경로가 안 생긴다.
+          구도·CTA·링크 동선·제품 히어로화로 상당 부분 풀린다.</div>
+        <div class="hx">저비용 처방</div>
+      </div>
+      <div class="conf">
+        <div class="cl">가능성</div>
+        <div class="bar"><i style="width:70%"></i></div>
+        <div class="cv">퍼널 데이터로 검증</div>
+      </div>
+    </div>
+
+    <div class="hyp">
+      <div class="id">A2</div>
+      <div>
+        <div class="ht">오디언스 미스매치 (강한 버전)</div>
+        <div class="hd">늘어난 1만 6천 명 자체가 구매 의향 없는 스타일링 영감 소비자로 채워졌다.
+          이 오디언스에 무엇을 해도 안 산다.</div>
+        <div class="hx">오디언스 재구축 + 네이버 중심 이동</div>
+      </div>
+      <div class="conf">
+        <div class="cl">가능성</div>
+        <div class="bar"><i style="width:60%"></i></div>
+        <div class="cv">방향 전환 폭 큼</div>
+      </div>
+    </div>
+
+    <div class="hyp">
+      <div class="id">B</div>
+      <div>
+        <div class="ht">결제 단계 이탈 (가격·UX)</div>
+        <div class="hd">유입 질은 문제없다. 자사몰 마지막 단계에서 샌다: 가격 저항, 배송비 쇼크, 결제 UX, 상세페이지의 구매 근거 부재.
+          <strong>“장바구니에 담고 안 산다”는 발화가 이쪽을 가리킵니다.</strong> 장바구니 도달은 꽤 깊은 의향 신호라, 이게 사실이면 A2는 약해집니다.</div>
+        <div class="hx">처방이 콘텐츠가 아니라 자사몰 CRO로 바뀜</div>
+      </div>
+      <div class="conf">
+        <div class="cl">가능성</div>
+        <div class="bar"><i style="width:55%"></i></div>
+        <div class="cv">퍼널 단계가 결정타</div>
+      </div>
+    </div>
+
+    <div class="hyp dim">
+      <div class="id">C</div>
+      <div>
+        <div class="ht">어트리뷰션 착시</div>
+        <div class="hd">인스타는 이미 일하고 있다. 사람들이 인스타에서 알고 네이버에서 “솔립”을 검색해 산다.
+          그래서 자사몰 전환율은 나쁘게 보인다. <strong>단, 7개월 매출 정체가 이 가설을 강하게 약화시킵니다</strong>
+          (인스타가 네이버 수요를 만들었다면 팔로워 3배 기간에 네이버 매출이 늘었어야 함).</div>
+        <div class="hx">맞다면 인스타를 줄이는 건 자해</div>
+      </div>
+      <div class="conf">
+        <div class="cl">가능성</div>
+        <div class="bar low"><i style="width:22%"></i></div>
+        <div class="cv">낮게 봄 · 그래도 반증 필요</div>
+      </div>
+    </div>
+
+    <div class="hyp dim">
+      <div class="id">D</div>
+      <div>
+        <div class="ht">사업 확장 신호 (결론 아님)</div>
+        <div class="hd">DM이 화분·테이블·조명을 묻는 건 시장이 다른 상품을 요구하는 신호일 수 있다.
+          브랜드의 진짜 자산이 “도마”가 아니라 “공간 큐레이션 감각”일 수 있다.
+          <strong>이건 재정의가 아니라 사업 확장 가설이고, 1인 리소스로 상품군 확장은 위험합니다.</strong>
+          Leo는 이걸 결론으로 밀지 않습니다. 전략가에게 검토 대상으로만 넘깁니다.</div>
+        <div class="hx">전략가 판단 영역 · 해석가 경계 밖</div>
+      </div>
+      <div class="conf">
+        <div class="cl">가능성</div>
+        <div class="bar low"><i style="width:30%"></i></div>
+        <div class="cv">경계 넘지 않음</div>
+      </div>
+    </div>
+  </div>
+
+  <h3>확신도는 층으로 나눠 넘깁니다</h3>
+  <div class="tiers">
+    <div class="tier hi">
+      <div class="gauge"><s></s><s></s><s></s><s></s><s></s></div>
+      <div class="tv">확신도 高</div>
+      <div class="tt">“생산량 2배·편집자 채용·숏츠 추가는 답이 아니다”</div>
+      <div class="td">A1·A2·B·C 어느 것이 맞아도 이 처방들은 전환 문제를 못 건드립니다. 여기는 세게 밉니다.</div>
+    </div>
+    <div class="tier mid">
+      <div class="gauge"><s></s><s></s><s></s><s></s><s></s></div>
+      <div class="tv">확신도 中상</div>
+      <div class="tt">“문제는 전환에 있다”</div>
+      <div class="td">측정된 전환율 하락이 앵커. 이 숫자가 흔들리면 재정의 전체가 흔들립니다.</div>
+    </div>
+    <div class="tier lo">
+      <div class="gauge"><s></s><s></s><s></s><s></s><s></s></div>
+      <div class="tv">확신도 中하</div>
+      <div class="tt">“왜 전환이 안 되는가” (A1 vs A2 vs B)</div>
+      <div class="td">퍼널 데이터 없이는 못 가릅니다. 여기가 리서처의 1차 미션입니다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 틀렸을 신호 ============ -->
+<section>
+  <div class="kicker">과잉해석 자가 점검</div>
+  <h2>이 재정의가 틀렸을 신호를 미리 박아둡니다</h2>
+  <p class="lead">
+    고객이 “콘텐츠 부족”을 지목했는데 저는 “콘텐츠가 넘치고 전환이 문제”로 완전히 반대 방향으로 틀었습니다.
+    큰 도약입니다. 이 도약이 걸려 있는 못은 <strong>딱 하나</strong>: 전환율 1.1%→0.6%와 매출 정체가 동시에 참이라는 사실.
+  </p>
+
+  <div class="trig">
+    <div class="th">전환 트리거 · 이게 나오면 브리프를 다시 짠다</div>
+    <ul>
+      <li><strong>자사몰 세션이 실은 안 늘었고 주문이 줄어서 전환율이 떨어진 거라면</strong> → 앵커 붕괴. 재정의 전체를 다시 짭니다. <strong>가장 먼저 확인할 것.</strong></li>
+      <li><strong>이탈이 상품 상세가 아니라 결제·배송비 단계에 몰려 있다면</strong> → 가설 B로 무게 이동. 콘텐츠가 아니라 자사몰·가격 문제.</li>
+      <li><strong>“솔립” 브랜드 검색량이 팔로워와 함께 뛰었고 네이버 매출도 같이 늘었다면</strong> → 가설 C 부활. 인스타는 이미 일하고 있고 문제는 측정.</li>
+      <li><strong>버렸던 콘텐츠(제품·사용·관리)의 링크 클릭률이 실은 높았다면</strong> → A1을 강하게 지지. 저장은 적어도 클릭은 높을 수 있어요. 저장·공유만 보느라 못 본 겁니다.</li>
+    </ul>
+  </div>
+
+  <p style="margin-top:20px">
+    또 하나 경계한 것: <strong>DM 해석에 과체중을 싣지 않기.</strong>
+    “화분 어디 거예요”가 자주 온다는 건 발화지만, 거기서 “오디언스가 통째로 비구매자”까지 가는 건 도약입니다.
+    실제로 “장바구니에 담는다”는 발화는 반대 방향(의향 있음)을 가리켜요.
+    그래서 A2를 단독 결론으로 밀지 않고 A1·B와 병렬로 세웠습니다.
+  </p>
+</section>
+
+<!-- ============ 핸드오프 ============ -->
+<section>
+  <div class="kicker">핸드오프</div>
+  <h2>리서처에게 넘깁니다</h2>
+  <p class="lead">
+    이 케이스는 <strong>본인 확신을 뒤집어야 하는 케이스</strong>입니다.
+    1년간 팔로워 3배라는 성공 경험이 “방향이 맞다”는 믿음을 단단히 굳혔어요.
+    말로는 안 뒤집힙니다. <mark>리서처가 가져오는 숫자가 곧 설득 재료입니다.</mark>
+  </p>
+
+  <div class="handoff">
+    <div class="hh"><i>Ben</i><b>리서치 미션 · 7항</b></div>
+    <div class="hs">범위를 좁혀 넘깁니다. 백화점식 조사 금지. 아래 것만 가릅니다.</div>
+
+    <div class="missions">
+      <div class="mi pri">
+        <div class="mn">Mission 01 · 최우선</div>
+        <div class="mt">앵커 검증</div>
+        <div class="md">자사몰 세션·주문·객단가 12개월 추이. 전환율 하락이 “세션 증가 + 주문 정체”인가, “주문 감소”인가.
+          <strong>여기 깨지면 브리프 전체 재작성.</strong></div>
+      </div>
+      <div class="mi pri">
+        <div class="mn">Mission 02 · 결정타</div>
+        <div class="mt">유입원별 퍼널 분해</div>
+        <div class="md">인스타 · 네이버 · 직접 유입의 단계별 도달률(상세 → 장바구니 → 결제 시작 → 완료).
+          상세에서 새면 A계열, 결제에서 새면 B. <strong>A1/A2/B를 가릅니다.</strong></div>
+      </div>
+      <div class="mi">
+        <div class="mn">Mission 03</div>
+        <div class="mt">어트리뷰션 반증 (가설 C)</div>
+        <div class="md">“솔립” 브랜드 검색량 추이 vs 팔로워 곡선 vs 네이버 매출. 인스타를 줄이는 게 자해가 될지 여기서 갈림.</div>
+      </div>
+      <div class="mi">
+        <div class="mn">Mission 04</div>
+        <div class="mt">콘텐츠 재정렬 (A1 반증 기회)</div>
+        <div class="md">저장·공유가 아니라 <strong>프로필 방문 → 링크 클릭</strong>으로 콘텐츠를 다시 줄 세운다.
+          버린 콘텐츠의 클릭률이 실제로 낮았는가.</div>
+      </div>
+      <div class="mi">
+        <div class="mn">Mission 05</div>
+        <div class="mt">내구재 성장 레버 (함정 회피)</div>
+        <div class="md">실제 재구매율·주기 실측 + 카테고리 벤치마크. 구조적으로 낮으면 성장은 신규 + 객단가(세트·선물)로만 가능.</div>
+      </div>
+      <div class="mi">
+        <div class="mn">Mission 06 · 시한 있음</div>
+        <div class="mt">선물 시장 실재성</div>
+        <div class="md">집들이·결혼 선물 검색량 시즌 곡선, 가격대, 경쟁사 선물 오퍼 관행(각인·포장·세트·메시지 카드), 시즌 리드타임 역산.</div>
+      </div>
+      <div class="mi">
+        <div class="mn">Mission 07 · 필터</div>
+        <div class="mt">1인 실행 가능성</div>
+        <div class="md">콘텐츠 총량을 <strong>줄이면서</strong> 전환을 올린 소규모 D2C 사례.
+          <strong>“시간을 더 쓰세요”라는 처방은 전부 실행 불가로 사전 차단.</strong></div>
+      </div>
+      <div class="mi">
+        <div class="mn">고객 확인 · 리서치 아님</div>
+        <div class="mt">선결 항목</div>
+        <div class="md">마진율·채용 여력 / 외주 공방 리드타임·최소 수량 / <strong>자사몰·GA·인스타 인사이트 접근 권한</strong>
+          (없으면 미션 1~4가 통째로 막힘).</div>
+      </div>
+    </div>
+
+    <div class="carry">
+      <div class="ct">계승 패킷 · 다시 캐지 말 것</div>
+      <ul>
+        <li><strong>1순위 진짜 문제</strong> 유입은 3배 늘었는데 늘어난 유입이 구매로 넘어가지 않는다. 병목은 유입과 구매 사이.</li>
+        <li><strong>2순위</strong> 콘텐츠 선택 규칙이 저장·공유(영감 신호)로 고정되어, 구매 근거 콘텐츠가 구조적으로 배제된다.</li>
+        <li><strong>3순위 · 자원 오배치</strong> 매출 6할의 네이버 검색은 굶고, 주 20시간은 매출 안 나는 채널에 묶여 있다.</li>
+        <li><strong>방치된 수요</strong> 집들이·결혼 선물(3월·9~11월). 포장 요청 집중은 관측된 행동. 시즌까지 두 달.</li>
+        <li><strong>판정 (재검토 금지)</strong> 생산량 2배·편집자 채용·숏츠 추가는 <strong>어느 가설이 맞아도</strong> 전환 문제를 못 건드린다. 여기에 다시 5 Whys를 돌리지 말 것.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="disc">
+    이 브리프의 브랜드·수치는 <strong>가상 시나리오 설정</strong>입니다(쇼케이스 케이스).
+    시장·업계 벤치마크는 다음 단계에서 리서처가 실제 출처로 검증·대체합니다.
+    <br>산출 원본: <code>작업/2026-07-11_쇼케이스_대조실험/01_Leo_문제정의.md</code>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div><b>Team of One : Marketer</b> · 1인 기업·마케터를 위한 AI 팀원 패키지</div>
+    <div>01 / 05 · 해석가 Leo · 문제정의 브리프</div>
+  </div>
+</footer>
+
+</body>
+</html>

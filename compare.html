@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>같은 의뢰, 두 개의 답 | Team of One : Marketer</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#16161A;
+    --ink-2:#4A4A55;
+    --ink-3:#82828F;
+    --ink-4:#B0B0BA;
+    --paper:#F7F5F2;
+    --card:#FFFFFF;
+    --line:#E4E1DB;
+    --line-2:#EFEDE8;
+
+    --ai:#8A8578;
+    --ai-wash:#F1F0EB;
+    --ai-line:#DCD9CF;
+
+    --leo:#46587A;
+    --ben:#5E7A62;
+    --tess:#9B5C63;
+    --sam:#A8813F;
+    --cap:#5B4B7A;
+
+    --stop:#A8543F;
+    --stop-wash:#F8EDE8;
+    --go:#5E7A62;
+    --go-wash:#EDF2EC;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.75;word-break:keep-all;
+    overflow-wrap:break-word;-webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  .narrow{max-width:820px;margin:0 auto}
+  section{padding:80px 0;border-top:1px solid var(--line)}
+
+  /* ===== HERO ===== */
+  .hero{background:var(--ink);color:#fff;padding:96px 0 88px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(760px 420px at 12% 6%, rgba(70,88,122,.34), transparent 62%),
+      radial-gradient(700px 400px at 88% 92%, rgba(155,92,99,.26), transparent 62%),
+      radial-gradient(600px 360px at 62% 18%, rgba(94,122,98,.18), transparent 66%);
+  }
+  .hero .wrap{position:relative;z-index:1}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:26px;
+    border:1px solid rgba(255,255,255,.2);padding:7px 15px;border-radius:999px}
+  .eyebrow i{width:6px;height:6px;border-radius:50%;background:#8FA3C4;font-style:normal}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.035em;line-height:1.2;margin-bottom:22px}
+  .hero h1 em{font-style:normal;color:#C9B9D6}
+  .hero .sub{font-size:19px;color:rgba(255,255,255,.76);max-width:640px;line-height:1.72}
+  .hero .sub strong{color:#fff;font-weight:700}
+  .heroline{display:flex;gap:0;margin-top:44px;border-top:1px solid rgba(255,255,255,.14);padding-top:26px;flex-wrap:wrap}
+  .hl{flex:1;min-width:150px;padding-right:20px}
+  .hl b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em;margin-bottom:3px}
+  .hl span{font-size:12.5px;color:rgba(255,255,255,.55);font-weight:600}
+
+  /* ===== shared ===== */
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+  .kicker::before{content:"";width:24px;height:2px;background:var(--ink-3);border-radius:1px}
+  h2{font-size:33px;font-weight:800;letter-spacing:-.028em;line-height:1.32;margin-bottom:16px}
+  h3{font-size:20px;font-weight:800;letter-spacing:-.015em;margin:36px 0 12px}
+  p{color:var(--ink-2);margin-bottom:15px;font-size:16px}
+  p strong,li strong,td strong{color:var(--ink);font-weight:700}
+  .lead{font-size:18px;color:var(--ink-2);line-height:1.78}
+  mark{background:linear-gradient(transparent 58%, #E4DFF0 58%);color:var(--ink);font-weight:700}
+  mark.warm{background:linear-gradient(transparent 58%, #F0D6C9 58%)}
+  ul{list-style:none}
+  ul li{position:relative;padding-left:17px;margin-bottom:9px;color:var(--ink-2);font-size:16px}
+  ul li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;
+    border-radius:50%;background:var(--ink-4)}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--line-2);
+    padding:1px 5px;border-radius:3px}
+
+  /* ===== 의뢰 ===== */
+  .brief{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:38px 40px}
+  .brief .bt{font-size:12px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:18px}
+  .brief blockquote{font-size:19px;line-height:1.75;color:var(--ink);font-weight:600;
+    border-left:3px solid var(--line);padding-left:22px}
+  .brief .who{margin-top:24px;padding-top:20px;border-top:1px solid var(--line-2);
+    font-size:14px;color:var(--ink-3);display:flex;gap:22px;flex-wrap:wrap}
+  .brief .who b{color:var(--ink-2);font-weight:700}
+
+  /* ===== prompt ===== */
+  .pbox{background:#1D1D22;border-radius:6px;padding:28px 30px;margin-top:22px;position:relative}
+  .pbox .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;gap:12px}
+  .pbox .phl{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(255,255,255,.5)}
+  .copybtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;
+    font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:4px;
+    cursor:pointer;transition:.15s;white-space:nowrap}
+  .copybtn:hover{background:rgba(255,255,255,.18)}
+  .copybtn.done{background:#5E7A62;border-color:#5E7A62}
+  .pbox pre{font-family:ui-monospace,Menlo,monospace;font-size:13.5px;color:#D5D2CB;
+    line-height:1.85;white-space:pre-wrap;word-break:keep-all}
+  .pnote{margin-top:18px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1);
+    font-size:13px;color:rgba(255,255,255,.48);line-height:1.65}
+  .pnote b{color:rgba(255,255,255,.8)}
+
+  /* ===== TABS ===== */
+  .tabs{display:flex;gap:8px;margin:0 0 24px;position:sticky;top:0;z-index:20;
+    background:var(--paper);padding:16px 0 12px}
+  .tab{flex:1;background:var(--card);border:1px solid var(--line);border-radius:6px;
+    padding:16px 18px;cursor:pointer;transition:.16s;text-align:left;font-family:inherit}
+  .tab .tl{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:4px}
+  .tab .tn{font-size:16px;font-weight:800;color:var(--ink-2);letter-spacing:-.01em}
+  .tab:hover{border-color:var(--ink-4)}
+  .tab.on{border-color:var(--ink);border-width:1px;box-shadow:0 0 0 1px var(--ink)}
+  .tab.on .tn{color:var(--ink)}
+  .tab.a.on{box-shadow:0 0 0 1px var(--ai);border-color:var(--ai)}
+  .tab.a.on .tl,.tab.a.on .tn{color:var(--ai)}
+  .tab.b.on{box-shadow:0 0 0 1px var(--cap);border-color:var(--cap)}
+  .tab.b.on .tl,.tab.b.on .tn{color:var(--cap)}
+  .tab.c.on{box-shadow:0 0 0 1px var(--stop);border-color:var(--stop)}
+  .tab.c.on .tl,.tab.c.on .tn{color:var(--stop)}
+  .pane{display:none}
+  .pane.on{display:block;animation:fade .28s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* ===== answer card ===== */
+  .ans{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:34px 36px}
+  .ans.a{border-top:4px solid var(--ai)}
+  .ans.b{border-top:4px solid var(--cap)}
+  .ans .ah{display:flex;align-items:center;gap:12px;margin-bottom:6px;flex-wrap:wrap}
+  .ans .ah b{font-size:22px;font-weight:800;letter-spacing:-.02em}
+  .ans .badge{font-size:11px;font-weight:800;letter-spacing:.06em;padding:3px 9px;border-radius:3px}
+  .ans.a .badge{background:var(--ai-wash);color:var(--ai)}
+  .ans.b .badge{background:#EFECF5;color:var(--cap)}
+  .ans .as{font-size:14px;color:var(--ink-3);margin-bottom:26px;font-weight:600}
+
+  .stepslist{display:flex;flex-direction:column;gap:9px}
+  .sl{display:grid;grid-template-columns:32px 1fr;gap:14px;align-items:start;
+    padding:13px 0;border-bottom:1px solid var(--line-2)}
+  .sl:last-child{border-bottom:none}
+  .sl .sn{width:26px;height:26px;border-radius:5px;display:flex;align-items:center;
+    justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0}
+  .sl .st{font-size:15.5px;font-weight:700;color:var(--ink);margin-bottom:2px;line-height:1.5}
+  .sl .sd{font-size:14px;color:var(--ink-2);line-height:1.62}
+
+  /* prescription order */
+  .porder{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:center;
+    padding:10px 0;border-bottom:1px solid var(--line-2);font-size:15px}
+  .porder:last-child{border-bottom:none}
+  .porder .pk{font-size:12px;font-weight:800;color:var(--ink-4);text-align:center}
+  .porder .pv{font-weight:700;color:var(--ink-2);background:var(--line-2);border-radius:4px;padding:10px 15px}
+  .porder .pv.hit{background:var(--cap);color:#fff}
+  .porder .pv.miss{background:var(--stop-wash);color:var(--stop)}
+
+  /* ===== compare table ===== */
+  .cmp{width:100%;border-collapse:collapse;background:var(--card);
+    border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:24px 0}
+  .cmp th{background:var(--ink);color:#fff;font-size:12px;font-weight:800;letter-spacing:.06em;
+    padding:15px 16px;text-align:left}
+  .cmp th.a{background:var(--ai)}
+  .cmp th.b{background:var(--cap)}
+  .cmp td{padding:16px;border-bottom:1px solid var(--line-2);font-size:14.5px;
+    color:var(--ink-2);vertical-align:top;line-height:1.62}
+  .cmp tr:last-child td{border-bottom:none}
+  .cmp td.k{font-weight:800;color:var(--ink);white-space:nowrap;background:#FBFAF8}
+  .cmp td.acol{background:var(--ai-wash)}
+  .cmp td.bcol{background:#F6F4F9}
+
+  /* ===== accordion (5 stages) ===== */
+  .acc{display:flex;flex-direction:column;gap:10px;margin-top:26px}
+  .ai-item{background:var(--card);border:1px solid var(--line);border-radius:6px;overflow:hidden;
+    transition:.16s}
+  .ai-item.open{box-shadow:0 8px 30px rgba(22,22,26,.07)}
+  .ai-head{display:grid;grid-template-columns:52px 1fr 30px;gap:16px;align-items:center;
+    padding:20px 24px;cursor:pointer;background:none;border:none;width:100%;text-align:left;
+    font-family:inherit}
+  .ai-head .num{width:44px;height:44px;border-radius:8px;color:#fff;display:flex;
+    align-items:center;justify-content:center;font-size:13px;font-weight:800;letter-spacing:-.01em}
+  .ai-head .ttl{font-size:17.5px;font-weight:800;letter-spacing:-.018em;line-height:1.4;color:var(--ink)}
+  .ai-head .who{font-size:12.5px;font-weight:700;margin-top:3px}
+  .ai-head .arw{font-size:18px;color:var(--ink-4);transition:.2s;text-align:center}
+  .ai-item.open .ai-head .arw{transform:rotate(180deg)}
+  .ai-body{max-height:0;overflow:hidden;transition:max-height .35s ease}
+  .ai-item.open .ai-body{max-height:1400px}
+  .ai-inner{padding:4px 24px 26px 92px}
+  .ai-inner p{font-size:15.5px}
+  .flipbox{background:#FBFAF8;border:1px solid var(--line-2);border-radius:5px;padding:18px 20px;
+    margin-top:14px}
+  .flipbox .fh{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--stop);margin-bottom:8px}
+  .flipbox p{margin:0;font-size:14.5px}
+
+  /* ===== reversals ===== */
+  .rev{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:26px 28px;
+    margin-bottom:10px;display:grid;grid-template-columns:200px 1fr;gap:24px;align-items:center}
+  .rev .rw{font-size:17px;font-weight:800;letter-spacing:-.015em;line-height:1.4}
+  .rev .rd{font-size:15px;color:var(--ink-2);line-height:1.65}
+  .rev .rd .no{display:block;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line);
+    color:var(--stop);font-weight:700;font-size:14.5px}
+  .rev.b{border-left:5px solid var(--ben)} .rev.b .rw{color:var(--ben)}
+  .rev.t{border-left:5px solid var(--tess)} .rev.t .rw{color:var(--tess)}
+  .rev.s{border-left:5px solid var(--sam)} .rev.s .rw{color:var(--sam)}
+
+  /* ===== punch ===== */
+  .punch{background:var(--ink);color:#fff;border-radius:6px;padding:46px 44px;text-align:center;
+    margin:30px 0;position:relative;overflow:hidden}
+  .punch::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(600px 320px at 50% 0%, rgba(91,75,122,.35), transparent 68%)}
+  .punch > *{position:relative;z-index:1}
+  .punch .pl{font-size:11.5px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+    color:rgba(255,255,255,.5);margin-bottom:16px}
+  .punch .pb{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1.42}
+  .punch .pb em{font-style:normal;color:#C9B9D6}
+  .punch p{color:rgba(255,255,255,.72);margin:18px auto 0;font-size:16px;max-width:640px}
+  .punch p strong{color:#fff}
+
+  /* ===== honesty ===== */
+  .honest{background:#FBF8F3;border:2px solid var(--sam);border-radius:6px;padding:36px 38px}
+  .honest .hh{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.1em;
+    text-transform:uppercase;background:var(--sam);color:#fff;padding:5px 12px;border-radius:3px;
+    margin-bottom:18px}
+  .honest .hq{font-size:22px;font-weight:800;line-height:1.5;letter-spacing:-.02em;margin-bottom:18px}
+  .honest blockquote{background:#fff;border-left:3px solid var(--sam);padding:18px 22px;
+    font-size:16px;color:var(--ink-2);margin:18px 0;border-radius:0 4px 4px 0;line-height:1.72}
+
+  /* ===== wrong list ===== */
+  .wl{display:flex;flex-direction:column;gap:8px;margin-top:22px}
+  .wi{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--stop);
+    border-radius:5px;padding:16px 20px;display:grid;grid-template-columns:26px 1fr;gap:12px}
+  .wi .wn{width:22px;height:22px;border-radius:50%;background:var(--stop);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:3px}
+  .wi .wt{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:2px}
+  .wi .wd{font-size:14px;color:var(--ink-2);line-height:1.6}
+
+  /* ===== team grid ===== */
+  .team{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin:30px 0}
+  .tm{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:22px 18px;
+    text-align:center;transition:.16s}
+  .tm:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(22,22,26,.08)}
+  .tm i{display:block;width:38px;height:38px;border-radius:10px;margin:0 auto 12px;
+    color:#fff;line-height:38px;font-size:13px;font-weight:800;font-style:normal}
+  .tm b{display:block;font-size:16px;font-weight:800;letter-spacing:-.01em}
+  .tm em{display:block;font-size:12px;font-style:normal;color:var(--ink-3);margin:2px 0 10px;font-weight:600}
+  .tm span{display:block;font-size:12.5px;color:var(--ink-2);line-height:1.55}
+
+  /* ===== reports ===== */
+  .reps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+  .rp{background:var(--card);border:1px solid var(--line);border-radius:5px;padding:18px 20px;
+    text-decoration:none;display:block;transition:.16s}
+  .rp:hover{border-color:var(--ink-4);transform:translateY(-2px)}
+  .rp .rn{font-size:11px;font-weight:800;letter-spacing:.07em;margin-bottom:5px}
+  .rp .rt{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.45}
+  .rp .rs{font-size:12.5px;color:var(--ink-3);margin-top:4px}
+
+  /* ===== CTA ===== */
+  .cta{background:var(--ink);color:#fff;padding:82px 0;position:relative;overflow:hidden}
+  .cta::before{content:"";position:absolute;inset:0;
+    background:radial-gradient(700px 400px at 50% 100%, rgba(70,88,122,.3), transparent 66%)}
+  .cta .wrap{position:relative;z-index:1;text-align:center}
+  .cta h2{font-size:36px;color:#fff;margin-bottom:18px}
+  .cta p{color:rgba(255,255,255,.72);font-size:17px;max-width:600px;margin:0 auto 32px}
+  .cta p strong{color:#fff}
+  .btn{display:inline-block;background:#fff;color:var(--ink);font-size:16px;font-weight:800;
+    padding:16px 36px;border-radius:6px;text-decoration:none;transition:.16s;
+    border:1px solid #fff}
+  .btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.3)}
+  .btn.ghost{background:transparent;color:#fff;margin-left:10px}
+  .btn.ghost:hover{background:rgba(255,255,255,.1)}
+  .ctanote{margin-top:26px;font-size:12.5px;color:rgba(255,255,255,.4);line-height:1.7}
+
+  footer{background:#0F0F12;color:rgba(255,255,255,.42);padding:44px 0;font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px}
+  footer b{color:rgba(255,255,255,.8);font-weight:700}
+  .disc{background:#FBFAF8;border:1px solid var(--line);border-radius:6px;padding:24px 28px;
+    font-size:13.5px;color:var(--ink-3);line-height:1.75;margin-top:30px}
+  .disc b{color:var(--ink-2)}
+
+  @media(max-width:900px){
+    .hero h1{font-size:34px}
+    .hero .sub{font-size:17px}
+    h2{font-size:26px}
+    .team{grid-template-columns:1fr 1fr}
+    .reps{grid-template-columns:1fr}
+    .rev{grid-template-columns:1fr;gap:10px}
+    .tabs{flex-direction:column}
+    .ai-inner{padding:4px 22px 24px 22px}
+    .punch .pb{font-size:21px}
+    .punch{padding:32px 26px}
+    .honest .hq{font-size:18px}
+    .cmp thead{display:none}
+    .cmp td{display:block;border-bottom:none;padding:6px 16px}
+    .cmp tr{display:block;border-bottom:1px solid var(--line);padding:12px 0}
+    .btn.ghost{margin:10px 0 0}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><i></i>Team of One : Marketer · 공개 대조 실험</div>
+    <h1>같은 의뢰,<br><em>두 개의 답</em></h1>
+    <p class="sub">
+      1인 마케터의 실제 고민 하나를 <strong>(A) 일반 AI에 한 방 프롬프트로</strong>,
+      <strong>(B) 5명의 AI 파트너 팀에</strong> 각각 던졌습니다.
+      <br><br>A를 일부러 못 쓰게 만들지 않았습니다. <strong>최선을 다해 뽑았고, 아래에서 프롬프트를 그대로 공개합니다.
+      복사해서 직접 재현해 보세요.</strong>
+    </p>
+    <div class="heroline">
+      <div class="hl"><b>5</b><span>AI 파트너</span></div>
+      <div class="hl"><b>3</b><span>결론이 뒤집힌 횟수</span></div>
+      <div class="hl"><b>1</b><span>단일 AI가 이긴 지점</span></div>
+      <div class="hl"><b>12</b><span>공개 전 팩트체크에서<br>잡힌 팀의 오류</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ 의뢰 ============ -->
+<section style="border-top:none">
+  <div class="narrow">
+    <div class="kicker">의뢰</div>
+    <h2>“콘텐츠가 소모되는 느낌이에요.<br>편집자를 뽑아야 할까요?”</h2>
+    <p class="lead">
+      수제 원목 도마를 파는 1인 D2C 브랜드.
+      인스타 팔로워는 <strong>1년 새 3배</strong>가 됐는데, 매출은 <strong>7개월째 그대로</strong>입니다.
+    </p>
+
+    <div class="brief" style="margin-top:26px">
+      <div class="bt">고객이 가져온 것 · 원문</div>
+      <blockquote>
+        “인스타는 1년 새 팔로워 8천 명에서 2만 4천 명까지 늘었어요.
+        릴스 저장 수가 잘 나오고 공유도 많이 돼요. 근데 <strong>매출이 안 늘어요.</strong>
+        <br><br>콘텐츠가 소모되는 느낌이라, <strong>숏폼 편집자를 한 명 뽑아서 릴스를 주 4회에서 주 8회로 늘려야</strong> 하나 싶어요.
+        지금 혼자 촬영·편집·발행 다 하느라 신제품 기획할 시간이 없거든요.
+        <br><br>편집자 뽑는 게 맞을까요? 아니면 릴스 말고 유튜브 숏츠도 같이 돌려야 할까요?”
+      </blockquote>
+      <div class="who">
+        <span><b>브랜드</b> SOLLIP · 수제 원목 도마·트레이 D2C</span>
+        <span><b>단계</b> 창업 3년 차</span>
+        <span><b>조직</b> 대표 겸 1인 마케터</span>
+        <span><b>월 매출</b> 1,900만 원 · 7개월 정체</span>
+      </div>
+    </div>
+
+    <div class="pbox">
+      <div class="ph">
+        <div class="phl">대조군 A · 재현용 프롬프트</div>
+        <button class="copybtn" id="cbtn">복사하기</button>
+      </div>
+<pre id="ptext">너는 마케팅 전문가야. 아래 상황을 보고 조언해줘.
+
+수제 원목 도마·트레이를 파는 1인 D2C 브랜드입니다. 인스타 팔로워가
+1년 새 8천에서 2만 4천으로 늘었고 릴스 저장·공유도 잘 나옵니다.
+그런데 월 매출이 1,900만 원에서 7개월째 정체입니다.
+
+콘텐츠가 소모되는 느낌이라 숏폼 편집자를 뽑아 릴스를 주 4회에서
+주 8회로 늘릴까 합니다. 아니면 유튜브 숏츠도 같이 돌려야 할까요?
+어떻게 해야 할까요?</pre>
+      <div class="pnote">
+        <b>이 프롬프트를 아무 AI에나 넣어보세요.</b> 아래 “A의 답”과 비슷한 답이 나올 겁니다.
+        저희는 A를 조작하지 않았습니다. <b>조작하면 당신이 5초 만에 잡아낼 테니까요.</b>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 두 개의 답 ============ -->
+<section>
+  <div class="kicker">두 개의 답</div>
+  <h2>먼저 인정하고 시작합니다. <mark>A는 꽤 잘 썼습니다.</mark></h2>
+  <p class="lead" style="max-width:760px">
+    큰 오답이 없어요. 편집자 채용을 기각했고, 숏츠도 기각했고, 문제가 유입이 아니라 전환이라는 것도 잡았습니다.
+    <strong>A의 조언을 그대로 따라도 대표는 최악은 면합니다.</strong>
+    <br>그러니 “AI는 멍청하다”는 이야기가 아닙니다. <mark>이건 순서에 대한 이야기입니다.</mark>
+  </p>
+
+  <div class="tabs">
+    <button class="tab a on" data-p="pa">
+      <div class="tl">대조군 A</div>
+      <div class="tn">단일 AI · 한 방 프롬프트</div>
+    </button>
+    <button class="tab b" data-p="pb">
+      <div class="tl">실험군 B</div>
+      <div class="tn">Team of One · 5단계 파이프라인</div>
+    </button>
+    <button class="tab c" data-p="pc">
+      <div class="tl">나란히</div>
+      <div class="tn">처방 순서 대조</div>
+    </button>
+  </div>
+
+  <!-- A -->
+  <div class="pane on" id="pa">
+    <div class="ans a">
+      <div class="ah">
+        <b>A · 단일 AI의 답</b>
+        <span class="badge">한 방 프롬프트 · 도구 없음 · 데이터 없음</span>
+      </div>
+      <div class="as">아래는 실제로 나온 답변의 골자입니다. 위 프롬프트로 재현할 수 있습니다.</div>
+
+      <div class="stepslist">
+        <div class="sl"><div class="sn" style="background:var(--go)">✓</div>
+          <div><div class="st">두 선택지 모두 기각</div>
+            <div class="sd">“팔로워 3배 증가에도 매출이 0원 늘었다는 건 유입 문제가 아니라 전환 문제입니다.
+              콘텐츠를 2배로 늘리면 전환 안 되는 트래픽만 2배가 됩니다.”</div></div></div>
+        <div class="sl"><div class="sn" style="background:var(--go)">✓</div>
+          <div><div class="st">저장·공유는 구매 신호가 아니다</div>
+            <div class="sd">감상형 릴스가 구매자가 아니라 감상자를 데려온다고 정확히 지적.</div></div></div>
+        <div class="sl"><div class="sn" style="background:var(--go)">✓</div>
+          <div><div class="st">내구재라 재구매 동력이 구조적으로 없다</div>
+            <div class="sd">“이건 마케팅 실패가 아니라 카테고리의 본질이에요.” <strong>팀의 해석가와 정확히 같은 통찰.</strong></div></div></div>
+        <div class="sl"><div class="sn" style="background:var(--go)">✓</div>
+          <div><div class="st">선물이 진짜 시장이다</div>
+            <div class="sd">각인·세트·선물 포장까지 지목. <strong>팀의 최종 전략 축과 같은 곳을 봤습니다.</strong></div></div></div>
+        <div class="sl"><div class="sn" style="background:var(--go)">✓</div>
+          <div><div class="st">되물었다</div>
+            <div class="sd">6개 지표를 요청하며 “이거 없이는 어떤 조언도 추측입니다”라고 명시.</div></div></div>
+        <div class="sl"><div class="sn" style="background:var(--stop)">✕</div>
+          <div><div class="st">그런데 그 정직함 <em>바로 뒤에</em> 목표를 확정했다</div>
+            <div class="sd">“<strong>목표: 90일 뒤 월 2,800만~3,200만 원.</strong>”
+              <mark class="warm">데이터를 못 받았다고 써놓고, 못 받은 채로 목표 매출을 박았습니다.</mark>
+              산술이 틀린 게 아니라, <strong>검증 안 된 객단가 추정(6만 원) 위에 목표가 서 있는 게 문제</strong>입니다.</div></div></div>
+        <div class="sl"><div class="sn" style="background:var(--stop)">✕</div>
+          <div><div class="st">결제를 후보 원인에 넣고, 처방에는 한 줄도 안 배정했다</div>
+            <div class="sd"><strong>A는 결제 이탈을 3대 후보 원인 중 하나로 명시했습니다.</strong>
+              그런데 5개 처방 어디에도 결제가 없어요. <strong>그리고 배송비는 단어조차 등장하지 않습니다.</strong>
+              <mark class="warm">크기를 못 쟀기 때문입니다.</mark>
+              벤치마크 없이는 93% 이탈이 재앙인지 정상인지 알 수 없고, 알 수 없으면 순위를 못 매깁니다.
+              나중에 밝혀지지만 <strong>배송비는 이 케이스의 이탈 사유 1위(31%)</strong>였습니다.</div></div></div>
+        <div class="sl"><div class="sn" style="background:var(--stop)">✕</div>
+          <div><div class="st">5개 원인을 세우고, 5개를 다 처방했다</div>
+            <div class="sd">90일 플랜에 4개 병렬 트랙.
+              <strong>그런데 그 플랜에는 시간을 줄이는 항목이 하나도 없습니다.</strong>
+              전부 기존 주 20시간 위에 얹힙니다.</div></div></div>
+        <div class="sl"><div class="sn" style="background:var(--stop)">✕</div>
+          <div><div class="st">인건비를 감당할 수 있는지 묻지 않고 인건비를 기각했다</div>
+            <div class="sd">자기가 요청한 6개 지표 목록에 <strong>마진율이 없습니다.</strong> 객단가는 있는데요.</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- B -->
+  <div class="pane" id="pb">
+    <div class="ans b">
+      <div class="ah">
+        <b>B · 팀의 답</b>
+        <span class="badge">5단계 · 파일 핸드오프 · 실측 + 외부 벤치마크</span>
+      </div>
+      <div class="as">각 파트너를 눌러 펼쳐보세요. <strong>중요한 건 결론이 아니라, 앞사람이 어디서 뒤집혔는가입니다.</strong></div>
+
+      <div class="acc">
+        <div class="ai-item open">
+          <button class="ai-head">
+            <span class="num" style="background:var(--leo)">01</span>
+            <span>
+              <span class="ttl">유입은 넘친다. 넘친 유입이 안 산다</span>
+              <span class="who" style="color:var(--leo)">Leo · 해석가</span>
+            </span>
+            <span class="arw">⌄</span>
+          </button>
+          <div class="ai-body"><div class="ai-inner">
+            <p>전환율이 <strong>1.10% → 0.62%</strong>인데 매출은 제자리.
+              전환율은 분수예요. 매출이 그대로인데 전환율만 절반이 됐다면
+              <strong>분모(세션)가 늘고 분자(주문)는 안 늘었다</strong>는 뜻입니다.
+              <mark>0에 무엇을 곱해도 0입니다.</mark></p>
+            <p>그리고 결정적 단서 하나. DM에 자주 오는 질문이
+              <strong>“이 화분 어디 거예요”, “테이블 어디서 사셨어요”</strong>였습니다.
+              <strong>아무도 도마를 안 묻습니다.</strong></p>
+            <p>단, 여기서 <strong>결론을 내지 않았습니다.</strong>
+              경합 가설 5개(A1·A2·B·C·D)를 벌리고, 각각을 가를 <strong>데이터를 지정</strong>한 뒤 멈췄습니다.
+              그리고 함정 경고를 하나 박았어요:
+              <strong>“도마는 내구재다. 재구매가 낮은 게 병이 아니라 상품의 성질일 수 있다. 리텐션 논리를 복사하면 오진이다.”</strong></p>
+          </div></div>
+        </div>
+
+        <div class="ai-item">
+          <button class="ai-head">
+            <span class="num" style="background:var(--ben)">02</span>
+            <span>
+              <span class="ttl">절벽은 콘텐츠가 아니라 결제에 있었다</span>
+              <span class="who" style="color:var(--ben)">Ben · 리서처</span>
+            </span>
+            <span class="arw">⌄</span>
+          </button>
+          <div class="ai-body"><div class="ai-inner">
+            <p>Leo의 앵커를 실측으로 검증: <strong>세션 +74.7%, 주문 −2.0%.</strong> 추론이 맞았습니다.
+              (다만 정정: “정체”가 아니라 <strong>침식</strong>이었습니다. 자사몰 매출 −5.9%.)</p>
+            <p>그리고 아무도 예상 못 한 게 나왔습니다.</p>
+            <p><strong>장바구니 담기율은 12.45%</strong>로 글로벌 평균(6.34%)의 <strong>2배</strong>입니다. 잘하고 있어요.
+              <mark class="warm">그런데 담은 것의 95.1%가 결제되지 않습니다.</mark>
+              업계 벤치마크(Baymard)는 70.22%예요.
+              <strong>의향은 이미 만들어졌고, 마지막 문에서 전멸합니다.</strong></p>
+            <p>콘텐츠 쪽도 뒤집혔습니다. <strong>저장 순위와 클릭 순위가 정반대</strong>였어요.
+              저장 1위(스타일링)가 클릭률 최하위(0.114%), 저장 최하위(관리법)가 클릭률 1위(1.463%).
+              <strong>“재미없어 보여서 잘 안 올려요”라던 그 콘텐츠가 팔고 있었습니다.</strong>
+              발행의 <strong>19%가 인스타 주문의 70%</strong>를 만듭니다.</p>
+            <div class="flipbox">
+              <div class="fh">★ 이 파이프라인이 오진할 뻔한 지점</div>
+              <p>유입원별 결제 이탈률이 93.5 / 92.7 / 93.1로 <strong>똑같았습니다.</strong>
+                “차이가 없으니 결제는 문제가 아니다”로 넘어갈 뻔했어요.
+                <br><br><strong>“차이가 없다”와 “정상이다”는 완전히 다른 말입니다.</strong>
+                차이가 없는 이유가 “다 정상이라서”가 아니라 <strong>“다 똑같이 망가져서”</strong>일 수 있거든요.
+                <br><strong>외부 기준선에 대보고 나서야 그림이 뒤집혔습니다.</strong></p>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="ai-item">
+          <button class="ai-head">
+            <span class="num" style="background:var(--tess)">03</span>
+            <span>
+              <span class="ttl">무료배송을 비용으로 사지 말고, 선물로 벌어라</span>
+              <span class="who" style="color:var(--tess)">Tess · 전략가</span>
+            </span>
+            <span class="arw">⌄</span>
+          </button>
+          <div class="ai-body"><div class="ai-inner">
+            <p>배송비가 이탈 1위이고 경쟁사는 전부 무료배송입니다. <strong>그러니 없애야죠.</strong>
+              그런데 Ben이 안 물은 게 있었어요. <mark>“그럼 마진은?”</mark></p>
+            <p><strong>순마진 411만 원짜리 회사</strong>입니다.
+              배송비 4,000원을 흡수하면 마진 중립에 <strong>주문 +33.2%</strong>가 필요합니다.
+              전면 무료배송은 <strong>마진 하방이 열린 도박</strong>이에요.</p>
+            <p>그래서 <strong>임계선</strong>을 두고, <strong>선물 오퍼로 객단가를 임계선 위로 밀어올립니다.</strong>
+              선물 주문은 이미 객단가가 <strong>94,000원</strong>(평균보다 +28.8%)이거든요.
+              <strong>이탈 1위(배송비)는 추가 구매 유인으로 바뀌고, 이탈 2위(가격 부담)는 “선물”이라는 맥락이 지웁니다.</strong></p>
+            <p>그리고 <strong>8월 중순 발주 데드라인을 지키지 않기로 했습니다.</strong>
+              신규 SKU를 안 만들기로 하는 순간 그 벽이 증발하거든요.
+              <mark>시장은 이미 기존 SKU를 선물로 사고 있습니다. 없는 건 상품이 아니라 오퍼였어요.</mark></p>
+            <div class="flipbox">
+              <div class="fh">Leo의 KPI도 교정했습니다</div>
+              <p>Leo가 “자사몰 전환율 회복”을 성공 신호로 뒀는데,
+                <strong>콘텐츠를 줄이면 세션(분모)이 줄어서 주문이 하나도 안 늘어도 전환율이 회복된 것처럼 보입니다.</strong>
+                North Star를 <strong>순마진액</strong>으로 교체했습니다.</p>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="ai-item">
+          <button class="ai-head">
+            <span class="num" style="background:var(--sam)">04</span>
+            <span>
+              <span class="ttl">아무도 그 쇼핑몰에 들어가 보지 않았다</span>
+              <span class="who" style="color:var(--sam)">Sam · 실행 설계자</span>
+            </span>
+            <span class="arw">⌄</span>
+          </button>
+          <div class="ai-body"><div class="ai-inner">
+            <p>이탈 사유 설문에 <strong>“결제수단 없음 11%”</strong>가 있었습니다.
+              Ben은 “배송비 31% + 가격 26% = 57%가 비용 이슈”로 묶었고,
+              <strong>11%는 아무도 안 건드렸습니다.</strong></p>
+            <p>그런데 <strong>결제 완료율 7.0%는 배송비 3,000원이 만드는 숫자가 아닙니다.</strong>
+              Baymard의 “추가비용” 이탈은 70% 언저리를 만들지 93%를 만들지 않아요.
+              그리고 <strong>인스타 유입은 세션의 60%이고 사실상 100% 모바일</strong>입니다.
+              <mark class="warm">모바일 결제창 1면에 간편결제가 없으면, 7%는 그것만으로 설명됩니다.</mark>
+              <strong>그리고 간편결제는 마진을 한 푼도 안 깎습니다.</strong></p>
+            <p>→ 그래서 <strong>첫 작업이 분석이 아니라 “본인 몰에서 모바일로 물건을 사보는 것”</strong>이 됐습니다.
+              1.5시간이면 GA4 이벤트 정의, 배송비 노출 시점, 폼 필드 수, 결제 수단 목록이 한 번에 나옵니다.</p>
+            <p><strong>그리고 “편집자를 뽑을까요”의 진짜 답이 아직 안 나와 있었어요.</strong>
+              Ben이 산술로 채용을 닫았고 Tess가 버렸는데, <strong>아무도 “그럼 편집은 누가 하나”를 안 답했습니다.</strong>
+              대표는 여전히 릴스 편집을 손으로 합니다. <strong>주 6시간</strong>이에요.
+              <mark>답: 편집은 AI가 합니다. 사람은 첫 3초의 후킹과 마지막 CTA만 쥡니다.</mark></p>
+            <div class="flipbox">
+              <div class="fh">시간표로 옮기자 드러난 것</div>
+              <p><strong>이 플레이북 전체가 못 하나에 걸려 있습니다.</strong>
+                발행을 주 4건에서 2건으로 줄이면 <strong>주 12.5시간</strong>이 회수되고,
+                그 12.5시간이 나머지 전부의 예산입니다.
+                <strong>안 줄이면 2주차에 30시간이 되고 전부 붕괴합니다.</strong>
+                <br><br>그런데 이게 가장 안 될 일이에요. <strong>“하는 일”이 아니라 “안 하는 일”이라서.</strong>
+                → 그래서 <strong>“영구히 줄인다”가 아니라 “4주만 실험한다”</strong>로 겁니다.</p>
+            </div>
+          </div></div>
+        </div>
+
+        <div class="ai-item">
+          <button class="ai-head">
+            <span class="num" style="background:var(--cap)">05</span>
+            <span>
+              <span class="ttl">계승은 새지 않았다. 그리고 팀이 놓친 것도 있다</span>
+              <span class="who" style="color:var(--cap)">Cap · 팀장 · 검수</span>
+            </span>
+            <span class="arw">⌄</span>
+          </button>
+          <div class="ai-body"><div class="ai-inner">
+            <p>Leo가 박은 못이 Ben의 1번 미션이 됐고, 검증됐고, Tess가 계승했고, Sam이 시간표로 옮겼습니다.
+              <strong>네 단계를 관통합니다.</strong></p>
+            <p>경계 위반은 없었습니다. <strong>다만 넘봐야 할 때 안 넘본 게 하나 있었어요.</strong>
+              Ben이 “결제 완료율 7%는 재앙”이라 판정해 놓고
+              <strong>“그럼 93%를 만드는 게 뭔가”를 안 물었습니다.</strong>
+              <mark>정확한 계승이 빈틈까지 정확히 나릅니다.</mark></p>
+            <p>그리고 <strong>아무도 안 본 자연 실험</strong>을 찾았습니다.
+              같은 브랜드·같은 가격·같은 상품인데,
+              <strong>네이버페이가 기본 탑재된 스마트스토어는 평평하고, 자사몰만 침식 중</strong>입니다.
+              <strong>결제창 스크린샷 2장이면 30초에 확인됩니다.</strong>
+              <span style="font-size:13px;color:var(--ink-3)">(단, 이건 추론입니다. 교란 요인이 많아요.)</span></p>
+            <div class="flipbox" style="border-color:var(--stop);background:var(--stop-wash)">
+              <div class="fh">그리고 팀의 사각지대를 인정했습니다</div>
+              <p><strong>매출의 6할(스마트스토어)을 이 파이프라인이 한 번도 안 봤습니다.</strong>
+                Leo가 리서치 미션을 자사몰로 좁게 박았거든요.
+                <strong>아이러니하게도 A는 이걸 물었습니다.</strong></p>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- C -->
+  <div class="pane" id="pc">
+    <div class="ans" style="border-top:4px solid var(--stop)">
+      <div class="ah">
+        <b>처방 순서가 거의 정확히 뒤집혀 있다</b>
+        <span class="badge" style="background:var(--stop-wash);color:var(--stop)">방향은 같은데 순서가 반대</span>
+      </div>
+      <div class="as">그리고 <strong>1인 사업자에게 순서는 방향보다 중요합니다.</strong> 자원이 하나뿐이라 첫 5주에 무엇을 하느냐가 전부거든요.</div>
+
+      <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:12px;margin-bottom:8px;
+        font-size:11px;font-weight:800;letter-spacing:.07em;color:var(--ink-3);text-transform:uppercase">
+        <div style="text-align:center">순위</div>
+        <div>단일 AI (A)</div>
+        <div>팀 (B)</div>
+      </div>
+      <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:12px;align-items:center;margin-bottom:8px">
+        <div class="pk" style="font-size:12px;font-weight:800;color:var(--ink-4);text-align:center">1</div>
+        <div class="pv" style="font-weight:700;background:var(--ai-wash);border-radius:4px;padding:12px 16px;color:var(--ink-2)">객단가 · 마진</div>
+        <div class="pv hit" style="font-weight:700;background:var(--cap);color:#fff;border-radius:4px;padding:12px 16px">결제 · 비용 구조</div>
+      </div>
+      <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:12px;align-items:center;margin-bottom:8px">
+        <div style="font-size:12px;font-weight:800;color:var(--ink-4);text-align:center">2</div>
+        <div style="font-weight:700;background:var(--ai-wash);border-radius:4px;padding:12px 16px;color:var(--ink-2)">콘텐츠 종류 전환</div>
+        <div style="font-weight:700;background:#F6F4F9;border-radius:4px;padding:12px 16px;color:var(--cap)">선물 오퍼</div>
+      </div>
+      <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:12px;align-items:center;margin-bottom:8px">
+        <div style="font-size:12px;font-weight:800;color:var(--ink-4);text-align:center">3</div>
+        <div style="font-weight:700;background:var(--ai-wash);border-radius:4px;padding:12px 16px;color:var(--ink-2)">이메일 리스트</div>
+        <div style="font-weight:700;background:#F6F4F9;border-radius:4px;padding:12px 16px;color:var(--cap)">콘텐츠 믹스</div>
+      </div>
+      <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:12px;align-items:center;margin-bottom:8px">
+        <div style="font-size:12px;font-weight:800;color:var(--ink-4);text-align:center">4</div>
+        <div style="font-weight:700;background:var(--stop-wash);border-radius:4px;padding:12px 16px;color:var(--stop)">
+          상세페이지 <span style="font-weight:600;font-size:13px">(결제 처방 없음)</span></div>
+        <div style="font-weight:700;background:#F6F4F9;border-radius:4px;padding:12px 16px;color:var(--cap)">네이버 검색</div>
+      </div>
+      <div style="display:grid;grid-template-columns:44px 1fr 1fr;gap:12px;align-items:center">
+        <div style="font-size:12px;font-weight:800;color:var(--ink-4);text-align:center">5</div>
+        <div style="font-weight:700;background:var(--ai-wash);border-radius:4px;padding:12px 16px;color:var(--ink-2)">선물 시즌</div>
+        <div></div>
+      </div>
+
+      <div style="margin-top:26px;padding-top:22px;border-top:1px solid var(--line)">
+        <p style="margin:0;font-size:16.5px">
+          <strong>공정하게 짚습니다. 겹치는 부분이 큽니다.</strong>
+          A의 1순위(객단가·마진 = 각인·세트·선물포장)는 팀의 2순위(선물 오퍼 = 각인·번들·포장)와
+          <strong>상당 부분 같은 물건</strong>이에요. A의 2순위(콘텐츠 종류 전환)는 팀의 3순위와 같고요.
+          <strong>A는 방향을 여러 곳에서 맞혔습니다.</strong>
+        </p>
+        <p style="margin:20px 0 0;font-size:22px;font-weight:800;letter-spacing:-.02em">
+          갈린 곳은 딱 하나입니다: <mark class="warm">결제.</mark>
+        </p>
+        <p style="margin:16px 0 0;font-size:16.5px">
+          팀의 리서처가 잰 레버 크기: <strong>결제 수리 = 주문 2.1~2.9배 여지.</strong>
+          <strong>A의 처방 목록에는 그게 없습니다. 그리고 배송비는 단어조차 없어요.</strong>
+          <br><br>그래서 이건 “순서가 반대다”라는 이야기가 아닙니다.
+          정확히는 <mark>“가장 큰 레버 하나가 A의 처방 목록에서 통째로 빠져 있다”</mark>는 이야기예요.
+          <br><br><strong>왜 빠졌나: 크기를 못 쟀기 때문입니다.</strong>
+          결제 병목은 <strong>퍼널 데이터 × 외부 벤치마크의 교집합</strong>에서만 보입니다.
+          둘 중 하나만 있으면 안 보여요. <strong>한 방 프롬프트에는 검색하고 출처를 열고 벤치마크를 대보는 단계가 없습니다.</strong>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 세 번의 반박 ============ -->
+<section>
+  <div class="kicker">차이가 만들어진 지점</div>
+  <h2>결론을 바꾼 건 지능이 아니라<br><mark>세 번의 반박</mark>이었습니다</h2>
+  <p class="lead" style="max-width:740px">
+    각 파트너는 앞사람의 산출을 <strong>파일로</strong> 물려받습니다.
+    결론은 물려받되, <strong>앞사람의 자신감은 안 물려받습니다.</strong>
+    그래서 눈치 없이 뒤집을 수 있어요.
+  </p>
+
+  <div style="margin-top:28px">
+    <div class="rev b">
+      <div class="rw">Ben이 Leo를 뒤집었다</div>
+      <div class="rd">
+        죽은 줄 알았던 가설(결제 병목)을 <strong>외부 벤치마크로 부활</strong>시켰습니다.
+        <span class="no">없었다면 → 최대 레버(주문 2.1~2.9배)를 놓친다. <strong>그리고 결론이 단일 AI와 거의 같아진다.</strong></span>
+      </div>
+    </div>
+    <div class="rev t">
+      <div class="rw">Tess가 Ben을 뒤집었다</div>
+      <div class="rd">
+        레버 2·3순위를 교체하고, 8월 데드라인을 포기하고, 무료배송에 <strong>마진 게이트</strong>를 걸었습니다.
+        <span class="no">없었다면 → 선물 시즌을 놓치고, 무료배송으로 마진을 태운다.</span>
+      </div>
+    </div>
+    <div class="rev s">
+      <div class="rw">Sam이 Tess를 뒤집었다</div>
+      <div class="rd">
+        “리드타임 0”은 틀렸고, 경고선 기준도 틀렸고, <strong>결제수단 11%</strong>를 발견했고, 20시간을 실측했습니다.
+        <span class="no">없었다면 → 결제수단을 못 보고, 9월에 “박스가 없네”가 되고, 2주차에 시간표가 터진다.</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="punch">
+    <div class="pl">구조 한 줄</div>
+    <div class="pb">팀이 더 똑똑해서가 아닙니다.<br><em>앞사람의 결론을 뒤집을 권한을 가진 사람이<br>네 번 더 있었기 때문입니다.</em></div>
+    <p><strong>한 방 프롬프트에는 자기가 방금 쓴 문장을 뒤집을 두 번째 화자가 없습니다.</strong>
+      AI도 자기반증을 시도할 수는 있어요. 그러나 <strong>같은 컨텍스트 안에서 자기 확신을 뒤집는 건 구조적으로 어렵습니다.</strong></p>
+  </div>
+
+  <div class="punch" style="background:#2A2530">
+    <div class="pl">결과 한 줄</div>
+    <div class="pb"><em>A는 할 일 목록을 줬고,<br>팀은 안 할 일 목록과 순서를 줬습니다.</em></div>
+    <p>A는 원인 5개를 세우고 <strong>5개를 다 처방</strong>했습니다.
+      팀은 가설 5개를 세우고 <strong>데이터로 3개를 죽였습니다.</strong>
+      <br><br><strong>1인 사업자에게 “다 하세요”는 “아무것도 하지 마세요”와 같습니다.</strong></p>
+  </div>
+</section>
+
+<!-- ============ 정직 ============ -->
+<section>
+  <div class="narrow">
+    <div class="kicker">그리고 여기서 팀이 졌습니다</div>
+    <h2>단일 AI가 팀보다 나았던 지점,<br>하나 있습니다</h2>
+    <p class="lead">
+      이 부분을 빼면 위의 모든 주장이 같이 가벼워집니다. <strong>그래서 그대로 싣습니다.</strong>
+    </p>
+
+    <div class="honest" style="margin-top:26px">
+      <div class="hh">★ 팀의 누락</div>
+      <div class="hq">A는 “팔로워를 소유하지 못하고 있다”를 3순위로 짚었다.<br>팀은 이걸 <mark class="warm">한 번도 다루지 않았다.</mark></div>
+      <blockquote>
+        “인스타 팔로워 2만 4천은 <strong>메타의 자산이지 사장님의 자산이 아닙니다.</strong>
+        이메일·카카오 채널로 옮겨두지 않으면, 알고리즘이 바뀌는 날 매출이 같이 사라집니다.”
+        <br><span style="font-size:13px;color:var(--ink-3)">— 단일 AI의 답변 중</span>
+      </blockquote>
+      <p style="margin:0">
+        팀은 “재구매 주기가 17.8개월이라 시간 축 리텐션은 불가능하다”고 판정하고 리스트를 버렸습니다.
+        <strong>그런데 A의 논리는 리텐션이 아니었어요. 플랫폼 의존 리스크 헤지였습니다.</strong>
+        완전히 다른 논거인데, 팀은 이 각도를 한 번도 세우지 않았습니다.
+      </p>
+      <p style="margin:16px 0 0">
+        <strong>그리고 더 아픕니다.</strong> 팀은 발행량을 반으로 줄여 <strong>알고리즘 도달을 의도적으로 희생</strong>하기로 했습니다.
+        <mark class="warm">바로 그 결정이 플랫폼 의존 리스크를 키우는데, 팀은 그 헤지를 안 만들었습니다.</mark>
+        <strong>누락 맞습니다.</strong>
+      </p>
+    </div>
+
+    <h3>팀도 틀렸을 수 있는 지점 (덮지 않습니다)</h3>
+    <div class="wl">
+      <div class="wi">
+        <div class="wn">1</div>
+        <div><div class="wt">팀의 1순위 결론이 아직 검증되지 않았습니다</div>
+          <div class="wd">“최대 레버는 결제”라는 판정 전체가 <strong>“결제 완료율 7.0%”라는 숫자 하나 위에</strong> 서 있습니다.
+            그리고 <strong>그 숫자를 만든 리서처가 직접 계측 정의 리스크를 경고했습니다.</strong>
+            팀이 A보다 나은 게 “결제를 1순위로 잡은 것”인데, <strong>그 1순위가 틀릴 수 있습니다.</strong></div></div>
+      </div>
+      <div class="wi">
+        <div class="wn">2</div>
+        <div><div class="wt">매출의 6할을 한 번도 안 봤습니다</div>
+          <div class="wd">해석가가 리서치 미션을 자사몰로 좁게 박았고, 그 결과 6할 채널이 미진단 상태입니다.
+            <strong>아이러니하게도 A는 이걸 물었습니다.</strong></div></div>
+      </div>
+      <div class="wi">
+        <div class="wn">3</div>
+        <div><div class="wt">🔴 공개 전 팩트체크에서 팀의 오류 12건이 잡혔습니다</div>
+          <div class="wd">
+            이 리포트를 내보내기 전에 <strong>모든 외부 출처와 산술을 다시 검증했습니다.</strong>
+            <strong>지어낸 URL은 하나도 없었지만, 인용 오류와 계산 오류가 12건 나왔어요.</strong>
+            <br><br>
+            <strong style="color:var(--stop)">가장 아픈 두 건은 저희가 A를 부당하게 다룬 것입니다.</strong>
+            ① A의 계산을 오류라고 몰았는데 <strong>틀린 건 A가 아니라 저희였고</strong>,
+            ② “A는 결제를 놓쳤다”고 썼는데 <strong>A는 결제를 후보 원인에 명시했습니다.</strong>
+            <strong>둘 다 위에서 고쳤고, 흔적을 남겼습니다.</strong>
+            <br><br>
+            <strong>나머지는 리서처의 인용 오류입니다.</strong>
+            Baymard 이탈 사유 48%→<strong>39%</strong> ·
+            “Shopify 45%”는 <strong>출처에 없는 수치</strong> ·
+            <strong>“내구재 재구매율 7~15%”는 어느 출처에도 없는 밴드</strong>(그래서 “재구매는 정상”이라는 판정을 낮췄습니다) ·
+            도마 수명 4~10년→<strong>5~10년</strong> ·
+            콘텐츠 레버 +13%→<strong>+13~47%</strong>(그래서 “결제가 3배 이상 큰 레버”를 <strong>“2~4배”</strong>로 내렸습니다).
+            <br><br>
+            <mark class="warm">이 목록을 지우고 조용히 고칠 수도 있었습니다. 안 지웁니다.</mark>
+            <strong>“우리 팀은 안 틀린다”는 주장은 검증 가능하지도 않고 사실도 아닙니다.
+            검증 가능한 주장은 이것뿐이에요: 틀리면 잡히고, 잡히면 결론을 낮춥니다.</strong>
+          </div></div>
+      </div>
+      <div class="wi">
+        <div class="wn">4</div>
+        <div><div class="wt">이건 가상 시나리오입니다</div>
+          <div class="wd">SOLLIP의 내부 수치는 <strong>쇼케이스용 설정치</strong>입니다.
+            시장 벤치마크·경쟁사 관행·혼인 통계는 리서처가 <strong>실제 출처</strong>로 검증했지만
+            (Baymard Institute, 다나와 476개 상품, 국가데이터처), <strong>자사 데이터는 만들어진 것입니다.</strong>
+            <br><br><strong>그러니 이 실험이 증명한 건 “SOLLIP의 결제가 문제다”가 아닙니다.
+            증명한 건 이겁니다: 이런 데이터가 주어졌을 때, 5단계가 무엇을 잡아내고 한 방 프롬프트가 무엇을 놓치는가.</strong></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 팀 소개 ============ -->
+<section>
+  <div class="kicker">이 답을 만든 팀</div>
+  <h2>Team of One : Marketer</h2>
+  <p class="lead" style="max-width:760px">
+    1인 기업·마케터를 위한 <strong>AI 팀원 패키지</strong>입니다.
+    각 파트너는 자기 지침과 기법 라이브러리를 갖고, <strong>파일 핸드오프</strong>로 일합니다.
+    앞사람의 결론은 물려받되 <strong>자신감은 안 물려받습니다.</strong>
+  </p>
+
+  <div class="team">
+    <div class="tm"><i style="background:var(--leo)">01</i><b>Leo</b><em>해석가</em>
+      <span>표면 요구를 그대로 받지 않습니다. 진짜 문제를 벼리고, <strong>틀렸을 신호</strong>를 먼저 박습니다.</span></div>
+    <div class="tm"><i style="background:var(--ben)">02</i><b>Ben</b><em>리서처</em>
+      <span>남이 준 숫자를 다시 계산합니다. <strong>외부 기준선</strong>에 대보고, 못 찾은 건 공백으로 남깁니다.</span></div>
+    <div class="tm"><i style="background:var(--tess)">03</i><b>Tess</b><em>전략가</em>
+      <span>레버끼리 무슨 관계인지 봅니다. <strong>버리는 목록</strong>이 하는 목록보다 깁니다.</span></div>
+    <div class="tm"><i style="background:var(--sam)">04</i><b>Sam</b><em>실행 설계자</em>
+      <span>시간표에 올려봅니다. <strong>안 되면 안 된다</strong>고 보고합니다. 되돌릴 수 없는 결정만 신중히.</span></div>
+    <div class="tm"><i style="background:var(--cap)">05</i><b>Cap</b><em>팀장 · 검수</em>
+      <span>계승이 샜는지, 경계를 넘봤는지 봅니다. <strong>넘봐야 할 때 안 넘본 것</strong>까지.</span></div>
+  </div>
+
+  <h3>이 케이스의 전체 산출물</h3>
+  <div class="reps">
+    <a class="rp" href="01_Leo_문제정의_리포트.html">
+      <div class="rn" style="color:var(--leo)">01 · LEO</div>
+      <div class="rt">문제정의 브리프</div>
+      <div class="rs">경합 가설 5개 · 확신도 3층 · 함정 경고</div>
+    </a>
+    <a class="rp" href="02_Ben_조사_리포트.html">
+      <div class="rn" style="color:var(--ben)">02 · BEN</div>
+      <div class="rt">조사 리포트</div>
+      <div class="rs">퍼널 분해 · 벤치마크 대조 · 실재 출처</div>
+    </a>
+    <a class="rp" href="03_Tess_전략_리포트.html">
+      <div class="rn" style="color:var(--tess)">03 · TESS</div>
+      <div class="rt">전략 브리프</div>
+      <div class="rs">경합안 3개 · 손익분기 게이트 · 버리는 목록</div>
+    </a>
+    <a class="rp" href="04_Sam_실행_리포트.html">
+      <div class="rn" style="color:var(--sam)">04 · SAM</div>
+      <div class="rt">실행 플레이북</div>
+      <div class="rs">주차별 로드맵 · 게이트 6개 · 되돌리기 계획</div>
+    </a>
+    <a class="rp" href="05_Cap_통합리포트.html">
+      <div class="rn" style="color:var(--cap)">05 · CAP</div>
+      <div class="rt">통합 리포트 + 대조 판정</div>
+      <div class="rs">계승 검수 · 경계 검수 · 팀의 오류 7건</div>
+    </a>
+    <a class="rp" href="A_단일AI_답변.html" style="background:var(--ai-wash);border-color:var(--ai-line)">
+      <div class="rn" style="color:var(--ai)">대조군 A</div>
+      <div class="rt">단일 AI의 답변 전문</div>
+      <div class="rs">한 글자도 안 고침 · 직접 재현 가능</div>
+    </a>
+  </div>
+
+  <div class="disc">
+    <b>실험 조건 공개.</b>
+    대조군 A는 파이프라인·전문 지침·검수·웹검색·파일 접근 없이,
+    위에 공개한 프롬프트를 <b>한 번</b> 던져 받은 답변입니다.
+    <b>의도적으로 열화시키지 않았습니다.</b>
+    실험군 B는 5명의 파트너가 각각 독립된 컨텍스트에서 작동하며 파일로 산출을 주고받았고,
+    2단계(리서처)에서 클라이언트로부터 실측 데이터를 회신받았습니다.
+    <br><br>
+    <b>공개 전 팩트체크를 거쳤습니다.</b>
+    모든 외부 출처(URL 실재 여부 + 인용 정확성)와 모든 산술을 재검증했고,
+    <b>팀의 오류 12건이 잡혀 전부 리포트에 반영했습니다.</b>
+    그중 2건은 <b>저희가 A를 부당하게 다룬 것</b>이었고, 그것도 지우지 않고 남겼습니다.
+    <br><br>
+    <b>정보량 차이는 인정합니다.</b> 팀은 데이터를 받았고 A는 못 받았습니다.
+    <b>그러나 그 데이터가 하늘에서 떨어진 게 아닙니다.</b>
+    해석가가 무엇을 물어야 하는지 정하고 멈췄기 때문에 왔습니다.
+    A도 6개 지표를 요청했지만, 그 목록에 마진율도, 유입원별 퍼널 단계도, 리드타임도,
+    콘텐츠 유형별 링크 클릭률도 없었습니다.
+    <b>무엇을 물을지가 문제정의의 질이고, 한 방 프롬프트에서는 문제정의와 답변이 같은 순간에 일어납니다.</b>
+  </div>
+</section>
+
+</div>
+
+<!-- ============ CTA ============ -->
+<div class="cta">
+  <div class="wrap">
+    <h2>혼자 일하지만,<br>혼자 결정하지는 마세요</h2>
+    <p>
+      혼자 일할 때 이걸 흉내 내는 방법은 하나입니다.
+      <strong>자기 결론을 뒤집는 일을, 자기 결론을 낸 다음 순간에 하지 않는 것.</strong>
+      <br>파일로 넘기고, 다른 자리에 앉아서, 다시 엽니다.
+      <br><br><strong>Team of One : Marketer는 그걸 구조로 만들어 둔 패키지입니다.</strong>
+    </p>
+    <a class="btn" href="#" id="ctaMain">패키지 보기</a>
+    <a class="btn ghost" href="#" id="ctaSub">5단계 산출물 전부 읽기</a>
+    <div class="ctanote">
+      ※ 이 페이지의 브랜드·내부 수치는 가상 시나리오 설정입니다.
+      시장 벤치마크·경쟁사 관행은 실제 출처로 검증했습니다.
+      <br>※ CTA 링크는 판매 채널 확정 후 연결하세요.
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div><b>Team of One : Marketer</b> · 1인 기업·마케터를 위한 AI 팀원 패키지</div>
+    <div>공개 대조 실험 · 2026.07</div>
+  </div>
+</footer>
+
+<script>
+  // copy prompt
+  const cbtn = document.getElementById('cbtn');
+  cbtn.addEventListener('click', () => {
+    const t = document.getElementById('ptext').innerText;
+    navigator.clipboard.writeText(t).then(() => {
+      cbtn.textContent = '복사됨 ✓';
+      cbtn.classList.add('done');
+      setTimeout(() => { cbtn.textContent = '복사하기'; cbtn.classList.remove('done'); }, 2000);
+    }).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = t; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      cbtn.textContent = '복사됨 ✓'; cbtn.classList.add('done');
+      setTimeout(() => { cbtn.textContent = '복사하기'; cbtn.classList.remove('done'); }, 2000);
+    });
+  });
+
+  // tabs
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+      document.querySelectorAll('.pane').forEach(p => p.classList.remove('on'));
+      tab.classList.add('on');
+      document.getElementById(tab.dataset.p).classList.add('on');
+    });
+  });
+
+  // accordion
+  document.querySelectorAll('.ai-head').forEach(h => {
+    h.addEventListener('click', () => {
+      const item = h.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.ai-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+</body>
+</html>

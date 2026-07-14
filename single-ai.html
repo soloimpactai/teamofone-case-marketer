@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>대조군 A · 단일 AI의 답변 전문 | Team of One : Marketer</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#1E1D1A;
+    --ink-2:#4F4D47;
+    --ink-3:#82806F;
+    --ink-4:#ADAB9E;
+    --ai:#8A8578;
+    --ai-deep:#5F5B50;
+    --ai-soft:#C3BFB2;
+    --ai-wash:#F2F1EC;
+    --ai-wash-2:#E5E3DA;
+    --paper:#F8F7F3;
+    --card:#FFFFFF;
+    --line:#E4E2DA;
+    --line-2:#EFEEE8;
+    --go:#5E7A62;
+    --stop:#A8543F;
+    --cap:#5B4B7A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.8;word-break:keep-all;
+    overflow-wrap:break-word;-webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:860px;margin:0 auto;padding:0 28px}
+
+  header{background:linear-gradient(160deg,var(--ai-deep) 0%,var(--ai) 65%,#9E998B 100%);
+    color:#fff;padding:56px 0 48px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-80px;top:-80px;width:300px;height:300px;
+    border:1px solid rgba(255,255,255,.14);border-radius:50%}
+  .brandbar{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(255,255,255,.66);margin-bottom:24px;font-weight:600}
+  .brandbar span.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.45)}
+  header h1{font-size:32px;font-weight:800;letter-spacing:-.025em;line-height:1.35;margin-bottom:10px;
+    position:relative;z-index:1}
+  header .role{font-size:14.5px;color:rgba(255,255,255,.78);font-weight:500;position:relative;z-index:1}
+  .meta{margin-top:24px;display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:1}
+  .chip{font-size:12.5px;padding:5px 12px;border-radius:999px;font-weight:600;
+    background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);color:#fff}
+
+  /* fairness notice */
+  .fair{background:var(--card);border-bottom:1px solid var(--line)}
+  .fair .wrap{padding-top:26px;padding-bottom:26px}
+  .fair .fh{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--ai);margin-bottom:10px}
+  .fair p{font-size:14.5px;color:var(--ink-2);margin:0;line-height:1.75}
+  .fair p strong{color:var(--ink);font-weight:700}
+
+  /* prompt */
+  .pbox{background:#22211E;border-radius:5px;padding:26px 28px;margin:32px 0}
+  .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;gap:12px}
+  .phl{font-size:11.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;
+    color:rgba(255,255,255,.5)}
+  .copybtn{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#fff;
+    font-family:inherit;font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:4px;
+    cursor:pointer;transition:.15s;white-space:nowrap}
+  .copybtn:hover{background:rgba(255,255,255,.18)}
+  .copybtn.done{background:var(--go);border-color:var(--go)}
+  .pbox pre{font-family:ui-monospace,Menlo,monospace;font-size:13.5px;color:#D6D3CA;
+    line-height:1.85;white-space:pre-wrap;word-break:keep-all}
+  .pnote{margin-top:16px;padding-top:13px;border-top:1px solid rgba(255,255,255,.1);
+    font-size:12.5px;color:rgba(255,255,255,.5);line-height:1.7}
+  .pnote b{color:rgba(255,255,255,.82)}
+
+  /* answer body */
+  .body{padding:56px 0 72px}
+  .ansmark{display:inline-flex;align-items:center;gap:9px;font-size:11.5px;font-weight:800;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--ai);background:var(--ai-wash);
+    border:1px solid var(--ai-wash-2);padding:6px 14px;border-radius:999px;margin-bottom:28px}
+  .ansmark i{width:6px;height:6px;border-radius:50%;background:var(--ai);font-style:normal}
+
+  .a-doc{background:var(--card);border:1px solid var(--line);border-radius:6px;
+    padding:46px 48px;box-shadow:0 1px 3px rgba(30,29,26,.04)}
+  .a-doc > .intro{font-size:17.5px;line-height:1.8;color:var(--ink);margin-bottom:16px}
+  .a-doc p{color:var(--ink-2);margin-bottom:16px;font-size:16px}
+  .a-doc p strong{color:var(--ink);font-weight:700}
+  .a-doc h2{font-size:23px;font-weight:800;letter-spacing:-.02em;margin:44px 0 16px;
+    padding-top:30px;border-top:1px solid var(--line-2);line-height:1.4}
+  .a-doc h2:first-of-type{border-top:none;padding-top:0}
+  .a-doc h3{font-size:18px;font-weight:800;letter-spacing:-.015em;margin:32px 0 10px;color:var(--ink)}
+  .a-doc h4{font-size:17px;font-weight:800;letter-spacing:-.015em;margin:30px 0 10px;
+    color:var(--ai-deep);padding-left:14px;border-left:3px solid var(--ai-soft)}
+  .a-doc ul{list-style:none;margin-bottom:16px}
+  .a-doc ul li{position:relative;padding-left:17px;margin-bottom:9px;color:var(--ink-2);font-size:16px}
+  .a-doc ul li::before{content:"";position:absolute;left:0;top:12px;width:5px;height:5px;
+    border-radius:50%;background:var(--ai-soft)}
+  .a-doc ol{list-style:none;counter-reset:n;margin-bottom:16px}
+  .a-doc ol li{counter-increment:n;position:relative;padding-left:26px;margin-bottom:9px;
+    color:var(--ink-2);font-size:16px}
+  .a-doc ol li::before{content:counter(n) ".";position:absolute;left:0;top:0;
+    font-weight:800;color:var(--ai)}
+  .a-doc table{width:100%;border-collapse:collapse;margin:22px 0;border:1px solid var(--line);
+    border-radius:5px;overflow:hidden}
+  .a-doc th{background:var(--ai-wash);font-size:12.5px;font-weight:800;letter-spacing:.04em;
+    color:var(--ai-deep);padding:12px 14px;text-align:left;border-bottom:1px solid var(--ai-wash-2)}
+  .a-doc td{padding:13px 14px;border-bottom:1px solid var(--line-2);font-size:14.5px;
+    color:var(--ink-2);vertical-align:top;line-height:1.6}
+  .a-doc tr:last-child td{border-bottom:none}
+  .a-doc hr{border:none;border-top:1px solid var(--line-2);margin:34px 0}
+  .nono{color:var(--stop);font-weight:800}
+  .a-doc .plan{background:#FBFAF7;border:1px solid var(--line-2);border-radius:5px;
+    padding:20px 24px;margin-bottom:12px}
+  .a-doc .plan b{display:block;font-size:14px;font-weight:800;color:var(--ai-deep);
+    letter-spacing:.02em;margin-bottom:8px}
+  .a-doc .plan ul{margin:0}
+  .a-doc .plan ul li{font-size:15px}
+  .goal{background:var(--ai-wash);border:1px solid var(--ai-wash-2);border-radius:5px;
+    padding:18px 22px;font-size:17px;font-weight:800;color:var(--ink);text-align:center;margin:20px 0}
+  .last{background:#FBFAF7;border-left:4px solid var(--ai);border-radius:0 5px 5px 0;
+    padding:24px 26px;margin-top:20px}
+  .last p:last-child{margin-bottom:0}
+
+  /* verdict */
+  .verdict{background:var(--card);border-top:1px solid var(--line);padding:64px 0}
+  .verdict .vh{font-size:11.5px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--cap);margin-bottom:14px}
+  .verdict h2{font-size:27px;font-weight:800;letter-spacing:-.024em;margin-bottom:14px;line-height:1.38}
+  .verdict > .wrap > p{font-size:16.5px;color:var(--ink-2);margin-bottom:26px}
+  .vcols{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .vc{border-radius:6px;padding:24px 26px}
+  .vc.good{background:#EEF3ED;border:1px solid #D6E1D5}
+  .vc.bad{background:#F8EEEA;border:1px solid #EDD6C9}
+  .vc h4{font-size:16px;font-weight:800;margin-bottom:14px}
+  .vc.good h4{color:var(--go)}
+  .vc.bad h4{color:var(--stop)}
+  .vc ul{list-style:none}
+  .vc ul li{position:relative;padding-left:17px;margin-bottom:9px;font-size:14.5px;
+    color:var(--ink-2);line-height:1.6}
+  .vc.good ul li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;
+    border-radius:50%;background:var(--go)}
+  .vc.bad ul li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;
+    border-radius:50%;background:var(--stop)}
+  .vc ul li strong{color:var(--ink);font-weight:700}
+  .backlink{display:inline-flex;align-items:center;gap:8px;margin-top:30px;background:var(--cap);
+    color:#fff;text-decoration:none;font-size:15px;font-weight:700;padding:14px 26px;border-radius:6px;
+    transition:.15s}
+  .backlink:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(91,75,122,.25)}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.55);padding:40px 0;font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  footer b{color:#fff;font-weight:700}
+
+  @media(max-width:760px){
+    header h1{font-size:25px}
+    .a-doc{padding:30px 24px}
+    .a-doc h2{font-size:20px}
+    .vcols{grid-template-columns:1fr}
+    .a-doc table{display:block;overflow-x:auto}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brandbar">
+      <span>Team of One : Marketer</span><span class="dot"></span>
+      <span>공개 대조 실험</span><span class="dot"></span><span>2026.07</span>
+    </div>
+    <h1>대조군 A · 단일 AI의 답변 전문</h1>
+    <div class="role">파이프라인 없음 · 전문 지침 없음 · 검수 없음 · 웹검색 없음 · 데이터 없음</div>
+    <div class="meta">
+      <span class="chip">한 방 프롬프트</span>
+      <span class="chip">의도적 열화 없음</span>
+      <span class="chip">누구나 재현 가능</span>
+    </div>
+  </div>
+</header>
+
+<div class="fair">
+  <div class="wrap">
+    <div class="fh">공정성 고지</div>
+    <p>
+      이 답변은 <strong>일부러 못 쓰게 만들지 않았습니다.</strong>
+      최선을 다해 유능하게 답하도록 지시했고, 그 결과를 <strong>한 글자도 고치지 않고</strong> 그대로 싣습니다.
+      아래 프롬프트를 복사해 어떤 AI에나 넣어보시면 비슷한 답이 나올 겁니다.
+      <strong>조작하면 독자가 5초 만에 잡아내고, 그러면 이 실험 전체가 무의미해지니까요.</strong>
+    </p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="pbox">
+    <div class="ph">
+      <div class="phl">재현용 프롬프트</div>
+      <button class="copybtn" id="cbtn">복사하기</button>
+    </div>
+<pre id="ptext">너는 마케팅 전문가야. 아래 상황을 보고 조언해줘.
+
+수제 원목 도마·트레이를 파는 1인 D2C 브랜드입니다. 인스타 팔로워가
+1년 새 8천에서 2만 4천으로 늘었고 릴스 저장·공유도 잘 나옵니다.
+그런데 월 매출이 1,900만 원에서 7개월째 정체입니다.
+
+콘텐츠가 소모되는 느낌이라 숏폼 편집자를 뽑아 릴스를 주 4회에서
+주 8회로 늘릴까 합니다. 아니면 유튜브 숏츠도 같이 돌려야 할까요?
+어떻게 해야 할까요?</pre>
+    <div class="pnote">
+      <b>이 프롬프트에는 정황 단서가 없습니다.</b> 팀이 실제로 처음 받은 정보만 담았어요.
+      전환율·객단가·마진율·리드타임 같은 것들은 <b>브리핑 중에 흘러나온 것</b>이라 A에게는 주지 않았습니다.
+      <b>대신 A가 그것들을 되묻는지가 관전 포인트였고, A는 실제로 되물었습니다.</b>
+    </div>
+  </div>
+</div>
+
+<div class="body">
+  <div class="wrap">
+    <div class="ansmark"><i></i>여기부터 A의 답변 원문</div>
+
+    <div class="a-doc">
+      <p class="intro">
+        결론부터 말씀드릴게요. <strong>릴스를 주 8회로 늘리는 것도, 유튜브 숏츠를 추가하는 것도 지금은 답이 아닐 가능성이 높습니다.</strong>
+        두 선택지 모두 “노출을 더 늘리면 매출이 늘 것”이라는 가정 위에 서 있는데,
+        지금 상황은 그 가정이 이미 깨졌다는 증거를 보여주고 있거든요.
+      </p>
+      <p>
+        팔로워가 8천에서 2만 4천으로 3배가 됐는데 매출은 7개월째 제자리입니다.
+        이건 유입이 부족한 문제가 아닙니다. <strong>들어온 트래픽이 돈으로 전환되지 않는 문제</strong>예요.
+        여기서 콘텐츠를 2배로 늘리면, 전환되지 않는 트래픽이 2배가 되고 인건비만 늘어납니다.
+      </p>
+
+      <h2>1. 지금 벌어지고 있는 일에 대한 진단</h2>
+
+      <h3>저장·공유가 잘 나오는 건 좋은 신호가 아닐 수 있습니다</h3>
+      <p>수제 원목 도마 콘텐츠에서 저장과 공유가 잘 나온다는 건 대개 이런 뜻입니다.</p>
+      <ul>
+        <li>대패질·오일링·우드 그레인 같은 <strong>ASMR/힐링 시청</strong>이 잘 되고 있다</li>
+        <li>사람들이 “예쁘다”, “언젠가 사고 싶다”는 마음으로 저장한다</li>
+        <li>즉, <strong>“보는 사람”은 늘었는데 “사는 사람”은 안 늘었다</strong></li>
+      </ul>
+      <p>
+        공예 계열 릴스의 고질적인 함정이 이겁니다. 제작 과정 영상은 알고리즘이 사랑하지만,
+        시청자의 정체성이 “구매 검토자”가 아니라 “감상자”예요.
+        팔로워 1만 6천 명이 늘었는데 매출이 0원 늘었다는 숫자가 이걸 거의 증명합니다.
+      </p>
+
+      <h3>확인해야 할 숫자 (이거 없이는 어떤 조언도 추측입니다)</h3>
+      <p>지금 당장 뽑아보셔야 할 값들입니다.</p>
+      <table>
+        <thead><tr><th style="width:44%">지표</th><th>왜 필요한가</th></tr></thead>
+        <tbody>
+          <tr><td>릴스 → 프로필 방문율</td><td>영상이 관심을 브랜드로 옮기고 있는가</td></tr>
+          <tr><td>프로필 → 링크 클릭율</td><td>브랜드가 사이트로 넘기고 있는가</td></tr>
+          <tr><td>사이트 세션 → 구매 전환율</td><td>사이트가 지갑을 열게 하는가</td></tr>
+          <tr><td>객단가(AOV)</td><td>1건당 얼마를 남기는가</td></tr>
+          <tr><td>재구매율 / 12개월 내 재구매 비중</td><td>매출이 신규에만 의존하는가</td></tr>
+          <tr><td>매출의 채널별 구성<br>(인스타 / 검색 / 직접 / 이메일 / 오프라인)</td><td>인스타가 실제로 매출을 만들고 있는가</td></tr>
+        </tbody>
+      </table>
+      <p>
+        특히 마지막이 중요합니다.
+        <strong>인스타가 매출의 몇 %를 만들고 있는지 모르는 상태에서 인스타를 2배로 늘리는 건 도박입니다.</strong>
+        만약 매출의 60%가 네이버 검색이나 재구매에서 나오고 있다면,
+        릴스 8회는 매출과 거의 무관한 노동이 됩니다.
+      </p>
+
+      <h3>러프하게 계산해보면</h3>
+      <p>
+        월 1,900만 원. 원목 도마 객단가를 6만 원 안팎으로 잡으면 월 300건 정도, 하루 10건입니다.
+        팔로워 2만 4천 대비 월 구매자 300명이면 팔로워의 1.25%.
+        이게 다 팔로워에서 왔다는 가정도 후한 편이고요.
+      </p>
+      <p>
+        여기서 나오는 질문은 하나입니다.
+        <strong>“팔로워가 3배 늘 동안 왜 이 1.25%가 안 움직였나?”</strong>
+        답은 대개 셋 중 하나입니다.
+      </p>
+      <ol>
+        <li><strong>새로 온 팔로워가 살 사람이 아니다</strong> (감상 목적, 지역·연령대 불일치, 해외 유입)</li>
+        <li><strong>살 마음이 생겨도 살 이유를 못 만들었다</strong> (가격 저항, 관리 부담 우려, 대체재 존재)</li>
+        <li><strong>살 마음이 생긴 순간에 살 수가 없었다</strong> (동선 끊김, 품절, 배송 대기, 결제 이탈)</li>
+      </ol>
+
+      <h2>2. 매출이 정체된 진짜 후보 원인 5가지</h2>
+
+      <h3>(a) 제품 라인의 가격대가 한 덩어리다</h3>
+      <p>
+        수제 원목 도마·트레이는 대체로 4만~10만 원 구간에 몰려 있습니다.
+        이러면 <strong>“살까 말까”의 이분법</strong>만 존재합니다.
+        사고 싶어진 2만 3천 명 중 다수가 “언젠가”에 머물러요.
+      </p>
+
+      <h3>(b) 재구매 동력이 구조적으로 없다</h3>
+      <p>
+        도마는 <strong>한 번 사면 5년 쓰는 물건</strong>입니다.
+        이건 마케팅 실패가 아니라 카테고리의 본질이에요.
+        즉, 신규 획득에만 의존하는 구조인데, 신규 획득 채널(인스타)이 감상자를 데려오고 있으니 정체가 오는 겁니다.
+        <strong>여기가 핵심입니다.</strong>
+      </p>
+
+      <h3>(c) 오퍼(구매 이유)가 없다</h3>
+      <p>
+        릴스는 “이 브랜드 멋있다”까지만 만듭니다.
+        “지금 사야 한다”는 이유는 릴스가 아니라 오퍼가 만듭니다.
+        각인 서비스, 한정 수종, 세트 구성, 선물 포장, 사이즈 커스텀 같은 것들이요.
+      </p>
+
+      <h3>(d) 팔로워를 소유하지 못하고 있다</h3>
+      <p>
+        인스타 팔로워 2만 4천은 메타의 자산이지 사장님의 자산이 아닙니다.
+        이메일·카카오 채널로 옮겨두지 않으면, 알고리즘이 바뀌는 날 매출이 같이 사라집니다.
+      </p>
+
+      <h3>(e) 구매 전환 지점이 약하다</h3>
+      <p>
+        릴스에서 감동한 사람이 상세페이지에 도착했을 때, 릴스만큼 설득력 있는 페이지를 만나고 있나요?
+        대부분의 1인 D2C가 여기서 무너집니다.
+        콘텐츠는 A급인데 상세페이지는 C급인 경우가 정말 많습니다.
+      </p>
+
+      <h2>3. 그래서 뭘 해야 하나</h2>
+
+      <h3>하지 말아야 할 것 먼저</h3>
+      <ul>
+        <li><span class="nono">✕ 숏폼 편집자 채용 (지금은)</span>: 월 150만~250만 원 고정비가 늘고,
+          전환되지 않는 조회수가 늘어납니다. 릴스 4회로 매출이 안 움직였다면 8회로도 안 움직입니다.
+          같은 종류의 콘텐츠라면요.</li>
+        <li><span class="nono">✕ 유튜브 숏츠 병행 (지금은)</span>: 유튜브 숏츠는 인스타 릴스보다
+          <strong>구매 의도가 더 낮고 커머스 동선이 더 깁니다.</strong>
+          채널을 늘리는 건 병목이 “노출”일 때 하는 일입니다. <strong>지금 병목은 “전환”입니다.</strong></li>
+      </ul>
+      <p>
+        한 가지만 기억하시면 돼요.
+        <strong>병목이 아닌 곳에 자원을 넣으면 아무 일도 일어나지 않습니다.</strong>
+      </p>
+
+      <h3>대신 할 것: 우선순위 순서대로</h3>
+
+      <h4>1순위. 객단가와 마진을 올린다 (가장 빠른 효과)</h4>
+      <p>
+        트래픽을 안 늘리고 매출을 올리는 가장 확실한 방법입니다.
+        지금 월 300건이 그대로여도 객단가가 6만 원에서 9만 원이 되면
+        <strong>매출은 1,900만 원에서 2,850만 원이 됩니다.</strong>
+      </p>
+      <ul>
+        <li><strong>각인·커스텀 옵션 유료화</strong>: 이니셜, 날짜, 문구. 원가 거의 0, 가격 +1만~2만 원.
+          선물 수요를 즉시 흡수합니다.</li>
+        <li><strong>세트 구성</strong>: 도마 + 트레이 + 전용 오일 + 리넨 클로스.
+          개별 합보다 10% 싸게, 그런데 객단가는 1.6배.</li>
+        <li><strong>하이엔드 라인 신설</strong>: 희귀 수종, 시리얼 넘버, 작가 사인, 20만~30만 원대.
+          실제로 많이 안 팔려도 됩니다.
+          <strong>비교 기준점(앵커)이 생기면 기존 8만 원 제품이 싸 보입니다.</strong></li>
+        <li><strong>선물 포장 옵션</strong>: +5,000원. 마진율 90% 이상.</li>
+      </ul>
+
+      <h4>2순위. “감상자”를 “구매자”로 번역하는 콘텐츠를 만든다</h4>
+      <p>
+        릴스 편수를 늘릴 게 아니라 <strong>릴스의 종류를 바꿔야 합니다.</strong>
+        지금은 제작 과정(감상형) 위주일 가능성이 큽니다. 여기에 아래를 섞으세요.
+      </p>
+      <ul>
+        <li><strong>용도 제안형</strong>: “혼자 사는 사람이 도마 하나로 상 차리는 법”, “손님상 5분 플레이팅”</li>
+        <li><strong>반박형/교육형</strong>: “원목 도마 관리 어렵다는 말, 사실 이것만 하면 됩니다” (구매 저항 직접 제거)</li>
+        <li><strong>비교형</strong>: “3만 원 도마와 8만 원 도마의 5년 후” (가격 정당화)</li>
+        <li><strong>사회적 증거형</strong>: 실제 고객 집에 놓인 사진, 선물 받은 사람 반응</li>
+        <li><strong>인물형</strong>: 만드는 사람의 얼굴과 이야기. 1인 브랜드의 최대 무기인데 대부분 안 씁니다.</li>
+      </ul>
+      <p>
+        주 4회 유지하되, <strong>2회는 감상형(도달용), 2회는 전환형(구매용)</strong>으로 배분해보세요.
+        편수는 그대로인데 매출은 움직일 가능성이 큽니다. 이걸 4주만 돌려도 답이 나옵니다.
+      </p>
+      <p>
+        그리고 모든 릴스 끝에 <strong>“다음 행동”을 명시</strong>하세요.
+        대부분의 공예 릴스는 여운으로 끝납니다. <strong>여운은 저장을 만들고 CTA는 매출을 만듭니다.</strong>
+      </p>
+
+      <h4>3순위. 팔로워를 내 소유로 옮긴다</h4>
+      <ul>
+        <li>프로필 링크에 <strong>“원목 도마 관리 가이드 PDF”</strong> 같은 리드마그넷을 걸고 이메일/카카오 수집</li>
+        <li>수집한 사람에게 3~5통짜리 시퀀스 발송: 브랜드 스토리 → 관리법 → 고객 사례 → 첫 구매 혜택</li>
+        <li>도마 구매자에게 <strong>6개월 뒤 자동 발송</strong>: “오일링 하실 때가 됐어요” + 오일 리필 구매 링크</li>
+      </ul>
+      <p>
+        이게 (b)에서 말한 재구매 문제의 해법입니다.
+        도마는 재구매가 안 되지만 <strong>관리용품, 트레이, 선물용 추가 구매는 됩니다.</strong>
+        다만 그건 기억시켜줘야 일어납니다.
+      </p>
+
+      <h4>4순위. 상세페이지를 뜯어고친다</h4>
+      <p>릴스에 쓰는 시간의 10분의 1만 여기 쓰셔도 됩니다.</p>
+      <ul>
+        <li>릴스에서 반응 좋았던 <strong>그 장면을 상세페이지 최상단에</strong> 넣으세요</li>
+        <li>관리법에 대한 불안을 페이지 안에서 해소 (FAQ가 아니라 본문에서)</li>
+        <li>“이 도마를 5년 쓰면 하루 40원입니다” 같은 가격 재구성</li>
+        <li>실사용 사진, 후기, 사이즈 감 잡을 수 있는 비교 컷</li>
+      </ul>
+
+      <h4>5순위. 선물 시즌을 설계한다</h4>
+      <p>
+        원목 도마·트레이의 진짜 시장은 <strong>자기 구매가 아니라 선물</strong>입니다.
+        집들이, 결혼, 명절, 연말. 이 수요는 이미 존재하는데
+        브랜드가 그걸 명시적으로 겨냥하지 않으면 그냥 흘러갑니다.
+      </p>
+      <ul>
+        <li>집들이 선물 카테고리 신설, 각인 + 포장 + 카드를 묶은 “선물 패키지”</li>
+        <li>1인 기업이라면 <strong>B2B 답례품/기업 선물</strong> 라인도 검토할 만합니다. 건당 규모가 완전히 다릅니다.</li>
+      </ul>
+
+      <h2>4. 그럼 콘텐츠 확대는 언제 하나</h2>
+      <p>이 순서로 판단하세요.</p>
+      <ol>
+        <li>위 1~4순위를 8~12주 돌려서 <strong>전환율과 객단가를 먼저 올린다</strong></li>
+        <li>전환 구조가 개선되면, <strong>그때</strong> 노출을 늘린다</li>
+        <li>노출을 늘릴 때도 사람 뽑기 전에 유료 광고로 테스트: 잘 나온 릴스에 월 50만~100만 원 태워보고,
+          ROAS가 나오면 그때 사람을 뽑아도 늦지 않습니다</li>
+      </ol>
+      <p>
+        <strong>“전환이 안 되는 깔때기에 물을 더 붓지 마세요.”</strong>
+        콘텐츠 확대는 전환 구조가 검증된 다음의 증폭 수단이지, 정체의 해법이 아닙니다.
+      </p>
+      <p>
+        유튜브는 나중에 하시더라도 <strong>숏츠가 아니라 롱폼</strong>으로 가시길 권합니다.
+        원목 공예는 롱폼과 궁합이 훌륭하고(제작 과정 20분짜리),
+        유튜브 롱폼은 <strong>검색 자산</strong>이 되어 몇 년간 유입을 만듭니다.
+        숏츠는 릴스 재탕이라 브랜드에 남는 게 거의 없어요.
+      </p>
+
+      <h2>5. 90일 실행 플랜</h2>
+      <div class="plan">
+        <b>Week 1~2 · 진단</b>
+        <ul>
+          <li>위 표의 6개 지표 전부 뽑기</li>
+          <li>최근 6개월 주문 데이터에서 객단가, 재구매율, 구매자 유입 경로 분석</li>
+          <li>잘 나온 릴스 상위 10개와 매출 발생일의 상관관계 확인</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <b>Week 3~6 · 객단가 + 상세페이지</b>
+        <ul>
+          <li>각인 옵션, 세트 구성, 선물 포장 옵션 출시</li>
+          <li>하이엔드 라인 1종 기획</li>
+          <li>상세페이지 전면 개편</li>
+          <li>목표: 객단가 +30%</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <b>Week 5~10 · 콘텐츠 종류 전환 + 리스트 구축</b>
+        <ul>
+          <li>릴스는 주 4회 유지, 감상형/전환형 2:2 배분</li>
+          <li>리드마그넷 + 이메일·카카오 시퀀스 구축</li>
+          <li>기존 구매자 대상 리마케팅 발송</li>
+        </ul>
+      </div>
+      <div class="plan">
+        <b>Week 8~12 · 선물 시즌 대비 + 광고 테스트</b>
+        <ul>
+          <li>선물 패키지 라인 출시</li>
+          <li>성과 좋은 릴스에 소액 광고 집행, ROAS 측정</li>
+          <li>여기서 ROAS가 나오면 그때 편집자 채용 검토</li>
+        </ul>
+      </div>
+      <div class="goal">목표: 90일 뒤 월 2,800만~3,200만 원</div>
+      <p style="text-align:center;color:var(--ink-3);font-size:14.5px">
+        콘텐츠 편수는 그대로, 조회수도 그대로일 수 있습니다. 그런데 매출은 오릅니다.
+      </p>
+
+      <h2>6. 마지막 한마디</h2>
+      <div class="last">
+        <p>
+          지금 느끼시는 “콘텐츠가 소모되는 느낌”은 정확한 감각입니다.
+          다만 그 원인이 <strong>양이 부족해서</strong>가 아니라,
+          <strong>콘텐츠가 브랜드는 키웠는데 사업은 안 키웠기 때문</strong>이에요.
+        </p>
+        <p>
+          팔로워 2만 4천은 이미 충분히 큰 자산입니다.
+          문제는 그 자산에서 현금을 뽑아내는 장치가 없다는 것이고,
+          릴스를 2배로 늘리는 건 자산을 더 쌓는 일이지 현금을 뽑는 일이 아닙니다.
+        </p>
+        <p>
+          <strong>지금 필요한 건 콘텐츠 생산자가 아니라, 이미 있는 관심을 돈으로 바꾸는 설계입니다.</strong>
+        </p>
+        <p>
+          혹시 위 지표들(특히 사이트 전환율, 객단가, 매출의 채널별 구성) 중 알고 계신 게 있으면 알려주세요.
+          훨씬 더 구체적으로 짚어드릴 수 있습니다.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 판정 -->
+<div class="verdict">
+  <div class="wrap">
+    <div class="vh">팀장 Cap의 대조 판정</div>
+    <h2>A는 꽤 잘 썼습니다. 큰 오답이 없어요.</h2>
+    <p>
+      <strong>A의 조언을 그대로 따라도 대표는 최악은 면합니다.</strong>
+      편집자를 안 뽑고, 숏츠를 안 켜고, 선물을 봅니다. 그것만으로도 값이 있어요.
+      <br>차이는 지능이 아니라 <strong>순서</strong>와 <strong>구조</strong>에서 났습니다.
+    </p>
+
+    <div class="vcols">
+      <div class="vc good">
+        <h4>A가 맞힌 것 (전부 인정)</h4>
+        <ul>
+          <li><strong>편집자 채용 기각</strong> · 숏츠 기각</li>
+          <li><strong>문제를 전환으로 재정의</strong> — 팀의 해석가와 사실상 같은 한 줄</li>
+          <li><strong>저장·공유는 구매 신호가 아니다</strong></li>
+          <li><strong>내구재라 재구매 동력이 구조적으로 없다</strong> — 팀의 함정 경고와 정확히 같다</li>
+          <li><strong>선물이 진짜 시장이다</strong> — 팀의 최종 전략 축과 같은 곳을 봤다</li>
+          <li><strong>되물었다</strong> — “이거 없이는 어떤 조언도 추측입니다”</li>
+          <li><strong>★ 플랫폼 의존 리스크</strong> — “팔로워는 메타의 자산이지 사장님의 자산이 아니다”.
+            <strong>팀은 이 각도를 한 번도 세우지 않았다. A가 이긴 지점이다.</strong></li>
+        </ul>
+      </div>
+      <div class="vc bad">
+        <h4>그런데 못 한 것</h4>
+        <ul>
+          <li><strong>결제를 후보 원인에 넣고, 처방에는 한 줄도 안 배정했다.</strong>
+            A는 “살 마음이 생긴 순간에 살 수가 없었다 (… 결제 이탈)”을 3대 후보 원인으로 <strong>명시했다.</strong>
+            그런데 5개 처방 어디에도 결제가 없고, <strong>배송비는 단어조차 등장하지 않는다.</strong>
+            <strong>크기를 못 쟀기 때문이다.</strong> 벤치마크 없이는 93% 이탈이 재앙인지 정상인지 알 수 없고,
+            알 수 없으면 순위를 못 매긴다. 실제로는 <strong>배송비가 이탈 사유 1위(31%)</strong>였고
+            <strong>결제 병목이 최대 레버(주문 2.1~2.9배)</strong>였다</li>
+          <li><strong>“이거 없이는 추측”이라 써놓고 바로 뒤에 목표 매출을 확정했다.</strong>
+            산술이 틀린 게 아니라, <strong>검증 안 된 객단가 추정(6만 원) 위에 90일 목표가 서 있는 게 문제다</strong></li>
+          <li><strong>인건비를 감당할 수 있는지 묻지 않고 인건비를 기각했다.</strong>
+            요청한 6개 지표에 <strong>마진율이 없다</strong></li>
+          <li><strong>90일 플랜에 시간을 줄이는 항목이 하나도 없다.</strong>
+            전부 기존 주 20시간 위에 얹힌다</li>
+          <li><strong>원인 5개를 세우고 5개를 다 처방했다.</strong>
+            팀은 가설 5개 중 3개를 데이터로 죽였다</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="background:#F8EEEA;border:2px solid var(--stop);border-radius:6px;
+      padding:26px 28px;margin-top:26px">
+      <div style="display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.09em;
+        text-transform:uppercase;background:var(--stop);color:#fff;padding:4px 11px;border-radius:3px;
+        margin-bottom:14px">🔴 팀장의 자기 정정 · 지우지 않고 남깁니다</div>
+      <p style="margin:0;font-size:15px;color:var(--ink-2)">
+        이 페이지의 초안에서 저희는 이렇게 썼습니다:
+        <em>“A의 계산은 자체적으로도 어긋난다. 300건 × 90,000원은 2,700만 원이지 2,850만 원이 아니다.
+        <strong>아무도 검산하지 않았다는 증거다.</strong>”</em>
+      </p>
+      <p style="margin:16px 0 0;font-size:19px;font-weight:800;color:var(--stop)">
+        틀린 건 A가 아니라 저희였습니다.
+      </p>
+      <p style="margin:12px 0 0;font-size:15px;color:var(--ink-2)">
+        A의 원문은 “객단가를 6만 원 안팎으로 잡으면 월 300건 <strong>정도</strong>”입니다.
+        1,900만 ÷ 6만 = <strong>316.7건</strong>이고, 316.7 × 9만 = <strong>정확히 2,850만 원</strong>이에요.
+        <strong>A의 산술은 완벽합니다.</strong> 저희가 A의 반올림 근사치를 정확한 값처럼 되받아 오류로 몰았습니다.
+        <strong>검산을 안 한 건 저희였어요.</strong>
+      </p>
+      <p style="margin:14px 0 0;font-size:15px;color:var(--ink-2);padding-top:14px;
+        border-top:1px dashed #E0C4B8">
+        이 실험의 철칙은 <strong>“A를 부당하게 깎아내리지 않는다”</strong>였습니다.
+        <strong>지우지 않고 남깁니다.</strong> 이게 이 자산이 자기가 비판한 것과 같은 짓을 하지 않는다는 걸
+        증명할 유일한 방법이라서요.
+      </p>
+    </div>
+
+    <p style="margin-top:26px;font-size:17px;font-weight:700;color:var(--ink)">
+      결과 한 줄: A는 <strong>할 일 목록</strong>을 줬고, 팀은 <strong>안 할 일 목록과 순서</strong>를 줬습니다.
+      <br>구조 한 줄: 팀이 더 똑똑해서가 아니라,
+      <strong>앞사람의 결론을 뒤집을 권한을 가진 사람이 네 번 더 있었기 때문입니다.</strong>
+    </p>
+
+    <a class="backlink" href="대조리포트_같은의뢰_두개의답.html">← 대조 실험 전체 보기</a>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div><b>Team of One : Marketer</b> · 1인 기업·마케터를 위한 AI 팀원 패키지</div>
+    <div>대조군 A · 단일 AI 답변 전문</div>
+  </div>
+</footer>
+
+<script>
+  const cbtn = document.getElementById('cbtn');
+  cbtn.addEventListener('click', () => {
+    const t = document.getElementById('ptext').innerText;
+    const done = () => {
+      cbtn.textContent = '복사됨 ✓'; cbtn.classList.add('done');
+      setTimeout(() => { cbtn.textContent = '복사하기'; cbtn.classList.remove('done'); }, 2000);
+    };
+    navigator.clipboard.writeText(t).then(done).catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = t; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta); done();
+    });
+  });
+</script>
+
+</body>
+</html>

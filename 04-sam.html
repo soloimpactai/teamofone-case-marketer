@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>04 · 실행설계자 Sam — 실행 플레이북 | SOLLIP</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#231F17;
+    --ink-2:#544D40;
+    --ink-3:#867E6E;
+    --sam:#A8813F;
+    --sam-deep:#75592A;
+    --sam-soft:#D2BC8E;
+    --sam-wash:#F7F2E7;
+    --sam-wash-2:#EDE3CD;
+    --leo:#46587A;
+    --ben:#5E7A62;
+    --tess:#9B5C63;
+    --plum:#5B4B7A;
+    --stop:#A8543F;
+    --stop-wash:#F8EDE8;
+    --go:#5E7A62;
+    --go-wash:#EDF2EC;
+    --paper:#F8F6F1;
+    --card:#FFFFFF;
+    --line:#E5E1D7;
+    --line-2:#EFEBE3;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
+    background:var(--paper);color:var(--ink);line-height:1.75;word-break:keep-all;
+    overflow-wrap:break-word;-webkit-font-smoothing:antialiased;font-size:16px}
+  .wrap{max-width:980px;margin:0 auto;padding:0 28px}
+  section{padding:64px 0;border-top:1px solid var(--line)}
+  section:first-of-type{border-top:none}
+
+  header{background:linear-gradient(160deg,var(--sam-deep) 0%,var(--sam) 62%,#BE9A5C 100%);
+    color:#fff;padding:60px 0 52px;position:relative;overflow:hidden}
+  header::after{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;
+    border:1px solid rgba(255,255,255,.16);border-radius:50%}
+  header::before{content:"";position:absolute;right:-20px;top:40px;width:200px;height:200px;
+    border:1px solid rgba(255,255,255,.11);border-radius:50%}
+  .brandbar{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.14em;
+    text-transform:uppercase;color:rgba(255,255,255,.66);margin-bottom:28px;font-weight:600}
+  .brandbar span.dot{width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.45)}
+  .stagerow{display:flex;align-items:flex-start;gap:20px;position:relative;z-index:1}
+  .stagenum{font-size:52px;font-weight:800;line-height:1;color:rgba(255,255,255,.3);
+    letter-spacing:-.03em;margin-top:2px}
+  h1{font-size:34px;font-weight:800;letter-spacing:-.025em;line-height:1.32;margin-bottom:10px}
+  .role{font-size:14px;color:rgba(255,255,255,.76);font-weight:500}
+  .meta{margin-top:26px;display:flex;flex-wrap:wrap;gap:8px;position:relative;z-index:1}
+  .chip{font-size:12.5px;padding:5px 12px;border-radius:999px;font-weight:600;
+    background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.22);color:#fff}
+
+  .teamstrip{background:var(--card);border-bottom:1px solid var(--line)}
+  .teamstrip .wrap{display:flex;padding:0}
+  .tsitem{flex:1;padding:14px 10px 12px;text-align:center;border-right:1px solid var(--line-2);opacity:.4}
+  .tsitem:last-child{border-right:none}
+  .tsitem.on{opacity:1}
+  .tsitem.done{opacity:.66}
+  .tsitem i{display:block;height:3px;border-radius:2px;margin-bottom:9px}
+  .tsitem b{display:block;font-size:13px;font-weight:700}
+  .tsitem em{display:block;font-size:11px;font-style:normal;color:var(--ink-3);margin-top:1px}
+
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--sam);margin-bottom:16px}
+  .kicker::before{content:"";width:22px;height:2px;background:var(--sam);border-radius:1px}
+  .kicker.stop{color:var(--stop)}
+  .kicker.stop::before{background:var(--stop)}
+  h2{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.4;margin-bottom:14px}
+  h3{font-size:18px;font-weight:700;margin:32px 0 10px}
+  p{color:var(--ink-2);margin-bottom:14px;font-size:15.5px}
+  p strong,li strong,td strong{color:var(--ink);font-weight:700}
+  .lead{font-size:17px;color:var(--ink-2)}
+  ul{list-style:none;margin-bottom:14px}
+  ul li{position:relative;padding-left:16px;margin-bottom:8px;color:var(--ink-2);font-size:15.5px}
+  ul li::before{content:"";position:absolute;left:0;top:11px;width:5px;height:5px;
+    border-radius:50%;background:var(--sam-soft)}
+  mark{background:linear-gradient(transparent 58%, var(--sam-wash-2) 58%);color:var(--ink);font-weight:700}
+  mark.stop{background:linear-gradient(transparent 58%, #F0D6C9 58%)}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:13px;background:var(--line-2);
+    padding:1px 5px;border-radius:3px}
+  .tag{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:.05em;padding:2px 6px;
+    border-radius:3px;background:var(--line-2);color:var(--ink-3);vertical-align:2px}
+
+  .hero{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--sam);
+    border-radius:4px;padding:34px}
+  .hero .lbl{font-size:11.5px;font-weight:700;letter-spacing:.12em;color:var(--sam);
+    text-transform:uppercase;margin-bottom:14px}
+  .hero .big{font-size:22px;line-height:1.6;font-weight:800;letter-spacing:-.02em}
+  .hero .big em{font-style:normal;color:var(--sam);border-bottom:2px solid var(--sam-soft)}
+  .hero .sub{margin-top:20px;padding-top:18px;border-top:1px dashed var(--line);font-size:15px}
+
+  .banner{background:var(--sam-deep);color:#fff;border-radius:4px;padding:28px 30px;margin:24px 0;text-align:center}
+  .banner .bl{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+    color:rgba(255,255,255,.6);margin-bottom:10px}
+  .banner .bb{font-size:24px;font-weight:800;letter-spacing:-.025em;line-height:1.45}
+  .banner p{color:rgba(255,255,255,.82);margin:14px 0 0;font-size:15px}
+  .banner p strong{color:#fff}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:28px;margin:26px 0}
+  .card .ct{font-size:15px;font-weight:700;margin-bottom:4px}
+  .card .cs{font-size:13px;color:var(--ink-3);margin-bottom:22px}
+
+  /* split L3 */
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+  .sp{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:24px}
+  .sp.neg{border-top:3px solid var(--go)}
+  .sp.pos{border-top:3px solid var(--stop)}
+  .sp .sl{font-size:12px;font-weight:800;letter-spacing:.07em;color:var(--ink-3);margin-bottom:8px}
+  .sp .st{font-size:17px;font-weight:800;margin-bottom:6px;letter-spacing:-.015em}
+  .sp .sd{font-size:14px;color:var(--ink-2);line-height:1.6;margin-bottom:16px}
+  .sp .sn{font-size:30px;font-weight:800;letter-spacing:-.03em}
+  .sp.neg .sn{color:var(--go)}
+  .sp.pos .sn{color:var(--stop)}
+  .sp .sx{font-size:12.5px;color:var(--ink-3);margin-top:4px;font-weight:600}
+
+  /* generic table */
+  .tbl{width:100%;border-collapse:collapse;margin:24px 0;background:var(--card);
+    border:1px solid var(--line);border-radius:4px;overflow:hidden}
+  .tbl th{background:var(--sam-wash);font-size:12px;font-weight:800;letter-spacing:.05em;
+    color:var(--sam-deep);padding:13px 14px;text-align:left;border-bottom:1px solid var(--sam-wash-2)}
+  .tbl td{padding:13px 14px;border-bottom:1px solid var(--line-2);font-size:14px;
+    color:var(--ink-2);vertical-align:top;line-height:1.6}
+  .tbl tr:last-child td{border-bottom:none}
+  .tbl td.k{font-weight:800;color:var(--ink);white-space:nowrap}
+  .tbl tr.hot td{background:var(--sam-wash)}
+  .tbl tr.dead td{background:#FAF3F0}
+  .tbl tr.sum td{background:var(--sam-wash);font-weight:800;color:var(--ink)}
+  .badge{display:inline-block;font-size:11px;font-weight:800;padding:2px 7px;border-radius:3px;white-space:nowrap}
+  .badge.rev{background:var(--go-wash);color:var(--go)}
+  .badge.irrev{background:var(--stop);color:#fff}
+  .badge.no{background:var(--stop-wash);color:var(--stop)}
+  .badge.wait{background:#F1EDE2;color:#8A6A2E}
+
+  /* payment lever compare */
+  .pcomp{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+  .pv{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:24px}
+  .pv.win{border:1px solid var(--go);border-top:3px solid var(--go);box-shadow:0 6px 20px rgba(94,122,98,.10)}
+  .pv.risk{border-top:3px solid var(--stop)}
+  .pv h4{font-size:16px;font-weight:800;margin-bottom:14px}
+  .pvr{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--line-2);font-size:13.5px}
+  .pvr:last-child{border-bottom:none}
+  .pvr span{color:var(--ink-3);font-weight:600}
+  .pvr b{color:var(--ink);font-weight:800;text-align:right}
+  .pv.win .pvr b{color:var(--go)}
+  .pv.risk .pvr b{color:var(--stop)}
+
+  /* flow chain */
+  .flow{background:var(--sam-wash);border:1px solid var(--sam-wash-2);border-radius:4px;
+    padding:28px 26px;margin:24px 0}
+  .fstep{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:12px 0;
+    border-bottom:1px dashed var(--sam-wash-2);align-items:start}
+  .fstep:last-child{border-bottom:none}
+  .fstep .fn{width:28px;height:28px;border-radius:4px;background:#fff;border:1px solid var(--sam-soft);
+    color:var(--sam-deep);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+  .fstep.key .fn{background:var(--sam);border-color:var(--sam);color:#fff}
+  .fstep.gate .fn{background:var(--sam-deep);border-color:var(--sam-deep);color:#fff}
+  .fstep .ft{font-size:14.5px;font-weight:700;color:var(--ink);margin-bottom:2px}
+  .fstep .fd{font-size:13px;color:var(--ink-2);line-height:1.55}
+  .fstep .fa{display:inline-block;font-size:11px;font-weight:800;color:var(--sam-deep);
+    background:#fff;border:1px solid var(--sam-soft);padding:1px 7px;border-radius:3px;margin-top:5px}
+
+  /* time budget */
+  .tb{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:28px;margin:24px 0}
+  .tbrow{display:grid;grid-template-columns:120px 1fr 78px;gap:12px;align-items:center;margin-bottom:9px;font-size:13.5px}
+  .tbrow .tk{font-weight:700;color:var(--ink-2);text-align:right}
+  .tbar{height:26px;background:var(--line-2);border-radius:2px;overflow:hidden;display:flex}
+  .tbar i{display:block;height:100%}
+  .tbrow .tv{font-weight:800;color:var(--ink);font-size:13.5px}
+  .tbrow.after .tv{color:var(--go)}
+  .tbtot{margin-top:16px;padding-top:14px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;align-items:baseline}
+  .tbtot span{font-size:14px;font-weight:700;color:var(--ink-2)}
+  .tbtot b{font-size:26px;font-weight:800;color:var(--go);letter-spacing:-.03em}
+
+  /* gantt */
+  .gantt{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:26px 24px;margin:24px 0;overflow-x:auto}
+  .gr{display:grid;grid-template-columns:60px 1fr 128px 62px;gap:12px;align-items:center;
+    padding:11px 0;border-bottom:1px solid var(--line-2);min-width:640px}
+  .gr:last-child{border-bottom:none}
+  .gr.head{border-bottom:1px solid var(--line);padding-bottom:9px;font-size:11px;
+    font-weight:800;letter-spacing:.06em;color:var(--ink-3);text-transform:uppercase}
+  .gr .gw{font-weight:800;font-size:13.5px;color:var(--ink)}
+  .gr .gw small{display:block;font-weight:600;font-size:11px;color:var(--ink-3);letter-spacing:0;text-transform:none}
+  .gr .gt{font-size:13px;color:var(--ink-2);line-height:1.5;
+    display:block;background:none;border:0;border-radius:0;padding:0;gap:0}
+  .gbar{display:flex;height:24px;border-radius:2px;overflow:hidden;background:var(--line-2)}
+  .gbar i{display:block;height:100%}
+  .gbar .ex{background:var(--sam)}
+  .gbar .co{background:#CFC7B4}
+  .gr .gh{font-weight:800;font-size:13.5px;text-align:right}
+  .gr.tight .gh{color:var(--stop)}
+  .gr.free .gh{color:var(--go)}
+  .gr.gate{background:var(--sam-wash);margin:0 -24px;padding:11px 24px}
+
+  /* gates */
+  .gates{display:flex;flex-direction:column;gap:9px;margin:24px 0}
+  .gt{background:var(--card);border:1px solid var(--line);border-radius:4px;padding:18px 20px;
+    display:grid;grid-template-columns:56px 1fr 118px;gap:16px;align-items:start}
+  .gt .gid{width:48px;height:32px;border-radius:3px;background:var(--sam);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800}
+  .gt.irrev{border:1px solid var(--stop);border-left:5px solid var(--stop)}
+  .gt.irrev .gid{background:var(--stop)}
+  .gt.key{border:1px solid var(--sam);border-left:5px solid var(--sam)}
+  .gt .gtt{font-size:15px;font-weight:800;margin-bottom:3px}
+  .gt .gtd{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+  .gt .gtw{font-size:12px;color:var(--ink-3);font-weight:700;text-align:right}
+  .gt .gtw b{display:block;font-size:13px;color:var(--ink);margin-bottom:4px}
+
+  /* AI leverage */
+  .ai{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+  .aib{border-radius:4px;padding:24px}
+  .aib.gas{background:var(--go-wash);border:1px solid #D5E0D4}
+  .aib.brake{background:var(--stop-wash);border:1px solid #EDD5C9}
+  .aib h4{font-size:16px;font-weight:800;margin-bottom:4px}
+  .aib.gas h4{color:var(--go)}
+  .aib.brake h4{color:var(--stop)}
+  .aib .as{font-size:12.5px;color:var(--ink-3);margin-bottom:16px;font-weight:600}
+  .aib ul{margin:0}
+  .aib ul li{font-size:14px;margin-bottom:9px}
+  .aib.gas ul li::before{background:var(--go)}
+  .aib.brake ul li::before{background:var(--stop)}
+
+  /* senior */
+  .snr{background:#FCFBF7;border:1px solid var(--line);border-left:4px solid var(--sam-soft);
+    border-radius:4px;padding:22px 26px;margin:24px 0}
+  .snr .sh{font-size:12px;font-weight:800;letter-spacing:.08em;color:var(--sam);
+    text-transform:uppercase;margin-bottom:10px}
+  .snr p{margin:0;font-size:14.5px}
+  .snr p + p{margin-top:10px}
+
+  /* traps */
+  .traps{display:flex;flex-direction:column;gap:8px;margin:24px 0}
+  .tp{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--sam-soft);
+    border-radius:4px;padding:16px 20px;display:grid;grid-template-columns:30px 1fr;gap:12px;align-items:start}
+  .tp.red{border-left-color:var(--stop)}
+  .tp .tn{width:24px;height:24px;border-radius:50%;background:var(--line-2);color:var(--ink-3);
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;margin-top:2px}
+  .tp.red .tn{background:var(--stop);color:#fff}
+  .tp .tt{font-size:14.5px;font-weight:700;margin-bottom:3px;color:var(--ink)}
+  .tp .td{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+
+  /* handoff Cap */
+  .handoff{background:linear-gradient(150deg,#F1EEF5 0%,#EBE7F1 100%);
+    border:1px solid #D9D2E4;border-radius:4px;padding:34px;margin-top:12px}
+  .handoff .hh{display:flex;align-items:center;gap:12px;margin-bottom:6px}
+  .handoff .hh i{width:30px;height:30px;border-radius:50%;background:var(--plum);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;font-style:normal}
+  .handoff .hh b{font-size:19px;font-weight:800;letter-spacing:-.02em}
+  .handoff .hs{font-size:13.5px;color:var(--ink-2);margin-bottom:22px;padding-left:42px}
+  .hitems{display:flex;flex-direction:column;gap:9px}
+  .hi{background:#fff;border:1px solid #DFD8E8;border-radius:4px;padding:16px 18px}
+  .hi.red{border:1px solid var(--plum);box-shadow:0 3px 12px rgba(91,75,122,.10)}
+  .hi .hn{font-size:11px;font-weight:800;color:var(--plum);letter-spacing:.06em;margin-bottom:4px}
+  .hi .ht{font-size:14.5px;font-weight:700;margin-bottom:3px}
+  .hi .hd{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+
+  .disc{font-size:12px;color:var(--ink-3);margin-top:22px;padding-top:16px;
+    border-top:1px solid var(--line);line-height:1.6}
+  footer{background:var(--ink);color:rgba(255,255,255,.6);padding:40px 0;font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+  footer b{color:#fff;font-weight:700}
+
+  @media(max-width:860px){
+    .split,.pcomp,.ai{grid-template-columns:1fr}
+    .gt{grid-template-columns:56px 1fr}
+    .gt .gtw{grid-column:2;text-align:left}
+    .tbrow{grid-template-columns:90px 1fr 62px}
+    h1{font-size:27px}
+    .hero .big{font-size:18px}
+    .banner .bb{font-size:19px}
+    .teamstrip .wrap{overflow-x:auto}
+    .tsitem{min-width:104px}
+    .tbl thead{display:none}
+    .tbl td{display:block;border-bottom:none;padding:5px 14px}
+    .tbl tr{display:block;border-bottom:1px solid var(--line);padding:10px 0}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brandbar">
+      <span>Team of One : Marketer</span><span class="dot"></span>
+      <span>Case · SOLLIP</span><span class="dot"></span><span>2026.07.11</span>
+    </div>
+    <div class="stagerow">
+      <div class="stagenum">04</div>
+      <div>
+        <h1>이 플레이북 전체가<br>못 하나에 걸려 있다</h1>
+        <div class="role">실행 설계자 <b style="color:#fff">Sam</b> · 실행 플레이북 · 파이프라인 4단계</div>
+      </div>
+    </div>
+    <div class="meta">
+      <span class="chip">20시간 제약 · 조건부 통과</span>
+      <span class="chip">Tess 함정 8건 지적</span>
+      <span class="chip">실행 불가 판정 2건</span>
+      <span class="chip">다음 → 팀장 Cap</span>
+    </div>
+  </div>
+</header>
+
+<div class="teamstrip">
+  <div class="wrap">
+    <div class="tsitem done"><i style="background:#46587A"></i><b>Leo</b><em>해석가</em></div>
+    <div class="tsitem done"><i style="background:#5E7A62"></i><b>Ben</b><em>리서처</em></div>
+    <div class="tsitem done"><i style="background:#9B5C63"></i><b>Tess</b><em>전략가</em></div>
+    <div class="tsitem on"><i style="background:#A8813F"></i><b>Sam</b><em>실행설계자</em></div>
+    <div class="tsitem"><i style="background:#5B4B7A"></i><b>Cap</b><em>팀장·검수</em></div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- 못 하나 -->
+<section>
+  <div class="kicker">이 플레이북이 서 있는 못</div>
+  <div class="hero">
+    <div class="lbl">The Nail</div>
+    <div class="big">
+      Tess가 “L3이 시간을 만든다”고 했습니다. 이 문장이 참이어야 나머지가 전부 성립합니다.
+      그래서 그것부터 <em>시간표로 계산했습니다.</em>
+      <br><br>결론: <em>참이다. 단, 절반만.</em>
+    </div>
+    <div class="sub">
+      L3(콘텐츠 믹스 교체)은 사실 <strong>두 개의 다른 일</strong>입니다.
+      Tess는 이 둘을 묶어 “착수 비용이 음수”라고 했어요.
+      <strong>L3-a만 음수입니다. L3-b는 명백히 양수고, 그것도 초반에 몰립니다.</strong>
+    </div>
+  </div>
+
+  <div class="split">
+    <div class="sp neg">
+      <div class="sl">L3-a · 감축</div>
+      <div class="st">발행 주 4건 → 2건</div>
+      <div class="sd">투입 0시간. 도구도 승인도 필요 없음. <strong>그냥 안 만들면 됩니다.</strong></div>
+      <div class="sn">+12.5h</div>
+      <div class="sx">주당 회수 · 되돌리기 즉시 <span class="tag">추산</span></div>
+    </div>
+    <div class="sp pos">
+      <div class="sl">L3-b · 교체</div>
+      <div class="st">크래프트 포맷 신설 · 공방 배치 촬영</div>
+      <div class="sd">전환 비용이 실재하고, <strong>W3~W5에 집중적으로 몰립니다.</strong></div>
+      <div class="sn">−17.5h</div>
+      <div class="sx">총 투입 · 소재는 남음 <span class="tag">추산</span></div>
+    </div>
+  </div>
+
+  <div class="banner">
+    <div class="bl">그래서 실행 순서가 결정된다</div>
+    <div class="bb">L3-a를 첫날에 친다</div>
+    <p>감축이 먼저 일어나야 L1·L2·L3-b를 돌릴 시간이 생깁니다.
+      순서가 뒤집히면(새 포맷 먼저 만들고 나중에 줄이기) <strong>W2부터 20시간을 넘깁니다.</strong>
+      <br>이건 우선순위 재편이 아닙니다. Tess의 “L3은 3순위지만 즉시 착수”를
+      <strong>“L3-a는 첫날, L3-b는 3주차”로 쪼갠 것</strong>입니다.</p>
+  </div>
+</section>
+
+<!-- 결제수단 11% -->
+<section>
+  <div class="kicker stop">★ 아무도 안 짚은 것</div>
+  <h2>“결제수단 없음 11%”</h2>
+  <p class="lead">
+    Ben의 이탈 사유 설문(n=61): 배송비 31% · 가격 부담 26% · 다른 곳과 비교 23% ·
+    <strong>결제수단 없음 11%</strong> · 기타 9%.
+    <br>Ben은 “배송비 + 가격 = 57%가 비용 이슈”로 묶었고, Tess는 그 57%를 받아 L1을 설계했습니다.
+    <mark class="stop">11%는 아무도 안 건드렸습니다.</mark>
+  </p>
+
+  <div class="card" style="border-left:4px solid var(--stop)">
+    <div class="ct" style="color:var(--stop)">그런데 이 케이스의 결제 완료율은 7.0%입니다</div>
+    <p style="margin:8px 0 0">
+      업계 하한선(20~40%)의 3분의 1이에요. <strong>배송비 3,000원으로 이 정도가 무너지지 않습니다.</strong>
+      Baymard의 “추가비용” 이탈은 <strong>70% 언저리를 만들지, 93%를 만들지 않습니다.</strong>
+    </p>
+    <p style="margin:14px 0 0">
+      그리고 이 케이스의 유입 구조를 보세요. <strong>인스타 유입 = 세션의 60%</strong>이고,
+      <strong>인스타는 사실상 100% 모바일</strong>입니다.
+      모바일에서 간편결제(네이버페이·카카오페이·토스)가 결제창 1면에 없으면
+      → 카드번호 입력 → 앱카드 인증 → 앱 전환 → <strong>복귀 실패.</strong>
+    </p>
+    <p style="margin:14px 0 0">
+      <mark class="stop">그리고 이 구간에서 나가는 사람은 설문에 답하지 않습니다. 이미 나갔으니까요.</mark>
+      설문에 잡힌 11%는 <strong>끝까지 남아서 답해준 사람들</strong>입니다. 실제 비중은 이보다 큽니다.
+      <br><br><strong style="font-size:17px">결제 완료율 7.0%라는 재앙적 숫자는, 간편결제 부재만으로 완벽히 설명됩니다.</strong>
+    </p>
+  </div>
+
+  <h3>그리고 이게 왜 실행상 중요한가</h3>
+  <div class="pcomp">
+    <div class="pv win">
+      <h4>간편결제 추가</h4>
+      <div class="pvr"><span>마진 영향</span><b>0.1~1%p (거의 0)</b></div>
+      <div class="pvr"><span>되돌리기</span><b>비활성화 10분</b></div>
+      <div class="pvr"><span>소요</span><b>신청 1h + 심사 1~2주</b></div>
+      <div class="pvr"><span>Tess의 “마진 하방 금지”</span><b>완전 통과</b></div>
+    </div>
+    <div class="pv risk">
+      <h4>무료배송 임계선</h4>
+      <div class="pvr"><span>마진 영향</span><b>직접 잠식 · 게이트 필요</b></div>
+      <div class="pvr"><span>되돌리기</span><b>설정 해제 10분<br><small style="font-weight:600">단 고객 기대는 안 돌아옴</small></b></div>
+      <div class="pvr"><span>소요</span><b>2h</b></div>
+      <div class="pvr"><span>Tess의 “마진 하방 금지”</span><b>손익분기 게이트 필수</b></div>
+    </div>
+  </div>
+  <p>
+    <mark>간편결제는 “마진 하방을 열지 마라”를 완전히 통과하면서, 잠재적으로 배송비보다 큰 레버입니다.</mark>
+    그리고 대표가 이미 붙였을 수도 있어요. <strong>테스트 주문이 30분 만에 답을 줍니다.</strong>
+  </p>
+
+  <div class="snr">
+    <div class="sh">시니어 코멘트 · 실행 설계자가 존재하는 이유</div>
+    <p>Ben과 Tess가 놓친 게 실력 부족이 아니에요. <strong>둘 다 “데이터를 읽는” 자리에 있었고, 저는 “그 몰에 직접 들어가 보는” 자리에 있기 때문</strong>입니다.</p>
+    <p><mark>전환율 7%라는 숫자를 아무리 노려봐도 “결제창 1면에 카카오페이가 없다”는 안 보입니다. 직접 결제해봐야 보입니다.</mark></p>
+    <p>그래서 이 플레이북의 첫 작업이 분석이 아니라 <strong>“본인 몰에서 물건을 사보는 것”</strong>입니다. 1인 사업자가 자기 몰에서 모바일로 끝까지 결제해본 게 언제인가요. 대부분 안 해봤습니다. 만들 때 데스크톱에서 테스트하고 끝이거든요.</p>
+  </div>
+</section>
+
+<!-- 테스트 주문 -->
+<section>
+  <div class="kicker">셋업 A · 첫날 · 1.5시간 · 사람 100%</div>
+  <h2>본인 몰에서 물건을 사본다</h2>
+  <p class="lead">
+    이 하나가 Tess의 선결 확인 <strong>3건을 동시에 처리</strong>합니다.
+    스마트폰으로, 인스타 프로필 링크를 눌러, 비회원으로, 실제 카드로 결제하고, 환불합니다.
+  </p>
+
+  <div class="flow">
+    <div class="fstep">
+      <div class="fn">0</div>
+      <div><div class="ft">GA4 DebugView를 켠다</div>
+        <div class="fd">관리 &gt; DebugView. 스마트폰 크롬 + 실시간 보고서</div></div>
+    </div>
+    <div class="fstep">
+      <div class="fn">1</div>
+      <div><div class="ft">상품 상세 진입 → 스톱워치</div>
+        <div class="fd">배송비가 <strong>어디에·언제</strong> 표시되는가?</div></div>
+    </div>
+    <div class="fstep">
+      <div class="fn">2</div>
+      <div><div class="ft">장바구니 담기</div>
+        <div class="fd">GA4에 무슨 이벤트가 찍히는가? (<code>add_to_cart</code>)</div></div>
+    </div>
+    <div class="fstep key">
+      <div class="fn">3</div>
+      <div><div class="ft">주문서로 이동</div>
+        <div class="fd">★ 여기서 <code>begin_checkout</code>이 찍히는가, 아니면 [2]에서 이미 찍혔는가?</div>
+        <div class="fa">Tess의 Check 01의 답</div></div>
+    </div>
+    <div class="fstep">
+      <div class="fn">4</div>
+      <div><div class="ft">폼 필드를 센다</div>
+        <div class="fd">필수 항목 몇 개인가? <strong>회원가입을 강요하는가?</strong></div></div>
+    </div>
+    <div class="fstep key">
+      <div class="fn">5</div>
+      <div><div class="ft">★ 결제 수단 목록을 스크린샷</div>
+        <div class="fd"><strong>네이버페이·카카오페이·토스가 1면에 있는가?</strong></div>
+        <div class="fa">아무도 안 본 30분</div></div>
+    </div>
+    <div class="fstep">
+      <div class="fn">6</div>
+      <div><div class="ft">실제로 결제한다 (본인 카드)</div>
+        <div class="fd">몇 번의 앱 전환·인증이 일어나는가? 몇 초 걸리는가?</div></div>
+    </div>
+    <div class="fstep">
+      <div class="fn">7</div>
+      <div><div class="ft">배송비가 최종 결제 화면에서 처음 보였는가?</div>
+        <div class="fd">Baymard 1위 이탈 원인 = “예상 못 한 추가비용”</div></div>
+    </div>
+    <div class="fstep">
+      <div class="fn">8</div>
+      <div><div class="ft">주문 취소·환불 처리</div></div>
+    </div>
+    <div class="fstep gate">
+      <div class="fn">✓</div>
+      <div><div class="ft">사람 게이트</div>
+        <div class="fd">위 8단계에서 <strong>“나라도 여기서 나가겠다”</strong> 싶은 지점을 전부 적는다.
+          <strong>그게 L1의 실제 작업 목록이다.</strong></div></div>
+    </div>
+  </div>
+
+  <div class="banner">
+    <div class="bl">숫자가 못 하는 일</div>
+    <div class="bb">숫자는 “결제에서 샌다”까지 알려주고,<br>테스트 주문은 “어느 클릭에서 새는지”를 알려준다</div>
+    <p>그리고 하나 더. <strong>[6]에서 대표 본인이 짜증이 나면, 그 짜증이 곧 93% 이탈률의 정체입니다.</strong></p>
+  </div>
+</section>
+
+<!-- 선결 확인 재설계 -->
+<section>
+  <div class="kicker">선결 확인 5건 재설계</div>
+  <h2>“10분짜리”라던 것들의 실제 절차</h2>
+  <p class="lead">
+    Tess의 5건을 실제 절차로 내려쓰니, <strong>3건이 하나의 작업으로 합쳐지고, 1건은 실행 불가</strong>였습니다.
+  </p>
+
+  <table class="tbl">
+    <thead>
+      <tr><th style="width:52px">#</th><th>확인 항목</th><th>실제 절차</th><th style="width:92px">실제 소요</th><th style="width:120px">판정</th></tr>
+    </thead>
+    <tbody>
+      <tr class="hot">
+        <td class="k">C0</td>
+        <td class="k">테스트 주문 완주<br><small style="font-weight:600;color:var(--ink-3)">Tess가 안 세운 것</small></td>
+        <td>본인 몰에서 모바일·비회원으로 실제 결제 + 환불</td>
+        <td class="k">1.5h</td>
+        <td><strong>★ 이것 하나가 C1·C2·결제수단·폼필드를 동시에 커버</strong></td>
+      </tr>
+      <tr>
+        <td class="k">C1</td>
+        <td class="k">GA4 <code>begin_checkout</code> 정의</td>
+        <td>C0 중 DebugView를 켜두면 어느 페이지에서 발화하는지 그대로 보인다</td>
+        <td>C0에 포함</td>
+        <td><span class="badge wait">10분 아님 · C0에 흡수</span></td>
+      </tr>
+      <tr>
+        <td class="k">C2</td>
+        <td class="k">배송비 정책·금액</td>
+        <td>카페24 관리자 &gt; 배송 설정 + 스마트스토어 판매자센터</td>
+        <td class="k">20분</td>
+        <td><span class="badge rev">Tess 말이 맞다</span></td>
+      </tr>
+      <tr>
+        <td class="k">C3</td>
+        <td class="k">각인 외주 리드타임·단가</td>
+        <td>업체 3곳 견적 문의 → 회신 대기 2~5영업일</td>
+        <td class="k">발송 30분 + 대기</td>
+        <td><span class="badge wait">비동기 · 블로커 아님</span></td>
+      </tr>
+      <tr>
+        <td class="k">C4</td>
+        <td class="k">기존 SKU 재고</td>
+        <td>카페24 관리자 &gt; 재고 조회</td>
+        <td class="k">10분</td>
+        <td><span class="badge rev">Tess 말이 맞다</span></td>
+      </tr>
+      <tr class="dead">
+        <td class="k">C5</td>
+        <td class="k">선물 요청 주문의<br>“요청 전” 장바구니 금액</td>
+        <td colspan="2" style="color:var(--stop);font-weight:700">비교할 두 상태가 데이터에 존재하지 않는다</td>
+        <td><span class="badge no">🔴 실행 불가</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="card" style="border-left:4px solid var(--stop)">
+    <div class="ct" style="color:var(--stop)">🔴 C5는 실행 불가입니다 (전략가에게 되돌릴 지점)</div>
+    <p style="margin:8px 0 0">
+      Tess는 이걸 <strong>“데이터는 이미 있어요. 10분짜리 확인입니다”</strong>라고 했습니다. <strong>없습니다.</strong>
+    </p>
+    <div style="background:var(--sam-wash);border-radius:3px;padding:16px 18px;margin:16px 0;
+      font-size:14.5px;font-weight:700;text-align:center;color:var(--sam-deep)">
+      장바구니에 담는다 → 주문서로 넘어간다 → 배송 요청사항에 “선물 포장 부탁드려요”를 쓴다 → 결제한다
+    </div>
+    <p style="margin:0">
+      <strong>요청은 주문 확정 시점에 일어납니다.</strong>
+      “요청 전 장바구니”와 “요청 후 주문”은 <strong>같은 금액</strong>이에요.
+      그리고 지금 선물 포장은 상품이 아니라 무료 서비스이므로,
+      <mark class="stop">요청 행위가 금액을 바꿀 메커니즘 자체가 없습니다.</mark>
+    </p>
+    <p style="margin:14px 0 0">
+      <strong>대체 검증을 설계했습니다</strong>(금액이 아니라 <strong>장바구니 구성</strong>을 봄).
+      선물 주문이 “비싼 SKU 1개”면 인과 역전, “평범한 SKU 여러 개”면 선물 프레임이 삽니다.
+      <strong>다만 이것도 결정적이지 않습니다.</strong> 상관을 다른 각도에서 볼 뿐이에요.
+    </p>
+    <div style="background:var(--stop-wash);border-radius:3px;padding:16px 18px;margin-top:16px;font-size:15px">
+      <strong style="color:var(--stop)">→ 즉 이 전략의 심장은 “확인하고 착수”가 불가능하고, “착수하면서 확인”만 가능합니다.</strong>
+      Tess는 이걸 T+1주 게이트에 넣었지만, <strong>게이트가 될 수 없습니다. 사후 판정 항목입니다.</strong>
+    </div>
+  </div>
+
+  <div class="snr">
+    <div class="sh">그래서 실행상 무엇이 달라지나 (이게 중요합니다)</div>
+    <p>인과를 못 가르니, <strong>무료배송 임계선을 선물 객단가에 기대어 설계하면 안 됩니다.</strong> 선물이 객단가를 못 올리면 임계선은 그냥 이탈 장치가 됩니다.</p>
+    <p><mark>설계 원칙: 임계선은 “선물 없이도 마진 중립”인 지점에 잡는다.</mark> 선물이 객단가를 올려주면 <strong>보너스로 받습니다.</strong> 선물을 임계선의 전제로 쓰지 않습니다.</p>
+    <p>이건 Tess의 사슬을 부정하는 게 아니라, <strong>그 사슬이 끊어져도 L1이 혼자 설 수 있게 하는 안전장치</strong>입니다. Tess가 “뒤집히면 L1은 마진 하방이 열린 채로 혼자 서야 합니다”라고 걱정한 바로 그 지점이고, 저는 <strong>애초에 안 열리게</strong> 설계했습니다.</p>
+  </div>
+</section>
+
+<!-- 20시간 -->
+<section>
+  <div class="kicker">주 20시간의 정체</div>
+  <h2>그 20시간의 내역을 아무도 안 봤다</h2>
+  <p class="lead">
+    Leo가 “주당 콘텐츠 20시간 이상”이라 했고, Tess가 “그 위에 시간을 더 얹지 마라”를 제약으로 박았습니다.
+    <strong>그런데 무엇이 그 20시간을 먹고 있는지는 아무도 안 봤어요.</strong>
+  </p>
+
+  <div class="tb">
+    <div class="ct" style="margin-bottom:18px">Before · 주 20시간 <span class="tag">추산</span></div>
+    <div class="tbrow"><span class="tk">기획·소재 발굴</span>
+      <span class="tbar"><i style="width:15%;background:#CFC7B4"></i></span><span class="tv">3h</span></div>
+    <div class="tbrow"><span class="tk">세팅·촬영</span>
+      <span class="tbar"><i style="width:35%;background:#A8813F"></i></span><span class="tv">7h</span></div>
+    <div class="tbrow"><span class="tk">편집 (릴스 4건)</span>
+      <span class="tbar"><i style="width:30%;background:#A8813F"></i></span><span class="tv">6h</span></div>
+    <div class="tbrow"><span class="tk">카피·발행</span>
+      <span class="tbar"><i style="width:10%;background:#CFC7B4"></i></span><span class="tv">2h</span></div>
+    <div class="tbrow"><span class="tk">댓글·DM</span>
+      <span class="tbar"><i style="width:10%;background:#CFC7B4"></i></span><span class="tv">2h</span></div>
+    <div style="margin:20px 0 18px;padding-top:18px;border-top:1px solid var(--line)"></div>
+    <div class="ct" style="margin-bottom:18px">After · 발행 반감 + 믹스 교체 + AI 이관</div>
+    <div class="tbrow after"><span class="tk">기획·소재 발굴</span>
+      <span class="tbar"><i style="width:7.5%;background:#5E7A62"></i></span><span class="tv">1.5h</span></div>
+    <div class="tbrow after"><span class="tk">세팅·촬영</span>
+      <span class="tbar"><i style="width:10%;background:#5E7A62"></i></span><span class="tv">2h</span></div>
+    <div class="tbrow after"><span class="tk">편집</span>
+      <span class="tbar"><i style="width:7.5%;background:#5E7A62"></i></span><span class="tv">1.5h</span></div>
+    <div class="tbrow after"><span class="tk">카피·발행</span>
+      <span class="tbar"><i style="width:2.5%;background:#5E7A62"></i></span><span class="tv">0.5h</span></div>
+    <div class="tbrow after"><span class="tk">댓글·DM</span>
+      <span class="tbar"><i style="width:10%;background:#CFC7B4"></i></span><span class="tv">2h</span></div>
+    <div class="tbtot">
+      <span>주 20h → 7.5h · 회수</span>
+      <b>+12.5h</b>
+    </div>
+  </div>
+
+  <h3>회수의 3원천</h3>
+  <ul>
+    <li><strong>발행량 반감 (4 → 2건)</strong>: 순수 산술. <strong>+5h</strong></li>
+    <li><strong>믹스 교체로 건당 원가 하락</strong>: 스타일링은 세팅(소품·자연광·구도)이 시간을 먹고,
+      관리법·사용법·제품컷은 <strong>대표의 주방에 제품만 놓으면 됩니다.</strong> 세팅 비용이 거의 0이에요.
+      <mark>가장 싸고 가장 잘 팔리는 콘텐츠를 “재미없어 보여서” 안 만들고 있었습니다.</mark> <strong>+3h</strong></li>
+    <li><strong>편집·캡션 AI 이관</strong>: <strong>+4.5h</strong></li>
+  </ul>
+
+  <div class="card" style="border-left:4px solid var(--sam)">
+    <div class="ct">⚠ 이 표가 틀리면 아래 로드맵이 전부 틀립니다</div>
+    <p style="margin:8px 0 0">
+      그래서 <strong>W1의 첫 작업이 시간 로그</strong>입니다. 스마트폰 메모에 작업 시작·끝만 적으세요.
+      7일치면 충분합니다. <strong>하루 5분입니다.</strong>
+      <br><br>그리고 여기가 중요한데, <strong>CS·정산·발송은 이 20시간 밖입니다.</strong>
+      대표가 “신제품·CS·정산이 밀린다”고 했으니, 그건 20시간을 다 쓰고 <strong>남는 시간에</strong> 하고 있다는 뜻이에요.
+      → <mark>즉 이 프로젝트의 가용 예산은 “콘텐츠 20시간에서 빼낸 것”이 전부입니다. 다른 데서 시간을 못 가져옵니다.</mark>
+    </p>
+  </div>
+</section>
+
+<!-- 로드맵 -->
+<section>
+  <div class="kicker">주차별 로드맵</div>
+  <h2>20시간 제약을 통과하는가</h2>
+
+  <div class="gantt">
+    <div class="gr head">
+      <div>주차</div><div>핵심 작업</div><div>부하 (실행 · 콘텐츠)</div><div style="text-align:right">합계</div>
+    </div>
+    <div class="gr">
+      <div class="gw">W1<small>7/14~20</small></div>
+      <div class="gt"><strong>L3-a 감축(0h)</strong> · 테스트주문(1.5) · 마진율(0.5) · 배송비·재고 확인 · 각인 견적 발송 · <strong>C5 대체검증(2)</strong> · 임계선 시뮬(1.5) · 시간 로그</div>
+      <div class="gbar"><i class="ex" style="width:35.5%"></i><i class="co" style="width:50%"></i></div>
+      <div class="gh">17h</div>
+    </div>
+    <div class="gr tight">
+      <div class="gw">W2<small>7/21~27</small></div>
+      <div class="gt">간편결제 신청 · 임계선 설정 · <strong>체크아웃 폼 정리</strong> · <strong>L2 자재 발주</strong> · 공방 섭외 · 편집 AI 셋업</div>
+      <div class="gbar"><i class="ex" style="width:50%"></i><i class="co" style="width:37.5%"></i></div>
+      <div class="gh">17.5h</div>
+    </div>
+    <div class="gr free">
+      <div class="gw">W3<small>7/28~8/3</small></div>
+      <div class="gt"><strong>재테스트 주문</strong> · 번들 설계 · 관리법 포맷 · 모니터링 셋업 · <strong>🔴 L1 측정 개시</strong></div>
+      <div class="gbar"><i class="ex" style="width:35%"></i><i class="co" style="width:37.5%"></i></div>
+      <div class="gh">14.5h</div>
+    </div>
+    <div class="gr">
+      <div class="gw">W4<small>8/4~10</small></div>
+      <div class="gt"><strong>공방 A 배치촬영(6h)</strong> · 번들 촬영(4h) ★ 겸용</div>
+      <div class="gbar"><i class="ex" style="width:50%"></i><i class="co" style="width:25%"></i></div>
+      <div class="gh">15h</div>
+    </div>
+    <div class="gr gate">
+      <div class="gw">W5<small>8/11~17</small></div>
+      <div class="gt"><strong>공방 B 배치촬영(6h)</strong> · 번들 상세 등록 · <strong style="color:var(--stop)">🔴 G1: 재고 판정 → 보충 발주 여부</strong></div>
+      <div class="gbar"><i class="ex" style="width:50%"></i><i class="co" style="width:25%"></i></div>
+      <div class="gh">15h</div>
+    </div>
+    <div class="gr free">
+      <div class="gw">W6<small>8/18~24</small></div>
+      <div class="gt">기프트박스 옵션 · 선물 안내 페이지 · CS 템플릿</div>
+      <div class="gbar"><i class="ex" style="width:25%"></i><i class="co" style="width:37.5%"></i></div>
+      <div class="gh">12.5h</div>
+    </div>
+    <div class="gr free">
+      <div class="gw">W7<small>8/25~31</small></div>
+      <div class="gt">크래프트 콘텐츠 발행 시작 · 하이라이트 정비 · <strong>L1 측정 종료</strong></div>
+      <div class="gbar"><i class="ex" style="width:10%"></i><i class="co" style="width:37.5%"></i></div>
+      <div class="gh">9.5h</div>
+    </div>
+    <div class="gr gate">
+      <div class="gw">W8<small>9/1</small></div>
+      <div class="gt"><strong style="color:var(--sam-deep)">🔴 G2: L1 판정 → 통과 시 L2 풀 가동 (시즌 개시)</strong></div>
+      <div class="gbar"></div>
+      <div class="gh">–</div>
+    </div>
+  </div>
+
+  <div class="banner">
+    <div class="bl">판정</div>
+    <div class="bb">20시간 제약은 통과한다. 단 조건부다.</div>
+    <p>가장 빡빡한 주가 <strong>17.5시간(W2)</strong>입니다. 들어옵니다. 그리고 W6부터 <strong>주 7~10시간이 남습니다.</strong>
+      <br><br><strong style="font-size:17px">조건은 하나: L3-a(발행량 반감)를 W1 첫날에 실행해야 한다.</strong>
+      <br>이걸 안 하면 W2의 실제 부담은 10h + 20h = <strong>30시간</strong>이 되고, 전부 붕괴합니다.</p>
+  </div>
+
+  <div class="snr">
+    <div class="sh">그런데 이게 이 플레이북에서 가장 안 될 일입니다</div>
+    <p>왜냐하면 이건 <strong>“하는 일”이 아니라 “안 하는 일”</strong>이거든요. 할 일 목록에는 안 적히고, 안 해도 아무도 안 혼내고, 대표는 1년간 <strong>주 4건 발행이 성공의 증거</strong>라고 믿어 왔습니다.</p>
+    <p><strong>Tess가 R5(대표가 이 전략을 못 믿는다)를 “가장 현실적인 리스크”라고 한 게 정확히 여기서 터집니다.</strong></p>
+    <p style="padding-top:10px;border-top:1px dashed var(--line)">→ <strong>그래서 제안합니다: W1에 발행을 줄이되, “영구히 줄인다”고 결심하지 마세요. <mark>“4주만 실험한다”고 결심하세요.</mark></strong> 되돌리기가 즉시 가능하고, 4주 뒤에 클릭·주문 데이터가 나옵니다. <strong>영구 결정은 감정적 저항을 부르고, 4주 실험은 안 부릅니다.</strong> 같은 행동인데 프레임이 다릅니다. 그리고 데이터가 나오면 그때는 설득할 필요가 없어집니다.</p>
+  </div>
+
+  <h3>Tess의 주장에 대한 내 판정</h3>
+  <table class="tbl">
+    <thead><tr><th>Tess의 주장</th><th style="width:230px">Sam의 판정</th></tr></thead>
+    <tbody>
+      <tr><td>“L3은 착수 비용이 음수다. 시간을 만든다”</td>
+        <td><strong style="color:var(--sam)">절반 참.</strong> L3-a는 음수(+12.5h), L3-b는 양수(−17.5h). 합쳐서 4주 안에 순증</td></tr>
+      <tr><td>“L1은 일회성 설정 작업이라 시간 비용 거의 0”</td>
+        <td><strong style="color:var(--stop)">틀렸다.</strong> L1은 <strong>9~10시간</strong>이다. 작지만 0이 아니다</td></tr>
+      <tr><td>“L2는 리드타임 0”</td>
+        <td><strong style="color:var(--stop)">틀렸다.</strong> 자재 리드타임 3~10일. <strong>실질 2~3주</strong></td></tr>
+      <tr><td>“주 20시간 제약을 L3이 해결한다”</td>
+        <td><strong style="color:var(--sam)">조건부 참.</strong> L3-a를 첫날에 치면 참, 아니면 거짓</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 게이트 -->
+<section>
+  <div class="kicker">의사결정 게이트</div>
+  <h2>되돌릴 수 없는 결정은 딱 하나다</h2>
+
+  <div class="gates">
+    <div class="gt key">
+      <div class="gid">G0</div>
+      <div>
+        <div class="gtt">L1의 실제 병목이 무엇인가</div>
+        <div class="gtd">테스트 주문 8단계 · GA4 정의 · 인과 대체 검증.
+          간편결제인가, 배송비인가, 폼인가. 셋 다면 <strong>간편결제 → 폼 → 배송비 순</strong>
+          (마진을 안 깎는 순서).</div>
+      </div>
+      <div class="gtw"><b>W1 말 · 7/20</b><span class="badge rev">읽기만</span></div>
+    </div>
+
+    <div class="gt irrev">
+      <div class="gid">G1</div>
+      <div>
+        <div class="gtt">🔴 재고 보충 발주 여부</div>
+        <div class="gtd">기존 SKU 재고 vs 시즌 3개월 예상 수요.
+          시즌 예상 판매량의 1.5배 재고가 없는 SKU만 발주.
+          <strong>번들에 들어가는 SKU는 별도로 볼 것</strong>(빨리 소진된다).</div>
+      </div>
+      <div class="gtw"><b>W5 · 8/15</b><span class="badge irrev">🔴 되돌리기 불가</span></div>
+    </div>
+
+    <div class="gt key">
+      <div class="gid">G2</div>
+      <div>
+        <div class="gtt">★ L1 판정 → L2 풀 가동 or 원복</div>
+        <div class="gtd">8월 한 달 K1(장바구니→구매 완료율, 현재 4.95%) · 손익분기 통과 여부.
+          <strong>통과 → L2 풀 가동(시즌 개시). 실패 → L1 원복 + Tess 중단조건 2 발동.</strong></div>
+      </div>
+      <div class="gtw"><b>W8 · 9/1</b><span class="badge rev">설정 원복 10분</span></div>
+    </div>
+
+    <div class="gt">
+      <div class="gid">G3</div>
+      <div>
+        <div class="gtt">선물 가설 중간 판정</div>
+        <div class="gtd">K2(선물 주문 비중, baseline 34%) · 포장·선물 CS 주간 시간.
+          <strong>포장이 주 3시간을 넘으면 외주 트리거.</strong></div>
+      </div>
+      <div class="gtw"><b>10월 말</b><span class="badge rev">가역</span></div>
+    </div>
+
+    <div class="gt">
+      <div class="gid">G4</div>
+      <div>
+        <div class="gtt">L4(네이버 광고) 착수 여부</div>
+        <div class="gtd">시즌 최종 · North Star(자사몰 월 순마진).
+          <strong>L1이 검증됐으면 광고비는 “배수기”가 된다.</strong></div>
+      </div>
+      <div class="gtw"><b>11월 말</b><span class="badge rev">가역</span></div>
+    </div>
+
+    <div class="gt" style="border-left:5px solid var(--stop)">
+      <div class="gid" style="background:var(--stop)">G5</div>
+      <div>
+        <div class="gtt">🚨 캐니벌라이제이션 감시 (Tess 교정)</div>
+        <div class="gtd">스마트스토어 매출 <strong>+ 전 채널 합산 순마진</strong>을 <strong>같이</strong> 본다.</div>
+      </div>
+      <div class="gtw"><b>매주</b></div>
+    </div>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--stop)">
+    <div class="ct" style="color:var(--stop)">🔴 측정 설계가 새 데드라인을 만든다 (Tess가 못 본 것)</div>
+    <p style="margin:8px 0 0">
+      Tess는 “8월 중순 데드라인을 포기했으니 시한에 쫓기지 마라”고 했습니다.
+      <strong>신규 SKU 데드라인은 정말 사라졌습니다. 그런데 다른 데드라인이 생겼어요.</strong>
+    </p>
+    <p style="margin:14px 0 0">
+      <mark class="stop">L1의 효과를 깨끗하게 측정하려면, 시즌이 시작되기 전에 켜야 합니다.</mark>
+      9월에 L1을 켜면 <strong>시즌 상승과 L1 효과가 섞입니다.</strong>
+      K1이 올라도 그게 결제 수리 때문인지 집들이 시즌 때문인지 못 가려요.
+      그러면 G2의 판정이 불가능해지고,
+      <strong>Tess의 중단 조건 2(“배송비를 없앴는데 K1이 안 움직이면 L1을 접는다”)가 작동하지 않습니다.</strong>
+    </p>
+    <div style="background:var(--stop-wash);border-radius:3px;padding:14px 18px;margin-top:16px;
+      font-size:15px;font-weight:700;color:var(--stop);text-align:center">
+      → L1은 7월 말까지 켠다. 8월 한 달(비시즌)이 순수 측정 기간이다. 9월 1일에 판정이 나온다.
+    </div>
+    <p style="margin:14px 0 0;font-size:14px">
+      <strong>통계적으로 충분한가</strong>: 월 장바구니 약 660건. K1이 4.95%(33건)에서 8%(53건)로 움직이면
+      비율 검정으로 유의합니다. <strong>한 달이면 판정 가능합니다.</strong> 다행히.
+    </p>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--stop)">
+    <div class="ct" style="color:var(--stop)">🚨 경보기는 반대 방향으로도 울린다 (Tess가 못 본 것)</div>
+    <p style="margin:8px 0 0">
+      Tess는 K5를 “스마트스토어가 흔들리면 중단”으로 세웠습니다. <strong>한 방향만 봤어요.</strong>
+      자사몰에만 무료배송 임계선을 걸면, <strong>같은 상품의 총액이 두 채널에서 달라집니다.</strong>
+    </p>
+    <ul style="margin:14px 0 0">
+      <li><strong>자사몰이 싸지면</strong> → 스마트스토어 고객이 자사몰로 이동. <strong style="color:var(--go)">좋습니다</strong>(수수료 절약).
+        그런데 스마트스토어 매출이 떨어집니다. K5만 보면 “경보 발령”. <strong style="color:var(--stop)">오진입니다.</strong></li>
+      <li><strong>자사몰이 비싸면</strong> → 자사몰 고객이 스마트스토어로 샙니다. <strong style="color:var(--stop)">나쁩니다</strong>(수수료를 냅니다).
+        그런데 스마트스토어 매출이 오릅니다. K5만 보면 “정상”. <strong style="color:var(--stop)">오진입니다.</strong></li>
+    </ul>
+    <div style="background:var(--stop-wash);border-radius:3px;padding:14px 18px;margin-top:16px;font-size:15px">
+      <strong style="color:var(--stop)">실행 원칙: 자사몰의 총액(상품가 + 배송비)이 스마트스토어보다 같거나 싸야 합니다.</strong>
+      안 그러면 결제 수리가 트래픽을 남의 집으로 밀어냅니다.
+    </div>
+  </div>
+</section>
+
+<!-- 되돌리기 -->
+<section>
+  <div class="kicker">되돌리기 계획</div>
+  <h2>나머지는 과감하게. W5만 신중하게</h2>
+
+  <table class="tbl">
+    <thead>
+      <tr><th>변경</th><th style="width:150px">되돌리기</th><th style="width:80px">소요</th><th>되돌아오지 않는 것</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="k">L3-a 발행 감축</td><td><span class="badge rev">가역</span></td><td>즉시</td>
+        <td>⚠ 잃은 도달·팔로워는 즉시 안 돌아온다. <strong>알고리즘 회복 2~4주</strong></td></tr>
+      <tr><td class="k">간편결제 추가</td><td><span class="badge rev">가역</span></td><td>10분</td><td>없음</td></tr>
+      <tr><td class="k">무료배송 임계선</td><td><span class="badge rev">가역</span></td><td>10분</td>
+        <td>⚠ <strong>한 번 무료를 경험한 고객의 기대.</strong> 임계선을 올리는 건 반발, 내리는 건 환영</td></tr>
+      <tr><td class="k">체크아웃 폼 변경</td><td><span class="badge rev">백업 복원</span></td><td>30분</td>
+        <td>없음 · <strong style="color:var(--stop)">단 백업 없이 만지면 몰이 깨진다</strong> 🔴</td></tr>
+      <tr><td class="k">프리미엄 기프트박스</td><td><span class="badge rev">가역</span></td><td>10분</td><td>자재 매몰 20~40만원</td></tr>
+      <tr><td class="k">번들 상품</td><td><span class="badge rev">가역</span></td><td>10분</td>
+        <td>없음 (<strong>신규 발주를 안 했으므로</strong>)</td></tr>
+      <tr class="dead"><td class="k">재고 보충 발주 (G1)</td><td><span class="badge irrev">🔴 불가</span></td><td>–</td>
+        <td><strong style="color:var(--stop)">품목당 30개 × 원가. 이 플레이북의 유일한 진짜 비가역 결정</strong></td></tr>
+    </tbody>
+  </table>
+
+  <div class="snr">
+    <div class="sh">시니어 코멘트 · 실행 설계의 뼈대</div>
+    <p>이 표를 만들고 나면 플레이북 전체의 성격이 보입니다. <strong>되돌릴 수 없는 결정이 딱 하나입니다. W5의 재고 보충 발주.</strong> 나머지는 전부 설정 변경이고 10분이면 원복됩니다.</p>
+    <p>1년간 “이걸 바꿔도 될까”를 고민하며 못 바꾼 것들이 있을 겁니다. 배송비도, 발행량도, 콘텐츠 유형도요. <mark>그런데 그것들은 전부 10분이면 되돌아옵니다. 되돌릴 수 있는 결정을 되돌릴 수 없는 결정처럼 다루면, 1년이 갑니다.</mark> 실제로 갔죠.</p>
+    <p>반대로 <strong>재고 발주는 진짜로 안 돌아옵니다.</strong> 순마진 411만 원짜리 회사가 안 팔릴 재고 30개를 떠안으면 다음 결정의 자유가 사라집니다. <strong>G1에만 신중함을 몰아 쓰세요.</strong></p>
+    <p style="padding-top:10px;border-top:1px dashed var(--line)"><strong>⚠ 그리고 하나 더</strong>: Tess는 “8월 중순 데드라인을 지키지 않는다”고 했고 그건 <strong>신규 SKU에 대해서만</strong> 맞습니다. <mark class="stop">재고 보충 발주에는 그 데드라인이 그대로 살아 있어요.</mark> Tess도 뒤집힘 조건으로 인정했지만 로드맵에 안 박았습니다. <strong>W5(8/15)가 마지막 문입니다.</strong></p>
+  </div>
+</section>
+
+<!-- AI 레버리지 -->
+<section>
+  <div class="kicker">AI 레버리지 맵</div>
+  <h2>“편집자를 뽑을까요”의 진짜 답</h2>
+
+  <div class="banner">
+    <div class="bl">아무도 “그럼 편집은 누가 하나”를 안 답했다</div>
+    <div class="bb">편집을 AI로 미세요</div>
+    <p>Ben이 산술로 채용 불가를 판정했고(손익분기 +80%), Tess가 버렸습니다. 맞습니다.
+      <strong>그런데 대표는 여전히 릴스 편집을 손으로 합니다. 주 6시간입니다.</strong></p>
+  </div>
+
+  <div class="ai">
+    <div class="aib gas">
+      <h4>★ 액셀 · 여긴 밟으세요</h4>
+      <div class="as">반복 高 × 판단 低 = 기계가 할 일</div>
+      <ul>
+        <li><strong>릴스 편집</strong>(컷·자막·리사이즈) → AI 자동편집.
+          <strong>사람은 첫 3초(후킹)와 마지막 CTA만</strong>. <strong>주 4h 회수</strong></li>
+        <li><strong>캡션·해시태그</strong> → AI 초안 → 사람 톤 확인. <strong>주 1~2h 회수</strong></li>
+        <li><strong>주문 엑셀 파싱</strong>(선물 요청 건 추출·집계) → AI 일회성</li>
+        <li><strong>임계선 시뮬레이션</strong> → AI가 계산 · <strong>결정은 사람</strong>(마진 직결)</li>
+        <li><strong>각인 견적 문의 메일</strong> → AI 초안 → 사람 발송</li>
+        <li><strong>선물 CS·DM 템플릿</strong> → AI 템플릿 → 실명 발송은 사람</li>
+      </ul>
+    </div>
+    <div class="aib brake">
+      <h4>🔴 브레이크 · 여긴 멈추세요</h4>
+      <div class="as">전부 “진짜여야만 값이 있는 것”</div>
+      <ul>
+        <li><strong>크래프트 서사.</strong> “북미산 호두나무를 6개월 자연건조”는 프리미엄 가격을 정당화하는 <strong>핵심 근거</strong>입니다.
+          AI에 시키면 그럴듯하게 나오고, <strong>그건 허위표시입니다.</strong>
+          공방 사장님한테 물어보세요. <strong>이 한 줄이 이 플레이북에서 가장 위험한 지점입니다.</strong></li>
+        <li><strong>선물 메시지 카드.</strong> 고객이 “결혼 축하해, 늘 행복하길”이라고 썼으면 그걸 그대로 옮깁니다.
+          AI가 “다듬어” 주면 안 됩니다. <strong>그 카드는 받는 사람이 읽는 유일한 사람의 말</strong>이에요.</li>
+        <li><strong>후기.</strong> 말할 것도 없습니다.</li>
+        <li><strong>자동화 워크플로우(n8n·Zapier)를 짜지 마세요.</strong> 주문 240건/월 규모입니다.
+          손으로 합니다. <strong>지금 이 회사에 필요한 시스템은 스프레드시트 한 장입니다.</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="snr">
+    <div class="sh">시니어 코멘트 · 1인이 AI를 쓰는 이유의 전부</div>
+    <p>“AI가 이상하게 자르면 어떡하죠”가 걸리면, 그건 <strong>안 넘기는 이유가 아니라 게이트를 다는 이유</strong>입니다. AI가 컷·자막을 치고, 사람은 첫 3초와 마지막 CTA만 손으로 봅니다. 나머지는 안 봐도 됩니다.</p>
+    <p>그리고 이게 중요한데요. <mark>편집자를 뽑았어도 시간은 안 돌아왔을 겁니다.</mark> 브리핑하고, 초안 받고, 피드백하고, 수정 받고, 검수하고. Leo가 정확히 지적했죠. <strong>AI는 브리핑을 안 요구합니다.</strong> 소재를 던지면 30분 뒤에 나옵니다.</p>
+  </div>
+
+  <div class="card" style="border-left:4px solid var(--sam)">
+    <div class="ct">🔴 크래프트 콘텐츠의 공급 원가를 아무도 안 봤다</div>
+    <p style="margin:8px 0 0">
+      Tess는 크래프트를 “이 전략의 접착제”라고 했습니다. 데이터상 맞아요.
+      <strong>그런데 왜 6개월에 2건뿐이었을까요.</strong>
+      Tess는 “안 만들어서”라고 암묵적으로 전제했습니다. 저는 다르게 봅니다.
+      <strong>공방은 외주 2곳입니다.</strong> 대표의 집이나 스튜디오가 아니에요.
+    </p>
+    <ul style="margin:14px 0 0">
+      <li><strong>스타일링 컷</strong>: 대표의 주방. 소품 배치하고 아침 햇살 기다리면 찍힌다. <strong>접근 비용 0.</strong></li>
+      <li><strong>크래프트 컷</strong>: <strong>차 타고 공방에 가야 한다.</strong> 공방 사장님 작업 일정에 맞춰야 한다.
+        남의 작업장이라 협조가 필요하다. <strong>접근 비용이 크다.</strong></li>
+    </ul>
+    <p style="margin:14px 0 0">
+      <mark>6개월에 2건은 게으름이 아니라 물리적 마찰의 결과일 가능성이 높습니다.</mark>
+      이걸 못 보면 “크래프트를 축으로”가 <strong>주 4시간짜리 공방 왕복</strong>으로 번역돼서 시간표를 터뜨립니다.
+    </p>
+    <div style="background:var(--sam-wash);border-radius:3px;padding:18px 20px;margin-top:16px">
+      <strong style="color:var(--sam-deep)">→ 해법: 배치 촬영 모델</strong>
+      <p style="margin:8px 0 0;font-size:14.5px">
+        <strong>[분기 1회]</strong> 공방 하루 방문(6h, 이동 포함) → 로우 푸티지 대량 확보(제재·건조·대패·샌딩·오일링) →
+        <strong>사장님 인터뷰 음성 녹음</strong>(나무 종류·건조 기간·왜 이 공법인지) → <strong>2~3개월치 소재</strong>
+        <br><strong>[매주]</strong> 소재에서 잘라 편집(AI 자막·컷) → 발행
+        <br><br><strong>주간 촬영 부하가 0이 됩니다.</strong> 그리고 사장님 인터뷰에서 나오는 “왜 이 나무를, 몇 개월 말려서, 어떤 공법으로”가
+        바로 <strong>Ben이 경쟁사에서 발견한 가격 정당화 언어</strong>에 대응하는 SOLLIP의 언어입니다.
+        상세페이지에도, 릴스에도, 번들 설명에도 씁니다. <strong>한 번 캐서 세 군데 씁니다.</strong>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- 함정 8개 -->
+<section>
+  <div class="kicker stop">Tess가 놓친 실행상의 함정</div>
+  <h2>눈치 안 보고 적습니다. 여덟 개입니다</h2>
+
+  <div class="traps">
+    <div class="tp red">
+      <div class="tn">1</div>
+      <div><div class="tt">Check 05(전략의 심장)는 현재 데이터로 실행 불가</div>
+        <div class="td">“요청 전 장바구니 금액”이라는 상태가 존재하지 않는다. 요청은 주문 확정 시점에 일어난다.
+          → <strong>대체 검증 설계. 단 결정적이지 않음. 임계선을 선물에 의존하지 않게 설계해 우회.</strong>
+          <span class="badge no">전략가 회신 필요</span></div></div>
+    </div>
+    <div class="tp red">
+      <div class="tn">2</div>
+      <div><div class="tt">“결제수단 없음 11%”를 아무도 안 짚었다</div>
+        <div class="td">인스타 유입은 사실상 100% 모바일. 간편결제 부재만으로 결제완료율 7%가 설명된다.
+          <strong>마진을 안 깎는 최대 레버일 수 있다.</strong>
+          → L1의 첫 수를 배송비에서 결제수단으로.</div></div>
+    </div>
+    <div class="tp">
+      <div class="tn">3</div>
+      <div><div class="tt">“L2는 리드타임 0”이 틀렸다</div>
+        <div class="td">포장 자재 3~7일, 인쇄물 5~10일. <strong>실질 2~3주.</strong>
+          9월 1일에 오퍼가 살아 있으려면 8월 첫째 주에 자재가 도착해 있어야 한다.
+          → W2에 자재 발주를 못 박음.</div></div>
+    </div>
+    <div class="tp red">
+      <div class="tn">4</div>
+      <div><div class="tt">8월 중순 데드라인이 완전히 안 사라졌다</div>
+        <div class="td">재고 보충 발주에는 살아 있고, 그게 <strong>이 플레이북의 유일한 비가역 결정</strong>이다.
+          → G1(W5 · 8/15)을 로드맵에 박음.</div></div>
+    </div>
+    <div class="tp red">
+      <div class="tn">5</div>
+      <div><div class="tt">측정 설계가 새 데드라인을 만든다</div>
+        <div class="td">L1을 9월에 켜면 시즌 효과와 섞여 G2 판정 불가.
+          → <strong>L1은 7월 말까지. 8월(비시즌)이 측정 기간.</strong></div></div>
+    </div>
+    <div class="tp">
+      <div class="tn">6</div>
+      <div><div class="tt">K5(스마트스토어 경보기)가 한 방향만 본다</div>
+        <div class="td">자사몰만 무료배송을 걸면 채널 간 이동이 일어나고,
+          <strong>스마트스토어가 오르는 것도 나쁜 신호일 수 있다.</strong>
+          → 합산 순마진과 같이 본다.</div></div>
+    </div>
+    <div class="tp">
+      <div class="tn">7</div>
+      <div><div class="tt">포장 경고선을 건수(월 60건)로 잡았다</div>
+        <div class="td">건당 시간이 오퍼 구성에 따라 <strong>6~21분</strong>으로 변한다
+          (리본 6분 / +카드 8분 / +박스 11분 / <strong>+각인 21분</strong>).
+          → <strong>“주 3시간”으로 재정의</strong> + 트리거 시 행동 사전 확정
+          (① 기프트박스 가격 인상 8,000→12,000원 ② 시즌 포장 알바).</div></div>
+    </div>
+    <div class="tp">
+      <div class="tn">8</div>
+      <div><div class="tt">크래프트 콘텐츠의 공급 원가를 아무도 안 봤다</div>
+        <div class="td">공방은 외주 2곳이다. 6개월에 2건뿐이었던 게 게으름이 아니라 <strong>물리적 마찰</strong>일 수 있다.
+          → <strong>배치 촬영 모델.</strong> 주간 촬영 부하 0.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- 실행 불가 -->
+<section>
+  <div class="kicker stop">실행 불가 판정</div>
+  <h2>우선순위는 안 건드립니다. 안 되는 건 안 된다고 보고합니다</h2>
+
+  <table class="tbl">
+    <thead><tr><th style="width:180px">항목</th><th style="width:180px">판정</th><th>전략가가 할 일</th></tr></thead>
+    <tbody>
+      <tr class="dead">
+        <td class="k">Check 05<br>선물 인과 검증</td>
+        <td><strong style="color:var(--stop)">🔴 실행 불가</strong><br>비교할 두 상태가 데이터에 없다</td>
+        <td><strong>“확인 후 착수”를 “착수하며 확인”으로 바꿔야 한다.</strong>
+          T+1주 게이트에서 빼고 <strong>사후 판정</strong>으로 옮길 것.
+          그리고 <strong>임계선이 선물에 의존하지 않도록</strong> 안전장치와 함께 재확인할 것</td>
+      </tr>
+      <tr class="dead">
+        <td class="k">각인의<br>올해 시즌 실행</td>
+        <td><strong style="color:var(--stop)">🔴 불가 판정 (권고)</strong></td>
+        <td><strong>외주 각인 = 배송 +3~7일 → 날짜가 있는 선물에 치명적</strong>(늦으면 “늦은 배송”이 아니라 <strong>“망친 선물”</strong>).
+          <strong>직접 각인 = 건당 +10분 → 포장 병목 돌파.</strong>
+          Tess가 이미 “필요조건 아님”이라 했으므로 전략 변경 없음.
+          실행상 <strong>“올해는 안 함”으로 확정</strong>하고 내년 시즌 준비로 이월</td>
+      </tr>
+      <tr>
+        <td class="k">“L2 리드타임 0”</td>
+        <td><strong style="color:var(--sam)">🟡 부분 불가</strong><br>제품은 0, 자재는 2~3주</td>
+        <td>전략 변경 없음. 로드맵에 반영 완료</td>
+      </tr>
+      <tr>
+        <td class="k">“L1은 시간 비용<br>거의 0”</td>
+        <td><strong style="color:var(--sam)">🟡 부정확</strong><br>9~10시간</td>
+        <td>전략 변경 없음. 다만 <strong>“0”이라는 인식이 로드맵을 낙관하게 만들었음</strong></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p style="font-size:16px;font-weight:700;color:var(--sam-deep)">
+    그 외 Tess의 전략은 전부 실행 가능합니다. 우선순위(L1 → L2 → L3 → L4)를 바꿀 이유를 못 찾았습니다.
+  </p>
+</section>
+
+<!-- 종합 -->
+<section>
+  <div class="kicker">종합 코멘트</div>
+  <h2>다음에 더 봐야 할 것 하나만 고르라면</h2>
+
+  <div class="banner">
+    <div class="bl">테스트 주문 [5]단계</div>
+    <div class="bb">결제 수단 목록 스크린샷</div>
+    <p>이 케이스에서 아무도 안 본 30분이 여기 있습니다.
+      결제 완료율 7%는 <strong>배송비 3,000원으로 만들어지지 않는 숫자</strong>입니다.
+      Baymard의 “추가비용” 이탈은 70% 언저리를 만들지, 93%를 만들지 않아요.
+      <strong>93%를 만드는 건 대개 결제 그 자체입니다.</strong>
+      <br><br>그리고 만약 간편결제가 없다면, 그건 <strong>마진을 한 푼도 안 깎고 결제를 여는 레버</strong>입니다.
+      Tess가 그렇게 조심스럽게 지킨 마진 하방을, <strong>아예 건드릴 필요가 없어집니다.</strong>
+      <br><br><strong style="font-size:18px">한 사람이 자기 몰에서 물건을 한 번 사보는 것으로 알 수 있습니다.</strong></p>
+  </div>
+
+  <h3>회수한 시간을 어디에 쓰나 (못을 박습니다)</h3>
+  <table class="tbl">
+    <thead><tr><th style="width:180px">기간</th><th>회수 시간이 가는 곳</th></tr></thead>
+    <tbody>
+      <tr><td class="k">W1~W7 (7~8월)</td><td><strong>전액 L1·L2·L3-b 실행에 흡수.</strong> 남는 시간 없음. 이건 “투자 기간”입니다</td></tr>
+      <tr class="hot"><td class="k">W6~W7<br><small style="font-weight:600;color:var(--ink-3)">가장 위험한 순간</small></td>
+        <td>주 7~10h 여유 발생 → <strong>CS 템플릿·선물 안내 정비</strong> (시즌 대비 선행 투자)</td></tr>
+      <tr><td class="k">W8~W20 (9~11월)</td><td>선물 시즌 운영에 흡수. 포장·CS가 늘어난다. <strong>주 3시간 경고선</strong></td></tr>
+      <tr><td class="k">12월 이후</td><td>🔴 <strong>여기가 재투자의 본진: 신제품 기획.</strong>
+        대표가 말한 두 번째 소원 + L4(네이버 확대)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="snr">
+    <div class="sh">시니어 코멘트 · 가장 위험한 순간은 W6~W7입니다</div>
+    <p>갑자기 주 7~10시간이 빕니다. 그리고 1인 사업자가 그 시간에 뭘 하냐면, <strong>콘텐츠를 더 만듭니다.</strong> 손이 근질거리거든요. “시간이 남으니 릴스 하나 더 찍을까.” 그러면 20시간으로 정확히 되돌아가고, <mark>1년 전과 똑같은 자리에 섭니다.</mark></p>
+    <p>그 시간이 가야 할 곳은 이미 정해져 있어요. <strong>시즌 대비(CS 템플릿·선물 안내·포장 표준화)입니다.</strong> 지루하고, 인스타에 안 올라가고, 아무도 좋아요를 안 눌러줍니다. <strong>그런데 9월에 주문이 2배가 되면 그것만이 당신을 살립니다.</strong></p>
+    <p>그리고 <strong>12월 이후의 시간은 반드시 신제품 기획에 쓰세요.</strong> 그게 이 전략의 출구예요. <mark>올해 아무것도 새로 안 만들기로 한 건, 내년에 제대로 만들 시간을 벌기 위해서지 영원히 안 만들려는 게 아닙니다.</mark></p>
+  </div>
+</section>
+
+<!-- 핸드오프 -->
+<section>
+  <div class="kicker">핸드오프</div>
+  <h2>팀장에게 넘깁니다</h2>
+
+  <div class="handoff">
+    <div class="hh"><i>Cap</i><b>통합 · 최종 검수</b></div>
+    <div class="hs">우선순위는 안 건드렸습니다. 전략가에게 되돌릴 지점만 표시합니다.</div>
+
+    <div class="hitems">
+      <div class="hi red">
+        <div class="hn">실행 가능성 판정</div>
+        <div class="ht">20시간 제약: 조건부 통과</div>
+        <div class="hd">최대 부하 17.5h(W2). 조건은 <strong>L3-a(발행 반감)를 첫날에 실행하는 것</strong> 하나뿐.
+          <strong>가장 취약한 지점</strong>: L3-a는 0시간이 드는 결정인데 <strong>가장 안 될 일</strong>이다.
+          대표의 1년치 확신을 정면으로 거스른다.</div>
+      </div>
+      <div class="hi red">
+        <div class="hn">전략가에게 되돌릴 것 ① · Cap이 판단</div>
+        <div class="ht">🔴 Tess의 Check 05는 데이터 구조상 실행 불가</div>
+        <div class="hd">전략의 심장(인과 사슬)이 착수 전에 검증되지 않는다. 대체 검증을 설계했으나 결정적이지 않다.
+          <strong>임계선을 선물에 의존하지 않게 설계해 우회했으나, Tess가 이 우회를 승인할지 확인 필요.</strong></div>
+      </div>
+      <div class="hi red">
+        <div class="hn">전략가에게 되돌릴 것 ②</div>
+        <div class="ht">🔴 “결제수단 없음 11%”가 L1의 최대 레버일 수 있다</div>
+        <div class="hd">마진을 안 깎는다. <strong>순서 재검토는 전략가 영역.</strong></div>
+      </div>
+      <div class="hi">
+        <div class="hn">비가역 결정 하나</div>
+        <div class="ht">G1 (W5 · 8/15) 재고 보충 발주</div>
+        <div class="hd">이 플레이북에서 되돌릴 수 없는 유일한 결정. <strong>나머지는 전부 10분이면 원복된다.</strong></div>
+      </div>
+      <div class="hi">
+        <div class="hn">검수해달라는 것</div>
+        <div class="ht">추산 딱지 · 각인 충돌 · 예시 표기</div>
+        <div class="hd">① 시간 추산 전부에 <code>추산</code> 딱지가 붙어 있다.
+          <strong>W1 시간 로그가 이걸 확정하거나 깬다.</strong> 로그 없이 실행하면 추산 위에 실행이 선다.
+          <br>② 각인 “올해 안 함” 권고가 Tess의 “필요조건 아님”과 충돌하지 않는지 (충돌 없다고 보지만 확인 요망).
+          <br>③ 카피 문구·번들 구성은 <strong>전부 예시</strong>다. 실제 문구는 크래프트 서사(공방 인터뷰) 확보 후 확정된다.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disc">
+    이 플레이북의 브랜드·내부 수치는 <strong>가상 시나리오 설정</strong>입니다(쇼케이스 케이스).
+    시장·업계 벤치마크·경쟁사 관행은 리서처가 실제 출처로 검증했습니다.
+    <strong>도구 정보는 2026 상반기 기준</strong>이며, 카페24·GA4·간편결제 UI는 바뀔 수 있습니다.
+    <strong>판단 틀(무엇을 AI에 넘기고 무엇을 사람이 쥐나)은 안 바뀝니다.</strong>
+    <br>산출 원본: <code>작업/2026-07-11_쇼케이스_대조실험/04_Sam_실행.md</code>
+  </div>
+</section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <div><b>Team of One : Marketer</b> · 1인 기업·마케터를 위한 AI 팀원 패키지</div>
+    <div>04 / 05 · 실행설계자 Sam · 실행 플레이북</div>
+  </div>
+</footer>
+
+</body>
+</html>

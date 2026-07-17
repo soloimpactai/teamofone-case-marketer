@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>팀을 한 번 돌린 전 과정 | Team of One : Marketer</title>
+<meta name="description" content="1인 마케터의 고민 한 문장이 5명의 AI 팀을 관통하는 전 과정. 각 단계 리포트 전문과 일반 AI 대조 실험을 전부 공개합니다.">
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+  :root{
+    --ink:#16161A;
+    --ink-2:#4A4A55;
+    --ink-3:#82828F;
+    --ink-4:#B0B0BA;
+    --paper:#F7F5F2;
+    --card:#FFFFFF;
+    --line:#E4E1DB;
+    --line-2:#EFEDE8;
+
+    --leo:#46587A;
+    --ben:#5E7A62;
+    --tess:#9B5C63;
+    --sam:#A8813F;
+    --cap:#5B4B7A;
+
+    --ai:#8A8578;
+    --ai-wash:#F1F0EB;
+    --ai-line:#DCD9CF;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Pretendard Variable',Pretendard,-apple-system,system-ui,sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.75;
+    word-break:keep-all;
+    overflow-wrap:break-word;
+    -webkit-font-smoothing:antialiased;
+    font-size:16px;
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 28px}
+  .narrow{max-width:820px;margin:0 auto}
+  section{padding:80px 0;border-top:1px solid var(--line)}
+
+  /* ===== HERO ===== */
+  .hero{background:var(--ink);color:#fff;padding:96px 0 88px;position:relative;overflow:hidden}
+  .hero::before{content:"";position:absolute;inset:0;
+    background:
+      radial-gradient(760px 420px at 12% 6%, rgba(70,88,122,.34), transparent 62%),
+      radial-gradient(700px 400px at 88% 92%, rgba(155,92,99,.26), transparent 62%),
+      radial-gradient(600px 360px at 62% 18%, rgba(94,122,98,.18), transparent 66%);
+  }
+  .hero .wrap{position:relative;z-index:1}
+  .eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:26px;
+    border:1px solid rgba(255,255,255,.2);padding:7px 15px;border-radius:999px}
+  .eyebrow i{width:6px;height:6px;border-radius:50%;background:#8FA3C4;font-style:normal}
+  .hero h1{font-size:52px;font-weight:800;letter-spacing:-.035em;line-height:1.2;margin-bottom:22px}
+  .hero h1 em{font-style:normal;color:#C9B9D6}
+  .hero .sub{font-size:19px;color:rgba(255,255,255,.76);max-width:660px;line-height:1.72}
+  .hero .sub strong{color:#fff;font-weight:700}
+  .heroline{display:flex;gap:0;margin-top:44px;border-top:1px solid rgba(255,255,255,.14);padding-top:26px;flex-wrap:wrap}
+  .hl{flex:1;min-width:150px;padding-right:20px}
+  .hl b{display:block;font-size:26px;font-weight:800;letter-spacing:-.03em;margin-bottom:3px}
+  .hl span{font-size:12.5px;color:rgba(255,255,255,.55);font-weight:600}
+
+  /* ===== shared ===== */
+  .kicker{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3);margin-bottom:16px}
+  .kicker::before{content:"";width:24px;height:2px;background:var(--ink-3);border-radius:1px}
+  h2{font-size:28px;font-weight:800;letter-spacing:-.025em;line-height:1.4;margin-bottom:14px}
+  p{color:var(--ink-2);margin-bottom:14px;font-size:15.5px}
+  p strong{color:var(--ink);font-weight:700}
+  .lead{font-size:17px;color:var(--ink-2);line-height:1.78}
+
+  /* ===== 의뢰 인용 ===== */
+  .askbox{background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:30px 32px;box-shadow:0 1px 3px rgba(22,22,26,.04);margin-top:8px}
+  .askbox .tag{font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:12px}
+  .askbox .q{font-size:17.5px;line-height:1.72;color:var(--ink);font-weight:600;letter-spacing:-.012em}
+  .askbox .note{margin-top:16px;padding-top:14px;border-top:1px dashed var(--line);
+    font-size:14px;color:var(--ink-3)}
+
+  /* ===== 릴레이 카드 ===== */
+  .relay{display:flex;flex-direction:column;gap:14px;margin-top:8px}
+  .rcard{display:block;background:var(--card);border:1px solid var(--line);border-radius:4px;
+    border-left:5px solid var(--c);padding:24px 26px;position:relative;
+    transition:transform .16s ease, box-shadow .16s ease, border-color .16s ease;
+    box-shadow:0 1px 3px rgba(22,22,26,.04)}
+  .rcard:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(22,22,26,.09)}
+  .rhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .rnum{font-size:13px;font-weight:800;letter-spacing:.08em;color:var(--c)}
+  .rname{font-size:20px;font-weight:800;letter-spacing:-.02em;color:var(--ink)}
+  .rrole{font-size:13px;font-weight:600;color:var(--ink-3)}
+  .rline{font-size:16.5px;font-weight:700;color:var(--ink);letter-spacing:-.015em;margin-bottom:14px;line-height:1.6}
+  .rlist{display:flex;flex-wrap:wrap;gap:6px}
+  .rlist span{font-size:12.5px;font-weight:600;color:var(--ink-2);background:var(--w);
+    border:1px solid var(--line-2);border-radius:999px;padding:4px 11px}
+  .rgo{margin-top:16px;font-size:13.5px;font-weight:700;color:var(--c);display:inline-flex;align-items:center;gap:6px}
+  .rgo::after{content:"→";transition:transform .16s ease;display:inline-block}
+  .rcard:hover .rgo::after{transform:translateX(3px)}
+
+  /* ===== 대조 실험 ===== */
+  .duo{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:8px}
+  .dcard{display:block;background:var(--card);border:1px solid var(--line);border-radius:4px;
+    padding:26px;transition:transform .16s ease, box-shadow .16s ease;
+    box-shadow:0 1px 3px rgba(22,22,26,.04)}
+  .dcard:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(22,22,26,.09)}
+  .dcard.main{border-top:3px solid var(--cap)}
+  .dcard.sub{border-top:3px solid var(--ai);background:var(--ai-wash);border-color:var(--ai-line)}
+  .dtag{font-size:11px;font-weight:800;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--ink-3);margin-bottom:10px}
+  .dtitle{font-size:19px;font-weight:800;letter-spacing:-.022em;margin-bottom:10px;line-height:1.45}
+  .dtext{font-size:14.5px;color:var(--ink-2);line-height:1.72}
+  .dgo{margin-top:16px;font-size:13.5px;font-weight:700;color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+  .dgo::after{content:"→";transition:transform .16s ease;display:inline-block}
+  .dcard:hover .dgo::after{transform:translateX(3px)}
+
+  /* ===== 주의 ===== */
+  .disc{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ai);
+    border-radius:4px;padding:22px 24px;font-size:14.5px;color:var(--ink-2);line-height:1.75;margin-top:26px}
+  .disc strong{color:var(--ink)}
+
+  /* ===== footer ===== */
+  footer{background:var(--ink);color:#fff;padding:64px 0 56px;margin-top:0}
+  .fcta{font-size:24px;font-weight:800;letter-spacing:-.025em;margin-bottom:12px;line-height:1.45}
+  .fsub{font-size:15px;color:rgba(255,255,255,.62);max-width:560px;line-height:1.72;margin-bottom:26px}
+  .fbtn{display:inline-block;background:#fff;color:var(--ink);font-weight:700;font-size:15px;
+    padding:13px 26px;border-radius:4px;transition:opacity .16s ease}
+  .fbtn:hover{opacity:.86}
+  .fmeta{margin-top:38px;padding-top:22px;border-top:1px solid rgba(255,255,255,.14);
+    font-size:12.5px;color:rgba(255,255,255,.42)}
+
+  @media (max-width:760px){
+    .hero{padding:66px 0 58px}
+    .hero h1{font-size:34px}
+    .hero .sub{font-size:16.5px}
+    section{padding:56px 0}
+    h2{font-size:23px}
+    .duo{grid-template-columns:1fr}
+    .hl{min-width:50%;margin-bottom:14px}
+    .askbox,.rcard,.dcard{padding:22px 20px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow"><i></i>Team of One : Marketer · 공개 사례</div>
+    <h1>고민 한 문장이<br><em>다섯 명을 통과하면</em></h1>
+    <p class="sub">
+      1인 마케터가 던진 <strong>200자짜리 고민 하나</strong>가 Leo에서 Cap까지 다섯 단계를 관통한
+      전 과정 기록입니다. 각 단계에서 팀이 실제로 만든 리포트를 <strong>한 글자도 덜어내지 않고</strong> 그대로 공개합니다.
+      같은 질문을 일반 AI에 던진 대조 실험도 함께 있습니다.
+    </p>
+    <div class="heroline">
+      <div class="hl"><b>600자</b><span>사용자가 입력한 것 전부</span></div>
+      <div class="hl"><b>5</b><span>거쳐 간 단계</span></div>
+      <div class="hl"><b>3</b><span>결론이 뒤집힌 횟수</span></div>
+      <div class="hl"><b>12</b><span>팀이 스스로 잡아낸<br>자기 오류</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+<!-- ============ 의뢰 ============ -->
+<section style="border-top:none">
+  <div class="narrow">
+    <div class="kicker">시작</div>
+    <h2>정리된 브리프도, 전문 용어도 없었습니다</h2>
+    <p class="lead">
+      수제 원목 도마를 파는 D2C 브랜드의 1인 마케터가, 하던 말 그대로 던졌습니다.
+      재미있는 건 <strong>이미 답까지 정해서 왔다</strong>는 것입니다. 팀은 그 답을 받지 않고 되물었습니다.
+    </p>
+    <div class="askbox">
+      <div class="tag">사용자 입력 · 첫 문단</div>
+      <div class="q">
+        “인스타 팔로워는 1년 새 8천에서 2만 4천까지 늘었는데 매출이 안 늘어.
+        숏폼 편집자를 뽑아서 릴스를 주 4회에서 8회로 늘려야 하나?
+        아니면 유튜브 숏츠도 같이 돌려야 할까?”
+      </div>
+      <div class="note">
+        <a href="user-input.html" style="color:var(--leo);font-weight:700;border-bottom:1px solid var(--leo)">사용자가 입력한 것 전부 보기 →</a>
+        <span style="margin-left:8px">세 번의 입력을 다 합쳐 약 600자, 어떤 분석 기법도 지시하지 않았습니다.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 릴레이 ============ -->
+<section>
+  <div class="narrow">
+    <div class="kicker">다섯 단계</div>
+    <h2>뒤에 앉은 사람이 앞 사람을 다시 봅니다</h2>
+    <p class="lead" style="margin-bottom:34px">
+      각 팀원은 앞 사람 결과를 넘겨받아 자기 일만 하고, 결과를 파일로 다음 사람에게 넘깁니다.
+      아래 다섯 장이 그 순서대로입니다. 어느 것부터 열어도 됩니다.
+    </p>
+
+    <div class="relay">
+
+      <a class="rcard" href="01-leo.html" style="--c:var(--leo);--w:#EEF1F6">
+        <div class="rhead">
+          <span class="rnum">01</span>
+          <span class="rname">Leo</span>
+          <span class="rrole">해석가 · 문제정의 브리프</span>
+        </div>
+        <div class="rline">“답을 내지 않고 멈췄다”</div>
+        <div class="rlist">
+          <span>한 줄 재정의: 콘텐츠 부족이 아니라 전환 병목</span>
+          <span>경합 가설 5개와 각각의 반증 신호</span>
+          <span>내구재 함정을 뒤 팀원에게 미리 심어둠</span>
+          <span>리서처에게 넘길 7개 미션</span>
+        </div>
+        <div class="rgo">Leo 리포트 전문 열기</div>
+      </a>
+
+      <a class="rcard" href="02-ben.html" style="--c:var(--ben);--w:#EDF2EC">
+        <div class="rhead">
+          <span class="rnum">02</span>
+          <span class="rname">Ben</span>
+          <span class="rrole">리서처 · 조사 리포트</span>
+        </div>
+        <div class="rline">“죽은 줄 알았던 가설을 되살렸다”</div>
+        <div class="rlist">
+          <span>가설 판정표: 5개 중 3개 사망</span>
+          <span>최대 레버 발견: 콘텐츠가 아니라 결제</span>
+          <span>자기 오류 6건 자백·정정</span>
+          <span>물리적으로 불가능한 처방 6종</span>
+        </div>
+        <div class="rgo">Ben 리포트 전문 열기</div>
+      </a>
+
+      <a class="rcard" href="03-tess.html" style="--c:var(--tess);--w:#F5EDEE">
+        <div class="rhead">
+          <span class="rnum">03</span>
+          <span class="rname">Tess</span>
+          <span class="rrole">전략가 · 전략 브리프</span>
+        </div>
+        <div class="rline">“Ben이 안 물은 걸 물었다: 그럼 마진은?”</div>
+        <div class="rlist">
+          <span>포지셔닝: 선물 시장으로 재정의</span>
+          <span>레버 우선순위: Ben의 순서를 뒤집음</span>
+          <span>지킬 필요 없는 데드라인 골라내기</span>
+          <span>버리는 목록 (하는 것보다 김)</span>
+        </div>
+        <div class="rgo">Tess 리포트 전문 열기</div>
+      </a>
+
+      <a class="rcard" href="04-sam.html" style="--c:var(--sam);--w:#F7F2E7">
+        <div class="rhead">
+          <span class="rnum">04</span>
+          <span class="rname">Sam</span>
+          <span class="rrole">실행설계자 · 실행 플레이북</span>
+        </div>
+        <div class="rline">“아무도 그 쇼핑몰에 안 들어가 봤다”</div>
+        <div class="rlist">
+          <span>주 20시간 제약 통과 검증 (시간표 실측)</span>
+          <span>아무도 안 본 결제수단 문제 포착</span>
+          <span>Tess가 놓친 실행 함정 8개</span>
+          <span>되돌릴 수 없는 결정 딱 1개 짚기</span>
+        </div>
+        <div class="rgo">Sam 리포트 전문 열기</div>
+      </a>
+
+      <a class="rcard" href="05-cap.html" style="--c:var(--cap);--w:#F1EEF6">
+        <div class="rhead">
+          <span class="rnum">05</span>
+          <span class="rname">Cap</span>
+          <span class="rrole">팀장 · 통합 리포트 + 검수</span>
+        </div>
+        <div class="rline">“팀의 오류를 스스로 자백했다”</div>
+        <div class="rlist">
+          <span>계승 사슬 검증: 네 단계를 관통했는가</span>
+          <span>가장 위험했던 길목 짚기</span>
+          <span>팀의 오류 12건 전부 공개 (2건은 Cap 자신)</span>
+          <span>팀도 틀렸을 수 있는 지점</span>
+        </div>
+        <div class="rgo">Cap 리포트 전문 열기</div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ 도달한 답 ============ -->
+<section>
+  <div class="narrow">
+    <div class="kicker">결과</div>
+    <h2>질문은 채용 여부 하나였는데,<br>답은 올해 우선순위 전체가 됐습니다</h2>
+    <div class="askbox" style="border-left:5px solid var(--cap)">
+      <div class="tag">팀이 도달한 답</div>
+      <div class="q">
+        “편집자가 아니라, 이미 온 사람이 마지막 문에서 돌아서고 있다.
+        올해 할 일은 새로 만드는 게 아니라 그 문을 여는 것.”
+      </div>
+    </div>
+    <div class="disc">
+      <strong>정직하게 짚습니다.</strong> 브랜드와 내부 수치는 가상 시나리오입니다.
+      시장 벤치마크와 통계는 팀이 실제 출처로 검증한 실측입니다.
+      사용자가 한 일은 팀이 요청한 데이터를 붙여넣은 것뿐이고,
+      무엇을 어디서 가져와야 하는지는 팀이 짚었습니다.
+      이 사례가 증명하는 건 특정 브랜드의 정답이 아니라,
+      <strong>고민 하나를 던졌을 때 다섯 단계가 무엇을 묻고 무엇을 잡아내는가</strong>입니다.
+    </div>
+  </div>
+</section>
+
+<!-- ============ 대조 실험 ============ -->
+<section>
+  <div class="narrow">
+    <div class="kicker">대조 실험</div>
+    <h2>“그냥 AI한테 물어보면 안 되나요?”</h2>
+    <p class="lead" style="margin-bottom:30px">
+      제일 많이 나올 질문이라 똑같은 고민을 일반 AI에 한 방으로 던져봤습니다.
+      일부러 못 쓰게 만들지 않았습니다. 최선을 다해 뽑았고, 입력한 것을 그대로 공개합니다.
+    </p>
+    <div class="duo">
+      <a class="dcard main" href="compare.html">
+        <div class="dtag">판정</div>
+        <div class="dtitle">같은 의뢰, 두 개의 답</div>
+        <div class="dtext">
+          일반 AI도 꽤 잘합니다. 큰 방향은 맞혔습니다.
+          다만 빠진 하나가 하필 가장 큰 것이었습니다.
+          어디서 갈렸는지 항목별로 비교합니다.
+        </div>
+        <div class="dgo">대조 실험 전문 열기</div>
+      </a>
+      <a class="dcard sub" href="single-ai.html">
+        <div class="dtag">대조군 A</div>
+        <div class="dtitle">단일 AI의 답변 전문</div>
+        <div class="dtext">
+          비교의 상대편입니다. 손대지 않은 원문 그대로예요.
+          직접 읽고 판단해 보셔도 됩니다.
+        </div>
+        <div class="dgo">답변 원문 열기</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="narrow">
+      <div class="fcta">이 다섯 명이, 당신 일에 붙습니다.</div>
+      <div class="fsub">
+        Team of One · Marketer는 혼자 일하는 마케터를 위한 5인 AI 팀입니다.
+        위 기록은 이 팀을 실제로 한 번 돌린 것입니다.
+      </div>
+      <a class="fbtn" href="https://soloimpact.kr">Team of One 알아보기</a>
+      <div class="fmeta">SoloImpact · Team of One : Marketer · 공개 사례 기록</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

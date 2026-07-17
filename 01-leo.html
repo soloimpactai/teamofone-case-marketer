@@ -265,6 +265,14 @@
     .teamstrip .wrap{overflow-x:auto}
     .tsitem{min-width:104px}
   }
+
+  /* ---------- index nav (added) ---------- */
+  a.tsitem{color:inherit;text-decoration:none;cursor:pointer}
+  a.tsitem:hover{opacity:.82}
+  .tsitem.on{cursor:default}
+  .brandbar a.tocgo{color:rgba(255,255,255,.88);text-decoration:none;
+    border-bottom:1px solid rgba(255,255,255,.42);padding-bottom:1px}
+  .brandbar a.tocgo:hover{color:#fff;border-color:#fff}
 </style>
 </head>
 <body>
@@ -274,7 +282,7 @@
     <div class="brandbar">
       <span>Team of One : Marketer</span><span class="dot"></span>
       <span>Case · SOLLIP</span><span class="dot"></span>
-      <span>2026.07.11</span>
+      <span>2026.07.11</span><span class="dot"></span><a class="tocgo" href="index.html">전 과정 목차</a>
     </div>
     <div class="stagerow">
       <div class="stagenum">01</div>
@@ -294,10 +302,10 @@
 <div class="teamstrip">
   <div class="wrap">
     <div class="tsitem on"><i style="background:#46587A"></i><b>Leo</b><em>해석가</em></div>
-    <div class="tsitem"><i style="background:#5E7A62"></i><b>Ben</b><em>리서처</em></div>
-    <div class="tsitem"><i style="background:#9B5C63"></i><b>Tess</b><em>전략가</em></div>
-    <div class="tsitem"><i style="background:#A8813F"></i><b>Sam</b><em>실행설계자</em></div>
-    <div class="tsitem"><i style="background:#5B4B7A"></i><b>Cap</b><em>팀장·검수</em></div>
+    <a class="tsitem " href="02-ben.html"><i style="background:#5E7A62"></i><b>Ben</b><em>리서처</em></a>
+    <a class="tsitem " href="03-tess.html"><i style="background:#9B5C63"></i><b>Tess</b><em>전략가</em></a>
+    <a class="tsitem " href="04-sam.html"><i style="background:#A8813F"></i><b>Sam</b><em>실행설계자</em></a>
+    <a class="tsitem " href="05-cap.html"><i style="background:#5B4B7A"></i><b>Cap</b><em>팀장·검수</em></a>
   </div>
 </div>
 
